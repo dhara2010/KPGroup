@@ -14,7 +14,7 @@ export default function Home() {
       <Hero/>
       <Ecosystem/>
       <Architecture/>
-      <Services/>
+      {/* <Services/> */}
       <Testimonials/>
       <Contact/>
       <FAQ/>
