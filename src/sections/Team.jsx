@@ -98,15 +98,9 @@ export default function Team() {
                 <img 
                   src={member.image} 
                   alt={member.name}
-                  className="w-full h-full object-cover object-top filter grayscale group-hover:grayscale-0 transition-all duration-700 group-hover:scale-110"
+                  className="w-full h-full object-cover object-top transition-all duration-700 group-hover:scale-110"
                 />
                 
-                {/* Gradient Overlay */}
-                <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent opacity-80 group-hover:opacity-60 transition-opacity duration-500"></div>
-                
-                {/* Colorful Glow underneath the name */}
-                <div className={`absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t ${member.color} opacity-0 group-hover:opacity-30 transition-opacity duration-500 blur-xl mix-blend-screen`}></div>
-
                
               </div>
 

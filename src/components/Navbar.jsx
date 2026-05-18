@@ -7,16 +7,19 @@ import Link from "next/link";
 import UniqueArrow from "@/components/UniqueArrow";
 
 const navLinks = [
-  { name: "Products", href: "#" },
-  { name: "Solutions", href: "#" },
+  { name: "About Us", href: "#" },
+  { name: "Our Companies", href: "#" },
   { name: "Resources", href: "#" },
-  { name: "Pricing", href: "#" },
+  { name: "Partners", href: "#" },
+  { name: "Blog", href: "#" },
+  { name: "Contact Us", href: "#" },
 ];
 
 export default function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [hoveredIndex, setHoveredIndex] = useState(null);
+  const [activeDropdown, setActiveDropdown] = useState(null);
 
   // Handle scroll effect
   useEffect(() => {
@@ -64,31 +67,103 @@ export default function Navbar() {
 
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center gap-1">
-            {navLinks.map((link, idx) => (
-              <div
-                key={idx}
-                className="relative px-4 py-2 rounded-full cursor-pointer"
-                onMouseEnter={() => setHoveredIndex(idx)}
-                onMouseLeave={() => setHoveredIndex(null)}
-              >
-                <span className="relative z-10 text-sm font-medium text-gray-300 hover:text-white transition-colors flex items-center gap-1">
-                  {link.name}
-                  {link.name === "Solutions" && <ChevronDown className="w-4 h-4" />}
-                </span>
-                
-                {/* Hover Background Animation */}
-                {hoveredIndex === idx && (
-                  <motion.div
-                    layoutId="navbar-hover"
-                    className="absolute inset-0 bg-white/10 rounded-full"
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    exit={{ opacity: 0 }}
-                    transition={{ type: "spring", bounce: 0.2, duration: 0.6 }}
-                  />
-                )}
-              </div>
-            ))}
+            {navLinks.map((link, idx) => {
+              const hasDropdown = link.name === "Our Companies" || link.name === "Resources";
+              const isDropdownOpen = activeDropdown === link.name;
+              
+              return (
+                <div
+                  key={idx}
+                  className="relative px-4 py-2 rounded-full cursor-pointer"
+                  onMouseEnter={() => {
+                    setHoveredIndex(idx);
+                    if (hasDropdown) setActiveDropdown(link.name);
+                    else setActiveDropdown(null);
+                  }}
+                  onMouseLeave={() => {
+                    setHoveredIndex(null);
+                    setActiveDropdown(null);
+                  }}
+                >
+                  <span className={`relative z-10 text-sm font-medium transition-colors flex items-center gap-1 ${
+                    isDropdownOpen ? "text-blue-500 font-semibold" : "text-gray-300 hover:text-white"
+                  }`}>
+                    {link.name}
+                    {hasDropdown && <ChevronDown className={`w-3.5 h-3.5 transition-transform duration-300 ${isDropdownOpen ? "rotate-180 text-blue-500" : "text-gray-400"}`} />}
+                  </span>
+                  
+                  {/* Dropdown Menu Overlay */}
+                  {hasDropdown && (
+                    <AnimatePresence>
+                      {isDropdownOpen && (
+                        <motion.div
+                          initial={{ opacity: 0, y: 15, scale: 0.95 }}
+                          animate={{ opacity: 1, y: 0, scale: 1 }}
+                          exit={{ opacity: 0, y: 15, scale: 0.95 }}
+                          transition={{ duration: 0.2 }}
+                          className="absolute left-1/2 -translate-x-1/2 top-full mt-3 w-64 bg-[#0a0a0a]/95 border border-white/10 rounded-2xl overflow-hidden shadow-[0_20px_50px_rgba(0,0,0,0.5)] z-50 py-3 backdrop-blur-2xl"
+                        >
+                          {/* Accent Top Bar */}
+                          <div className="absolute top-0 inset-x-0 h-[2px] bg-gradient-to-r from-blue-500 to-purple-600"></div>
+                          
+                          {/* Menu Items */}
+                          <div className="flex flex-col gap-1 px-2">
+                            {link.name === "Our Companies" ? (
+                              <>
+                                {[
+                                  { name: "KP Global IT Solution", href: "#services" },
+                                  { name: "KP Global Skill Academy", href: "#academy" },
+                                  { name: "KP Global Media Network", href: "#media" },
+                                  { name: "KP Global Business Community", href: "#community" },
+                                  { name: "KP Global Jobs", href: "#careers" }
+                                ].map((subLink, subIdx) => (
+                                  <Link 
+                                    key={subIdx} 
+                                    href={subLink.href}
+                                    className="px-4 py-3 text-xs font-semibold text-gray-300 hover:text-white hover:bg-white/5 rounded-xl transition-all duration-200 block text-left leading-tight"
+                                  >
+                                    {subLink.name}
+                                  </Link>
+                                ))}
+                              </>
+                            ) : (
+                              <>
+                                {[
+                                  { name: "Testimonial", href: "#testimonials" },
+                                  { name: "Careers", href: "#contact" },
+                                  { name: "Team", href: "#team" },
+                                  { name: "Faq", href: "#faq" }
+                                ].map((subLink, subIdx) => (
+                                  <Link 
+                                    key={subIdx} 
+                                    href={subLink.href}
+                                    className="px-4 py-3 text-xs font-semibold text-gray-300 hover:text-white hover:bg-white/5 rounded-xl transition-all duration-200 block text-left"
+                                  >
+                                    {subLink.name}
+                                  </Link>
+                                ))}
+                              </>
+                            )}
+                          </div>
+                        </motion.div>
+                      )}
+                    </AnimatePresence>
+                  )}
+                  
+                  {/* Hover Background Animation */}
+                  {hoveredIndex === idx && (
+                    <motion.div
+                      layoutId="navbar-hover"
+                      className="absolute inset-0 bg-white/10 rounded-full"
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      exit={{ opacity: 0 }}
+                      transition={{ type: "spring", bounce: 0.2, duration: 0.6 }}
+                    />
+                  )}
+                </div>
+              );
+            })}
           </div>
 
           {/* CTA & Mobile Toggle */}

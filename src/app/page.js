@@ -19,7 +19,6 @@ export default function Home() {
       <Contact/>
       <FAQ/>
       <Supporters/>
-
       <Team/>
     </main>
   );
