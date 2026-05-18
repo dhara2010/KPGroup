@@ -17,9 +17,10 @@ export default function Home() {
       <Services/>
       <Testimonials/>
       <Contact/>
-      <Supporters/>
-      <Team/>
       <FAQ/>
+      <Supporters/>
+
+      <Team/>
     </main>
   );
 }
