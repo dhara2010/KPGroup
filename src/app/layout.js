@@ -19,6 +19,7 @@ export const metadata = {
 
 import Navbar from "@/components/Navbar";
 import CustomCursor from "@/components/CustomCursor";
+import Footer from "@/components/Footer";
 
 export default function RootLayout({ children }) {
   return (
@@ -30,6 +31,7 @@ export default function RootLayout({ children }) {
         <CustomCursor />
         <Navbar />
         {children}
+        <Footer />
       </body>
     </html>
   );

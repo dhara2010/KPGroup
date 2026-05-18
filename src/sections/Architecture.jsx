@@ -55,6 +55,8 @@ export default function Architecture() {
   const [activeNode, setActiveNode] = useState(null);
   const [isVisible, setIsVisible] = useState(false);
   const [isMounted, setIsMounted] = useState(false);
+  const [rotationAngle, setRotationAngle] = useState(0);
+  const [isHovered, setIsHovered] = useState(false);
   const sectionRef = useRef(null);
 
   useEffect(() => {
@@ -72,9 +74,21 @@ export default function Architecture() {
     return () => observer.disconnect();
   }, []);
 
-  // Helper to calculate circular position
-  const getPosition = (index, total, radius) => {
-    const angle = (index * (360 / total) - 90) * (Math.PI / 180);
+  // Continuous smooth orbital rotation loop
+  useEffect(() => {
+    if (!isVisible) return;
+    let animationFrameId;
+    const animate = () => {
+      setRotationAngle((prev) => (prev + 0.15) % 360);
+      animationFrameId = requestAnimationFrame(animate);
+    };
+    animationFrameId = requestAnimationFrame(animate);
+    return () => cancelAnimationFrame(animationFrameId);
+  }, [isVisible]);
+
+  // Helper to calculate circular position with rotation offset
+  const getPosition = (index, total, radius, offset = 0) => {
+    const angle = (index * (360 / total) - 90 + offset) * (Math.PI / 180);
     return {
       x: Math.cos(angle) * radius,
       y: Math.sin(angle) * radius
@@ -136,7 +150,7 @@ export default function Architecture() {
           <svg className="absolute inset-0 w-full h-full pointer-events-none z-10" viewBox="0 0 100 100">
             {isMounted && divisions.map((node, i) => {
               const radius = 35; // % based
-              const angle = (i * (360 / divisions.length) - 90) * (Math.PI / 180);
+              const angle = (i * (360 / divisions.length) - 90 + rotationAngle) * (Math.PI / 180);
               const x2 = 50 + Math.cos(angle) * radius;
               const y2 = 50 + Math.sin(angle) * radius;
               
@@ -166,18 +180,25 @@ export default function Architecture() {
           {/* Outer Nodes: Perfect Circle Placement */}
           {isMounted && divisions.map((node, i) => {
             const radius = window.innerWidth < 768 ? 160 : 320;
-            const pos = getPosition(i, divisions.length, radius);
+            const pos = getPosition(i, divisions.length, radius, rotationAngle);
             
             return (
               <div
                 key={node.id}
-                className={`absolute z-30 transition-all duration-1000 ${isVisible ? 'opacity-100' : 'opacity-0 scale-0'}`}
+                className={`absolute z-30 transition-opacity transition-transform duration-1000 ${isVisible ? 'opacity-100 scale-100' : 'opacity-0 scale-0 pointer-events-none'}`}
                 style={{
                   transform: `translate(${pos.x}px, ${pos.y}px)`,
-                  transitionDelay: `${i * 100}ms`
+                  transition: 'opacity 1s cubic-bezier(0.16, 1, 0.3, 1), scale 1s cubic-bezier(0.16, 1, 0.3, 1), transform 0s',
+                  transitionDelay: isVisible ? '0ms' : `${i * 100}ms`
                 }}
-                onMouseEnter={() => setActiveNode(node)}
-                onMouseLeave={() => setActiveNode(null)}
+                onMouseEnter={() => {
+                  setActiveNode(node);
+                  setIsHovered(true);
+                }}
+                onMouseLeave={() => {
+                  setActiveNode(null);
+                  setIsHovered(false);
+                }}
               >
                 <div className={`group relative flex flex-col items-center transition-all duration-500 ${activeNode?.id === node.id ? 'scale-110' : ''}`}>
                   {/* Node Circle Panel */}

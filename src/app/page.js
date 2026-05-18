@@ -3,6 +3,11 @@ import Ecosystem from "@/sections/Ecosystem";
 import Architecture from "@/sections/Architecture";
 import Services from "@/sections/Services";
 import Testimonials from "@/sections/Testimonials";
+import Contact from "@/sections/Contact";
+import Supporters from "@/sections/Supporters";
+import Team from "@/sections/Team";
+import FAQ from "@/sections/FAQ";
+
 export default function Home() {
   return (
     <main>
@@ -11,6 +16,10 @@ export default function Home() {
       <Architecture/>
       <Services/>
       <Testimonials/>
+      <Contact/>
+      <Supporters/>
+      <Team/>
+      <FAQ/>
     </main>
   );
 }

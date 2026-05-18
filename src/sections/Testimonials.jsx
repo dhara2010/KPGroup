@@ -18,81 +18,84 @@ const testimonials = [
   {
     id: 1,
     cat: "client",
-    name: "Sarah Jenkins",
-    role: "CEO, TechNova",
+    name: "Rohan Sharma",
+    role: "CEO, TechNova India",
     type: "Client Review",
     icon: Briefcase,
     content: "KP Global transformed our entire digital infrastructure. Their AI automation saved us countless hours and significantly boosted our bottom line.",
     rating: 5,
-    image: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&q=80&w=200",
+    image: "https://images.unsplash.com/photo-1556157382-97eda2d62296?auto=format&fit=crop&q=80&w=200",
     color: "from-blue-500 to-cyan-500"
   },
   {
     id: 2,
     cat: "video",
-    name: "Marcus Thorne",
+    name: "Priya Patel",
     role: "Founder, Zenith Media",
     type: "Success Story",
     icon: PlayCircle,
     content: "The Virality Engine is unmatched. We reached 50M users in just two weeks. Watch my full breakdown of how KP Global made it happen.",
     rating: 5,
-    image: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&q=80&w=600",
+    image: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&q=80&w=600",
     isVideo: true,
+    videoSrc: "https://kpglobalbusiness.com/wp-content/uploads/2026/02/Krupa-final-video.mp4",
     color: "from-purple-500 to-pink-500"
   },
   {
     id: 3,
     cat: "student",
-    name: "Elena Rodriguez",
+    name: "Ananya Desai",
     role: "Graduate, Meta Academy",
     type: "Student Review",
     icon: GraduationCap,
     content: "The immersive VR labs at the Academy accelerated my learning by 10x. I secured a Senior Developer role within months of graduating.",
     rating: 5,
-    image: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?auto=format&fit=crop&q=80&w=200",
+    image: "https://images.unsplash.com/photo-1585938389612-a552a28d6914?auto=format&fit=crop&q=80&w=200",
     color: "from-amber-400 to-orange-500"
   },
   {
     id: 4,
     cat: "client",
-    name: "David Chen",
+    name: "Vikram Singh",
     role: "CTO, Lumina Networks",
     type: "Client Review",
     icon: Briefcase,
     content: "Partnering with KP Global for our decentralized core was the best strategic move we made this decade. Zero downtime and infinite scale.",
     rating: 5,
-    image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=200",
+    image: "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?auto=format&fit=crop&q=80&w=200",
     color: "from-cyan-400 to-blue-600"
   },
   {
     id: 5,
     cat: "student",
-    name: "Aisha Patel",
+    name: "Neha Gupta",
     role: "Quantum Mastery Alumnus",
     type: "Success Story",
     icon: GraduationCap,
     content: "The CEO mentorship program rewired my approach to high-stakes decision-making. We've scaled our operations globally since then.",
     rating: 5,
-    image: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&q=80&w=200",
+    image: "https://images.unsplash.com/photo-1544168190-79c154273140?auto=format&fit=crop&q=80&w=200",
     color: "from-rose-500 to-red-500"
   },
   {
     id: 6,
     cat: "video",
-    name: "James Wilson",
+    name: "Arjun Kapoor",
     role: "Director, Apex Solutions",
     type: "Video Testimonial",
     icon: PlayCircle,
     content: "Neural Security protocols protected our assets during a massive global breach. Here's our story on how KP Global kept us safe.",
     rating: 5,
-    image: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&q=80&w=600",
+    image: "https://images.unsplash.com/photo-1566492031773-4f4e44671857?auto=format&fit=crop&q=80&w=600",
     isVideo: true,
+    videoSrc: "https://kpglobalbusiness.com/wp-content/uploads/2026/02/sujal.mp4",
     color: "from-violet-500 to-blue-600"
   }
 ];
 
 export default function Testimonials() {
   const [activeCat, setActiveCat] = useState("all");
+  const [activeVideo, setActiveVideo] = useState(null);
   const [isVisible, setIsVisible] = useState(false);
   const sectionRef = useRef(null);
 
@@ -177,7 +180,10 @@ export default function Testimonials() {
                   
                   {/* Play Button Overlay */}
                   <div className="absolute inset-0 z-10 flex items-center justify-center">
-                     <div className="w-20 h-20 rounded-full bg-white/10 backdrop-blur-md border border-white/20 flex items-center justify-center group-hover:scale-110 group-hover:bg-blue-600/50 transition-all duration-500 cursor-pointer shadow-[0_0_40px_rgba(37,99,235,0.3)]">
+                     <div 
+                        className="w-20 h-20 rounded-full bg-white/10 backdrop-blur-md border border-white/20 flex items-center justify-center group-hover:scale-110 group-hover:bg-blue-600/50 transition-all duration-500 cursor-pointer shadow-[0_0_40px_rgba(37,99,235,0.3)]"
+                        onClick={() => setActiveVideo(testimonial.videoSrc)}
+                     >
                         <Play className="w-8 h-8 text-white ml-1" fill="currentColor" />
                      </div>
                   </div>
@@ -238,6 +244,32 @@ export default function Testimonials() {
           ))}
         </div>
       </div>
+
+      {/* Video Modal */}
+      {activeVideo && (
+        <div 
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black/90 p-4 md:p-10 backdrop-blur-sm"
+          onClick={() => setActiveVideo(null)}
+        >
+          <div 
+            className="relative w-full max-w-5xl aspect-video rounded-3xl overflow-hidden shadow-[0_0_50px_rgba(37,99,235,0.3)] bg-black border border-white/10"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <video 
+              src={activeVideo} 
+              controls 
+              autoPlay 
+              className="w-full h-full outline-none"
+            ></video>
+            <button 
+              onClick={() => setActiveVideo(null)} 
+              className="absolute top-4 right-4 md:top-6 md:right-6 text-white/50 hover:text-white bg-black/50 p-2 rounded-full backdrop-blur-md transition-colors"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+            </button>
+          </div>
+        </div>
+      )}
     </section>
   );
 }

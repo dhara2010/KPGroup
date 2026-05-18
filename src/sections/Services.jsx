@@ -32,7 +32,7 @@ const services = [
     cat: "media",
     title: "Virality Network",
     desc: "Leverage the KP Media Network to push your brand narrative through millions of synchronized nodes.",
-    price: "From $3,500",
+    price: "From ₹3,500",
     icon: Layers,
     color: "from-purple-600 to-violet-500",
     features: ["Trend Dominance", "Node Distribution", "Global Reach"]
@@ -52,7 +52,7 @@ const services = [
     cat: "tech",
     title: "Cloud Infrastructure",
     desc: "Zero-trust edge computing and secure cloud architecture for high-performance global scaling.",
-    price: "From $1,999",
+    price: "From ₹1,999",
     icon: ShieldAlert,
     color: "from-cyan-500 to-blue-500",
     features: ["Zero-Trust Core", "Edge Distribution", "Quantum Guard"]
@@ -62,7 +62,7 @@ const services = [
     cat: "media",
     title: "Spatial Production",
     desc: "High-end holographic and immersive 3D content for spatial computing and digital displays.",
-    price: "From $5,500",
+    price: "From ₹5,500",
     icon: Sparkles,
     color: "from-pink-500 to-rose-500",
     features: ["Spatial Rendering", "AR/VR Mastery", "Cinematic Quality"]
