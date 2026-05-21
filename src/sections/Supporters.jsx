@@ -1,7 +1,9 @@
 "use client";
 
-import React, { useState, useEffect, useRef } from 'react';
+import React from 'react';
 import { Star } from 'lucide-react';
+import ScrollReveal from "@/components/ScrollReveal";
+import TextReveal from "@/components/TextReveal";
 
 const supportersRow1 = [
   { name: "Zoho Premium Partner", logo: "/logos/Zoho-premium-partner.png" },
@@ -24,25 +26,8 @@ const supportersRow2 = [
 ];
 
 export default function Supporters() {
-  const [isVisible, setIsVisible] = useState(false);
-  const sectionRef = useRef(null);
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setIsVisible(true);
-          observer.disconnect();
-        }
-      },
-      { threshold: 0.1 }
-    );
-    if (sectionRef.current) observer.observe(sectionRef.current);
-    return () => observer.disconnect();
-  }, []);
-
   return (
-    <section ref={sectionRef} className="relative py-32 bg-[#020202] overflow-hidden font-sans border-t border-white/5">
+    <section className="relative py-32 bg-[#020202] overflow-hidden font-sans border-t border-white/5">
       
       {/* Background Ambience */}
       <div className="absolute inset-0 z-0 pointer-events-none opacity-20">
@@ -52,32 +37,27 @@ export default function Supporters() {
       <div className="max-w-7xl mx-auto px-6 relative z-10">
         
         {/* Header */}
-        <div className={`mb-20 flex flex-col transition-all duration-[1200ms] ease-out ${isVisible ? 'text-center items-center translate-x-0 opacity-100' : 'text-left items-start -translate-x-[90vw] opacity-0'}`}>
-          <div 
-            className={`inline-flex items-center gap-3 px-4 py-1.5 rounded-full bg-white/5 border border-white/10 mb-6 backdrop-blur-md opacity-0 ${isVisible ? 'animate-fade-in-up' : ''}`}
-            style={{ animationDelay: "0.1s" }}
-          >
-            <Star className="w-4 h-4 text-purple-400" />
-            <span className="text-xs font-medium text-purple-200 tracking-wider uppercase font-sans">Our Clients</span>
-          </div>
-          <h2 
-            className={`text-4xl md:text-6xl font-black text-white mb-6 uppercase tracking-tighter font-heading opacity-0 ${isVisible ? 'animate-fade-in-up' : ''}`}
-            style={{ animationDelay: "0.3s" }}
-          >
-            OUR <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-400">SUPPORTERS.</span>
+        <div className="mb-20 flex flex-col text-center items-center">
+          <ScrollReveal variant="3d-unfold">
+            <div className="inline-flex items-center gap-3 px-4 py-1.5 rounded-full bg-white/5 border border-white/10 mb-6 backdrop-blur-md">
+              <Star className="w-4 h-4 text-purple-400" />
+              <span className="text-xs font-medium text-purple-200 tracking-wider uppercase">Our Clients</span>
+            </div>
+          </ScrollReveal>
+          <h2 className="text-4xl md:text-6xl font-black text-white mb-6 uppercase tracking-tighter font-heading">
+            <TextReveal text="OUR SUPPORTERS." delay={0.2} />
           </h2>
-          <p 
-            className={`text-gray-400 max-w-2xl font-light leading-relaxed text-sm md:text-base opacity-0 transition-all duration-1000 ${isVisible ? 'animate-fade-in-up mx-auto' : 'ml-0'}`}
-            style={{ animationDelay: "0.5s" }}
-          >
-            Proudly partnered with global leaders, enterprises, and entrepreneurial communities shaping the future of business.
-          </p>
+          <ScrollReveal variant="3d-unfold" delay={0.4}>
+            <p className="text-gray-400 max-w-2xl mx-auto font-light leading-relaxed text-sm md:text-base">
+              Proudly partnered with global leaders, enterprises, and entrepreneurial communities shaping the future of business.
+            </p>
+          </ScrollReveal>
         </div>
 
       </div>
 
       {/* Infinite Scrolling Marquees */}
-      <div className={`relative z-10 transition-all duration-1000 delay-300 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
+      <ScrollReveal variant="3d-zoom" delay={0.5} className="relative z-10">
         
         {/* Top/Bottom Fade Masks */}
         <div className="absolute left-0 top-0 bottom-0 w-32 bg-gradient-to-r from-[#020202] to-transparent z-20 pointer-events-none"></div>
@@ -122,7 +102,7 @@ export default function Supporters() {
           </div>
 
         </div>
-      </div>
+      </ScrollReveal>
 
       <style dangerouslySetInnerHTML={{__html: `
         @keyframes marquee {

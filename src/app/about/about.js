@@ -1,8 +1,10 @@
-"use client";
+﻿"use client";
 
 import React from 'react';
-import { Target, Compass, Sparkles, CheckCircle2, Play, Users, Briefcase, Award, Globe } from 'lucide-react';
+import { Target, Compass, Sparkles, Compass as CompassIcon, Users, Briefcase, Award, Globe } from 'lucide-react';
 import Link from 'next/link';
+import ScrollReveal from "@/components/ScrollReveal";
+import TextReveal from "@/components/TextReveal";
 
 export default function AboutPage() {
   return (
@@ -23,17 +25,22 @@ export default function AboutPage() {
           <div className="absolute inset-0 bg-gradient-to-b from-black/80 via-black/50 to-[#020202]"></div>
           
           <div className="max-w-7xl mx-auto px-6 relative text-center">
-            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/5 border border-white/10 mb-6 backdrop-blur-md">
-              <span className="w-2 h-2 rounded-full bg-blue-500 animate-pulse"></span>
-              <span className="text-xs font-semibold text-purple-200 tracking-widest uppercase">WELCOME</span>
-            </div>
+            <ScrollReveal variant="fade-up">
+              <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/5 border border-white/10 mb-6 backdrop-blur-md">
+                <span className="w-2 h-2 rounded-full bg-blue-500 animate-pulse"></span>
+                <span className="text-xs font-semibold text-purple-200 tracking-widest uppercase">WELCOME</span>
+              </div>
+            </ScrollReveal>
             
             <h1 className="text-5xl md:text-8xl font-black uppercase tracking-tight text-white mb-6">
-              ABOUT US
+              <TextReveal text="ABOUT US" delay={0.2} />
             </h1>
-            <p className="text-gray-400 max-w-2xl mx-auto font-light text-sm md:text-base leading-relaxed">
-              Empowering global enterprise through unified software ecosystems, technical training, digital broadcasting networks, and dynamic B2B corridors.
-            </p>
+            
+            <ScrollReveal variant="fade-up" delay={0.4}>
+              <p className="text-gray-400 max-w-2xl mx-auto font-light text-sm md:text-base leading-relaxed">
+                Empowering global enterprise through unified software ecosystems, technical training, digital broadcasting networks, and dynamic B2B corridors.
+              </p>
+            </ScrollReveal>
           </div>
         </div>
 
@@ -44,7 +51,7 @@ export default function AboutPage() {
             
             {/* Left Block: Intro text & statistics */}
             <div className="lg:col-span-7 space-y-8">
-              <div className="space-y-4">
+              <ScrollReveal variant="fade-right" className="space-y-4">
                 <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-500/10 border border-blue-500/20 text-xs font-semibold text-blue-400 uppercase tracking-widest">
                   KP Global Business
                 </div>
@@ -56,10 +63,10 @@ export default function AboutPage() {
                   From IT to education, media, networking, and career growth, we are committed to helping you succeed 
                   with trusted solutions and genuine care. Let's work together to achieve your goals.
                 </p>
-              </div>
+              </ScrollReveal>
 
               {/* Stats Block */}
-              <div className="grid grid-cols-2 gap-8 border-t border-white/5 pt-8">
+              <ScrollReveal variant="fade-up" delay={0.2} className="grid grid-cols-2 gap-8 border-t border-white/5 pt-8">
                 <div>
                   <div className="text-4xl md:text-5xl font-black text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-400 font-mono tracking-tighter">
                     100+
@@ -84,11 +91,11 @@ export default function AboutPage() {
                   </div>
                   <div className="text-xs uppercase font-bold text-gray-500 tracking-wider mt-1">Years Experience</div>
                 </div>
-              </div>
+              </ScrollReveal>
             </div>
 
             {/* Right Block: Image */}
-            <div className="lg:col-span-5 relative group">
+            <ScrollReveal variant="fade-left" className="lg:col-span-5 relative group">
               <div className="absolute -inset-4 bg-gradient-to-r from-blue-500/20 to-purple-500/20 rounded-[2.5rem] blur-xl opacity-70 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none"></div>
               <div className="relative rounded-[2rem] overflow-hidden border border-white/10 bg-[#0a0a0a] shadow-2xl">
                 <img 
@@ -97,7 +104,7 @@ export default function AboutPage() {
                   className="w-full h-auto object-cover transition-transform duration-700 group-hover:scale-105"
                 />
               </div>
-            </div>
+            </ScrollReveal>
 
           </div>
 
@@ -111,7 +118,7 @@ export default function AboutPage() {
             <div className="relative z-10 grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16">
               
               {/* Our Vision */}
-              <div className="space-y-6 bg-white/[0.02] border border-white/5 rounded-3xl p-8 backdrop-blur-xl hover:border-white/15 transition-all duration-300">
+              <ScrollReveal variant="zoom-in" className="space-y-6 bg-white/[0.02] border border-white/5 rounded-3xl p-8 backdrop-blur-xl hover:border-white/15 transition-all duration-300">
                 <div className="w-12 h-12 rounded-2xl bg-blue-500/10 border border-blue-500/20 flex items-center justify-center text-blue-400">
                   <Compass className="w-6 h-6" />
                 </div>
@@ -122,10 +129,10 @@ export default function AboutPage() {
                   establish a unified ecosystem that fosters continuous growth and collaboration, connecting international 
                   opportunities with technical mastery.
                 </p>
-              </div>
+              </ScrollReveal>
 
               {/* Our Mission */}
-              <div className="space-y-6 bg-white/[0.02] border border-white/5 rounded-3xl p-8 backdrop-blur-xl hover:border-white/15 transition-all duration-300">
+              <ScrollReveal variant="zoom-in" delay={0.2} className="space-y-6 bg-white/[0.02] border border-white/5 rounded-3xl p-8 backdrop-blur-xl hover:border-white/15 transition-all duration-300">
                 <div className="w-12 h-12 rounded-2xl bg-purple-500/10 border border-purple-500/20 flex items-center justify-center text-purple-400">
                   <Target className="w-6 h-6" />
                 </div>
@@ -136,13 +143,13 @@ export default function AboutPage() {
                   of modern business growth. We strive to deliver excellence, security, and sustainability in everything we 
                   architect, ensuring balanced data flow and synchronized synergy.
                 </p>
-              </div>
+              </ScrollReveal>
 
             </div>
           </div>
 
           {/* Section 4: Video Banner / Image Banner */}
-          <div className="relative w-full aspect-[21/9] rounded-[2rem] overflow-hidden border border-white/10 group">
+          <ScrollReveal variant="blur-in" className="relative w-full aspect-[21/9] rounded-[2rem] overflow-hidden border border-white/10 group">
             <div className="absolute inset-0 bg-cover bg-center" style={{ backgroundImage: "url('/about_video_bg.png')" }}></div>
             <div className="absolute inset-0 bg-black/40 group-hover:bg-black/30 transition-colors duration-500"></div>
 
@@ -152,13 +159,13 @@ export default function AboutPage() {
                 One Global Platform For Technology, Skills, Media, Business, and Career Growth.
               </span>
             </div>
-          </div>
+          </ScrollReveal>
 
           {/* Section 5: Why Choose Us */}
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
             
             {/* Left Block: Image */}
-            <div className="lg:col-span-5 relative group">
+            <ScrollReveal variant="fade-right" className="lg:col-span-5 relative group">
               <div className="absolute -inset-4 bg-gradient-to-r from-blue-500/20 to-purple-500/20 rounded-[2.5rem] blur-xl opacity-70 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none"></div>
               <div className="relative rounded-[2rem] overflow-hidden border border-white/10 bg-[#0a0a0a] shadow-2xl">
                 <img 
@@ -167,11 +174,11 @@ export default function AboutPage() {
                   className="w-full h-auto object-cover transition-transform duration-700 group-hover:scale-105"
                 />
               </div>
-            </div>
+            </ScrollReveal>
 
             {/* Right Block: Capabilities List */}
             <div className="lg:col-span-7 space-y-8">
-              <div className="space-y-4">
+              <ScrollReveal variant="fade-left" className="space-y-4">
                 <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-purple-500/10 border border-purple-500/20 text-xs font-semibold text-purple-400 uppercase tracking-widest">
                   Capabilities
                 </div>
@@ -182,9 +189,9 @@ export default function AboutPage() {
                   We bridge technical architectures, educational networks, B2B synergy and worldwide employment 
                   marketplaces directly to deliver unrivaled value to your company.
                 </p>
-              </div>
+              </ScrollReveal>
 
-              {/* Grid Capabilities */}
+              {/* Capabilities */}
               <div className="space-y-6">
                 {[
                   {
@@ -203,15 +210,17 @@ export default function AboutPage() {
                     desc: "Connecting international opportunities with technical mastery. Broadening horizons and building powerful business corridors worldwide."
                   }
                 ].map((item, idx) => (
-                  <div key={idx} className="flex gap-4 p-4 border border-white/5 rounded-2xl bg-white/[0.01] hover:border-white/15 transition-all duration-300">
-                    <div className="w-10 h-10 rounded-xl bg-blue-500/10 border border-blue-500/20 flex items-center justify-center text-blue-400 shrink-0">
-                      <item.icon className="w-5 h-5" />
+                  <ScrollReveal key={idx} variant="fade-left" delay={0.15 * idx}>
+                    <div className="flex gap-4 p-4 border border-white/5 rounded-2xl bg-white/[0.01] hover:border-white/15 transition-all duration-300">
+                      <div className="w-10 h-10 rounded-xl bg-blue-500/10 border border-blue-500/20 flex items-center justify-center text-blue-400 shrink-0">
+                        <item.icon className="w-5 h-5" />
+                      </div>
+                      <div>
+                        <h4 className="text-md font-bold text-white uppercase tracking-tight mb-1">{item.title}</h4>
+                        <p className="text-xs text-gray-400 leading-relaxed font-light">{item.desc}</p>
+                      </div>
                     </div>
-                    <div>
-                      <h4 className="text-md font-bold text-white uppercase tracking-tight mb-1">{item.title}</h4>
-                      <p className="text-xs text-gray-400 leading-relaxed font-light">{item.desc}</p>
-                    </div>
-                  </div>
+                  </ScrollReveal>
                 ))}
               </div>
             </div>
@@ -219,7 +228,7 @@ export default function AboutPage() {
           </div>
 
           {/* Section 6: Our Commitment Symmetrical Panel */}
-          <div className="relative w-full rounded-[2.5rem] overflow-hidden border border-white/10 p-8 md:p-16 shadow-2xl bg-gradient-to-r from-black via-black/80 to-blue-950/25">
+          <ScrollReveal variant="fade-up" className="relative w-full rounded-[2.5rem] overflow-hidden border border-white/10 p-8 md:p-16 shadow-2xl bg-gradient-to-r from-black via-black/80 to-blue-950/25">
             <div className="absolute inset-0 bg-cover bg-center opacity-30 mix-blend-luminosity z-0" style={{ backgroundImage: "url('/about_commitment_bg.png')" }}></div>
             
             {/* Ambient blur node */}
@@ -262,7 +271,7 @@ export default function AboutPage() {
               </div>
 
             </div>
-          </div>
+          </ScrollReveal>
 
         </div>
 

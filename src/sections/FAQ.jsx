@@ -1,7 +1,10 @@
 "use client";
 
-import React, { useState, useEffect, useRef } from 'react';
-import { HelpCircle, Plus, Minus, Settings, HelpCircle as QuestionIcon } from 'lucide-react';
+import React, { useState } from 'react';
+import { HelpCircle, Plus, Settings } from 'lucide-react';
+import ScrollReveal from "@/components/ScrollReveal";
+import TextReveal from "@/components/TextReveal";
+import ThreeDTilt from "@/components/ThreeDTilt";
 
 const faqs = [
   {
@@ -36,29 +39,13 @@ const faqs = [
 
 export default function FAQ() {
   const [openIdx, setOpenIdx] = useState(null);
-  const [isVisible, setIsVisible] = useState(false);
-  const sectionRef = useRef(null);
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setIsVisible(true);
-          observer.disconnect();
-        }
-      },
-      { threshold: 0.1 }
-    );
-    if (sectionRef.current) observer.observe(sectionRef.current);
-    return () => observer.disconnect();
-  }, []);
 
   const toggleFAQ = (idx) => {
     setOpenIdx(openIdx === idx ? null : idx);
   };
 
   return (
-    <section ref={sectionRef} className="relative py-32 bg-[#020202] overflow-hidden font-sans border-t border-white/5">
+    <section className="relative py-32 bg-[#020202] overflow-hidden font-sans border-t border-white/5">
       
       {/* Background Ambience */}
       <div className="absolute inset-0 z-0 pointer-events-none opacity-20">
@@ -67,20 +54,16 @@ export default function FAQ() {
 
       <div className="max-w-7xl mx-auto px-6 relative z-10">
         
-        {/* Header (Matching scroll-in animation of Ecosystem) */}
-        <div className={`mb-20 flex flex-col transition-all duration-[1200ms] ease-out ${isVisible ? 'text-center items-center translate-x-0 opacity-100' : 'text-left items-start -translate-x-[90vw] opacity-0'}`}>
-          <div 
-            className={`inline-flex items-center gap-3 px-4 py-1.5 rounded-full bg-white/5 border border-white/10 mb-6 backdrop-blur-md opacity-0 ${isVisible ? 'animate-fade-in-up' : ''}`}
-            style={{ animationDelay: "0.1s" }}
-          >
-            <HelpCircle className="w-4 h-4 text-purple-400" />
-            <span className="text-xs font-medium text-purple-200 tracking-wider uppercase font-sans">Popular Questions</span>
-          </div>
-          <h2 
-            className={`text-4xl md:text-6xl font-black text-white mb-6 uppercase tracking-tighter font-heading opacity-0 ${isVisible ? 'animate-fade-in-up' : ''}`}
-            style={{ animationDelay: "0.3s" }}
-          >
-            Frequently Asked <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-400">Questions.</span>
+        {/* Header */}
+        <div className="mb-20 flex flex-col text-center items-center">
+          <ScrollReveal variant="3d-unfold">
+            <div className="inline-flex items-center gap-3 px-4 py-1.5 rounded-full bg-white/5 border border-white/10 mb-6 backdrop-blur-md">
+              <HelpCircle className="w-4 h-4 text-purple-400" />
+              <span className="text-xs font-medium text-purple-200 tracking-wider uppercase">Popular Questions</span>
+            </div>
+          </ScrollReveal>
+          <h2 className="text-4xl md:text-6xl font-black text-white mb-6 uppercase tracking-tighter font-heading">
+            <TextReveal text="Frequently Asked Questions." delay={0.2} />
           </h2>
         </div>
 
@@ -88,86 +71,82 @@ export default function FAQ() {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
           
           {/* Left Column: Graphic/Illustration */}
-          <div className={`lg:col-span-5 flex flex-col items-center justify-center transition-all duration-1000 delay-300 ${isVisible ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-10'}`}>
-            <div className="relative w-72 h-72 md:w-96 md:h-96 flex items-center justify-center">
-              
-              {/* Spinning tech gear in background */}
-              <div className="absolute inset-0 rounded-full border border-dashed border-white/10 animate-[spin_60s_linear_infinite] flex items-center justify-center">
+          <ScrollReveal variant="3d-zoom" delay={0.3} className="lg:col-span-5 flex flex-col items-center justify-center" style={{ transformStyle: "preserve-3d" }}>
+            <ThreeDTilt tiltMax={18} glareOpacity={0} scale={1.05} className="w-72 h-72 md:w-96 md:h-96 flex items-center justify-center cursor-pointer" style={{ transformStyle: "preserve-3d" }}>
+              <div className="absolute inset-0 rounded-full border border-dashed border-white/10 animate-[spin_60s_linear_infinite] flex items-center justify-center" style={{ transform: "translateZ(10px)" }}>
                 <div className="w-[85%] h-[85%] rounded-full border border-dashed border-white/5 animate-[spin_40s_linear_infinite_reverse]"></div>
               </div>
 
-              {/* Central Glowing Orb */}
-              <div className="absolute w-48 h-48 bg-purple-500/10 rounded-full blur-3xl animate-pulse"></div>
+              <div className="absolute w-48 h-48 bg-purple-500/10 rounded-full blur-3xl animate-pulse" style={{ transform: "translateZ(20px)" }}></div>
               
-              {/* Massive Minimalist Tech Question Mark */}
-              <div className="relative z-10 flex flex-col items-center justify-center">
+              <div className="relative z-10 flex flex-col items-center justify-center" style={{ transform: "translateZ(45px)" }}>
                 <span className="text-9xl font-black text-transparent bg-clip-text bg-gradient-to-b from-white to-white/10 tracking-tighter leading-none select-none filter drop-shadow-[0_0_30px_rgba(168,85,247,0.2)]">
                   ?
                 </span>
                 
-                {/* Tech lines */}
                 <div className="flex gap-1.5 mt-4">
                   <span className="w-1.5 h-1.5 rounded-full bg-blue-500 animate-ping"></span>
                   <span className="w-1.5 h-1.5 rounded-full bg-purple-500"></span>
                   <span className="w-1.5 h-1.5 rounded-full bg-pink-500"></span>
                 </div>
               </div>
-
-            </div>
-          </div>
+            </ThreeDTilt>
+          </ScrollReveal>
 
           {/* Right Column: Accordions */}
-          <div className={`lg:col-span-7 space-y-4 transition-all duration-1000 delay-300 ${isVisible ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-10'}`}>
+          <div className="lg:col-span-7 space-y-4">
             {faqs.map((faq, idx) => {
               const isOpen = openIdx === idx;
               return (
-                <div 
+                <ScrollReveal 
                   key={idx}
-                  className={`group rounded-2xl border transition-all duration-300 overflow-hidden ${
-                    isOpen 
-                      ? 'bg-white/5 border-purple-500/30 shadow-[0_0_30px_rgba(168,85,247,0.1)]' 
-                      : 'bg-white/[0.02] border-white/5 hover:border-white/10 hover:bg-white/[0.04]'
-                  }`}
+                  variant="3d-unfold"
+                  delay={idx * 0.05}
                 >
-                  <button
-                    onClick={() => toggleFAQ(idx)}
-                    className="w-full flex items-center justify-between p-6 text-left focus:outline-none"
-                  >
-                    <div className="flex items-center gap-4">
-                      {/* Technical cog icon on left */}
-                      <Settings className={`w-5 h-5 transition-all duration-500 shrink-0 ${
-                        isOpen ? 'text-purple-400 rotate-90 scale-110' : 'text-gray-600 group-hover:text-gray-400'
-                      }`} />
-                      
-                      <span className={`font-semibold tracking-tight text-sm md:text-base transition-colors duration-300 ${
-                        isOpen ? 'text-white' : 'text-gray-300 group-hover:text-white'
-                      }`}>
-                        {faq.question}
-                      </span>
-                    </div>
-
-                    {/* Expand/Collapse Indicator */}
-                    <div className={`w-8 h-8 rounded-full flex items-center justify-center transition-all duration-300 border ${
-                      isOpen 
-                        ? 'bg-purple-500 border-purple-400 text-white rotate-45 scale-110' 
-                        : 'bg-white/5 border-white/10 text-gray-400 group-hover:border-white/20 group-hover:text-white'
-                    }`}>
-                      <Plus className="w-4 h-4" />
-                    </div>
-                  </button>
-
-                  {/* Expandable Panel */}
                   <div 
-                    className={`transition-all duration-500 ease-in-out ${
-                      isOpen ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0 pointer-events-none'
+                    className={`group rounded-2xl border transition-all duration-300 overflow-hidden ${
+                      isOpen 
+                        ? 'bg-white/5 border-purple-500/30 shadow-[0_0_30px_rgba(168,85,247,0.1)]' 
+                        : 'bg-white/[0.02] border-white/5 hover:border-white/10 hover:bg-white/[0.04]'
                     }`}
                   >
-                    <div className="px-6 pb-6 pt-2 pl-14 text-sm md:text-base text-gray-400 font-light leading-relaxed border-t border-white/5">
-                      {faq.answer}
-                    </div>
-                  </div>
+                    <button
+                      onClick={() => toggleFAQ(idx)}
+                      className="w-full flex items-center justify-between p-6 text-left focus:outline-none"
+                    >
+                      <div className="flex items-center gap-4">
+                        <Settings className={`w-5 h-5 transition-all duration-500 shrink-0 ${
+                          isOpen ? 'text-purple-400 rotate-90 scale-110' : 'text-gray-600 group-hover:text-gray-400'
+                        }`} />
+                        
+                        <span className={`font-semibold tracking-tight text-sm md:text-base transition-colors duration-300 ${
+                          isOpen ? 'text-white' : 'text-gray-300 group-hover:text-white'
+                        }`}>
+                          {faq.question}
+                        </span>
+                      </div>
 
-                </div>
+                      <div className={`w-8 h-8 rounded-full flex items-center justify-center transition-all duration-300 border ${
+                        isOpen 
+                          ? 'bg-purple-500 border-purple-400 text-white rotate-45 scale-110' 
+                          : 'bg-white/5 border-white/10 text-gray-400 group-hover:border-white/20 group-hover:text-white'
+                      }`}>
+                        <Plus className="w-4 h-4" />
+                      </div>
+                    </button>
+
+                    <div 
+                      className={`transition-all duration-500 ease-in-out ${
+                        isOpen ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0 pointer-events-none'
+                      }`}
+                    >
+                      <div className="px-6 pb-6 pt-2 pl-14 text-sm md:text-base text-gray-400 font-light leading-relaxed border-t border-white/5">
+                        {faq.answer}
+                      </div>
+                    </div>
+
+                  </div>
+                </ScrollReveal>
               );
             })}
           </div>
@@ -178,3 +157,4 @@ export default function FAQ() {
     </section>
   );
 }
+

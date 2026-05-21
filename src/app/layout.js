@@ -20,6 +20,10 @@ export const metadata = {
 import Navbar from "@/components/Navbar";
 import CustomCursor from "@/components/CustomCursor";
 import Footer from "@/components/Footer";
+import SmoothScroll from "@/components/SmoothScroll";
+import ScrollProgress from "@/components/ScrollProgress";
+import InteractiveCanvas from "@/components/InteractiveCanvas";
+import PageTransition from "@/components/PageTransition";
 
 export default function RootLayout({ children }) {
   return (
@@ -28,10 +32,16 @@ export default function RootLayout({ children }) {
       className={`${inter.variable} ${poppins.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col bg-black font-sans">
+        <InteractiveCanvas />
+        <ScrollProgress />
         <CustomCursor />
-        <Navbar />
-        {children}
-        <Footer />
+        <SmoothScroll>
+          <Navbar />
+          <PageTransition>
+            {children}
+          </PageTransition>
+          <Footer />
+        </SmoothScroll>
       </body>
     </html>
   );
