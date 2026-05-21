@@ -6,9 +6,7 @@ import {
   Cpu, Layers, Zap, Globe, Sparkles, Activity,
   User, Mail, Building
 } from 'lucide-react';
-import ScrollReveal from "@/components/ScrollReveal";
-import TextReveal from "@/components/TextReveal";
-import ThreeDTilt from "@/components/ThreeDTilt";
+import { ScrollReveal, TextReveal, ThreeDTilt } from "@/components/Animations";
 
 const services = [
   { id: "ai", label: "Enterprise AI & Tech", icon: Cpu },

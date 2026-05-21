@@ -1,10 +1,9 @@
-﻿"use client";
+"use client";
 
 import React from 'react';
 import { Target, Compass, Sparkles, Compass as CompassIcon, Users, Briefcase, Award, Globe } from 'lucide-react';
 import Link from 'next/link';
-import ScrollReveal from "@/components/ScrollReveal";
-import TextReveal from "@/components/TextReveal";
+import { ScrollReveal, TextReveal } from "@/components/Animations";
 
 export default function AboutPage() {
   return (

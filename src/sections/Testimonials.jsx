@@ -6,9 +6,7 @@ import {
   GraduationCap, Briefcase, Activity,
   ChevronRight, PlayCircle
 } from 'lucide-react';
-import ScrollReveal from "@/components/ScrollReveal";
-import TextReveal from "@/components/TextReveal";
-import ThreeDTilt from "@/components/ThreeDTilt";
+import { ScrollReveal, TextReveal, ThreeDTilt } from "@/components/Animations";
 
 const categories = [
   { id: "all", label: "All Stories" },

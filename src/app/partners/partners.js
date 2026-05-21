@@ -1,10 +1,9 @@
-﻿"use client";
+"use client";
 
 import React, { useState } from 'react';
 import { Star, ShieldCheck, Heart, ArrowUpRight, CheckCircle2, ChevronRight } from 'lucide-react';
 import Link from 'next/link';
-import ScrollReveal from "@/components/ScrollReveal";
-import TextReveal from "@/components/TextReveal";
+import { ScrollReveal, TextReveal } from "@/components/Animations";
 
 const supportersRow1 = [
   { name: "Zoho Premium Partner", logo: "/logos/Zoho-premium-partner.png", type: "Enterprise" },

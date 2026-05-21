@@ -2,9 +2,7 @@
 
 import React, { useState, useEffect, useRef } from 'react';
 import { MonitorSmartphone, Radio, GraduationCap, Briefcase, Network, Globe, ArrowUpRight } from 'lucide-react';
-import ScrollReveal from "@/components/ScrollReveal";
-import TextReveal from "@/components/TextReveal";
-import ThreeDTilt from "@/components/ThreeDTilt";
+import { ScrollReveal, TextReveal, ThreeDTilt } from "@/components/Animations";
 
 const divisions = [
   {

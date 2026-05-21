@@ -6,7 +6,7 @@ import Contact from "@/sections/Contact";
 import FAQ from "@/sections/FAQ";
 import Supporters from "@/sections/Supporters";
 import Team from "@/sections/Team";
-import Scroll3DSection from "@/components/Scroll3DSection";
+import { Scroll3DSection } from "@/components/Animations";
 
 export default function Home() {
   return (

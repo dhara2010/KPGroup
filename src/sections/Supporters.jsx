@@ -2,8 +2,7 @@
 
 import React from 'react';
 import { Star } from 'lucide-react';
-import ScrollReveal from "@/components/ScrollReveal";
-import TextReveal from "@/components/TextReveal";
+import { ScrollReveal, TextReveal } from "@/components/Animations";
 
 const supportersRow1 = [
   { name: "Zoho Premium Partner", logo: "/logos/Zoho-premium-partner.png" },

@@ -3,9 +3,7 @@
 import React, { useRef, useState, useEffect } from 'react';
 import { MonitorSmartphone, Radio, GraduationCap, Briefcase, Network, ArrowUpRight } from 'lucide-react';
 import Image from 'next/image';
-import ScrollReveal from "@/components/ScrollReveal";
-import TextReveal from "@/components/TextReveal";
-import ThreeDTilt from "@/components/ThreeDTilt";
+import { ScrollReveal, TextReveal, ThreeDTilt } from "@/components/Animations";
 
 export default function Ecosystem() {
   const cards = [

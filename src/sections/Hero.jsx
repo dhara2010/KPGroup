@@ -5,8 +5,7 @@ import Image from "next/image";
 import { motion, useScroll, useSpring, useTransform } from "framer-motion";
 import { Play, Sparkles } from "lucide-react";
 
-import UniqueArrow from "@/components/UniqueArrow";
-import ScrollReveal from "@/components/ScrollReveal";
+import { ScrollReveal } from "@/components/Animations";
 
 function GlassOrbitalSphere({
   rotateX,
@@ -246,3 +245,60 @@ function Hero() {
 }
 
 export default Hero;
+
+function UniqueArrow({ className = "w-5 h-5", direction = "right" }) {
+  const isDiagonal = direction === "up-right";
+  const primaryExit = isDiagonal 
+    ? "group-hover:translate-x-[150%] group-hover:-translate-y-[150%]" 
+    : "group-hover:translate-x-[150%]";
+  const secondaryEntry = isDiagonal 
+    ? "-translate-x-[150%] translate-y-[150%] group-hover:translate-x-0 group-hover:translate-y-0" 
+    : "-translate-x-[150%] group-hover:translate-x-0";
+
+  return (
+    <div className={`relative overflow-hidden inline-flex items-center justify-center ${className}`}>
+      <svg 
+        className={`absolute transition-transform duration-400 ease-[cubic-bezier(0.65,0,0.35,1)] transform ${primaryExit} w-full h-full`} 
+        viewBox="0 0 24 24" 
+        fill="none" 
+        stroke="currentColor" 
+        strokeWidth="2.5" 
+        strokeLinecap="round" 
+        strokeLinejoin="round"
+      >
+        {isDiagonal ? (
+          <>
+            <path d="M7 17L17 7" />
+            <path d="M7 7h10v10" />
+          </>
+        ) : (
+          <>
+            <path d="M4 12h16" />
+            <path d="m13 5 7 7-7 7" />
+          </>
+        )}
+      </svg>
+      <svg 
+        className={`absolute transition-transform duration-400 ease-[cubic-bezier(0.65,0,0.35,1)] transform ${secondaryEntry} w-full h-full`} 
+        viewBox="0 0 24 24" 
+        fill="none" 
+        stroke="currentColor" 
+        strokeWidth="2.5" 
+        strokeLinecap="round" 
+        strokeLinejoin="round"
+      >
+        {isDiagonal ? (
+          <>
+            <path d="M7 17L17 7" />
+            <path d="M7 7h10v10" />
+          </>
+        ) : (
+          <>
+            <path d="M4 12h16" />
+            <path d="m13 5 7 7-7 7" />
+          </>
+        )}
+      </svg>
+    </div>
+  );
+}

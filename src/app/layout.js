@@ -18,12 +18,14 @@ export const metadata = {
 };
 
 import Navbar from "@/components/Navbar";
-import CustomCursor from "@/components/CustomCursor";
 import Footer from "@/components/Footer";
-import SmoothScroll from "@/components/SmoothScroll";
-import ScrollProgress from "@/components/ScrollProgress";
-import InteractiveCanvas from "@/components/InteractiveCanvas";
-import PageTransition from "@/components/PageTransition";
+import {
+  CustomCursor,
+  SmoothScroll,
+  ScrollProgress,
+  InteractiveCanvas,
+  PageTransition,
+} from "@/components/LayoutWrappers";
 
 export default function RootLayout({ children }) {
   return (
