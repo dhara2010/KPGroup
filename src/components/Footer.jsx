@@ -2,6 +2,7 @@
 
 import React from 'react';
 import { ArrowUpRight, MapPin, Mail, Phone, ArrowRight } from 'lucide-react';
+import Link from 'next/link';
 
 export default function Footer() {
   const scrollToTop = () => {
@@ -115,24 +116,45 @@ export default function Footer() {
             </a>
           </div>
 
-          {/* Partnership Column */}
-          <div className="md:col-span-4 col-span-1">
+          {/* Quick Links Column */}
+          <div className="md:col-span-2 col-span-1">
             <h4 className="text-white font-bold text-xs uppercase tracking-widest mb-6 relative pl-3">
               <span className="absolute left-0 top-1/2 -translate-y-1/2 w-1.5 h-1.5 rounded-full bg-purple-500"></span>
-              Partnership
+              Quick Links
             </h4>
             <ul className="space-y-4 text-sm">
               {[
-                "Global Alliance Partners",
-                "Strategic Business Partners",
-                "International Associates",
-                "Corporate Collaboration",
-                "Worldwide Network Partners"
+                { name: "About Us", href: "/about" },
+                { name: "Partners", href: "/partners" },
+                { name: "Blog", href: "/blog" },
+                { name: "Contact Us", href: "/contact" }
               ].map((link, idx) => (
                 <li key={idx}>
-                  <a href="#" className="text-gray-400 hover:text-white transition-all duration-300 flex items-center gap-1 group font-light">
-                    {link} <ArrowUpRight className="w-3.5 h-3.5 opacity-0 group-hover:opacity-100 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all duration-300" />
-                  </a>
+                  <Link href={link.href} className="text-gray-400 hover:text-white transition-all duration-300 flex items-center gap-1 group font-light">
+                    {link.name} <ArrowUpRight className="w-3.5 h-3.5 opacity-0 group-hover:opacity-100 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all duration-300" />
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* Resources Column */}
+          <div className="md:col-span-2 col-span-1">
+            <h4 className="text-white font-bold text-xs uppercase tracking-widest mb-6 relative pl-3">
+              <span className="absolute left-0 top-1/2 -translate-y-1/2 w-1.5 h-1.5 rounded-full bg-indigo-500"></span>
+              Resources
+            </h4>
+            <ul className="space-y-4 text-sm">
+              {[
+                { name: "Testimonials", href: "/testimonials" },
+                { name: "Careers", href: "/careers" },
+                { name: "Team", href: "/team" },
+                { name: "FAQ", href: "/faq" }
+              ].map((link, idx) => (
+                <li key={idx}>
+                  <Link href={link.href} className="text-gray-400 hover:text-white transition-all duration-300 flex items-center gap-1 group font-light">
+                    {link.name} <ArrowUpRight className="w-3.5 h-3.5 opacity-0 group-hover:opacity-100 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all duration-300" />
+                  </Link>
                 </li>
               ))}
             </ul>
@@ -146,15 +168,20 @@ export default function Footer() {
             </h4>
             <ul className="space-y-4 text-sm">
               {[
-                "KP Global IT Solution",
-                "KP Global Skill Academy",
-                "KP Global Media Network",
-                "KP Global Business Community",
-                "KP Global Jobs"
+                { name: "KP Global IT Solution", href: "https://kpgbit.kpglobalbusiness.com/" },
+                { name: "KP Global Skill Academy", href: "https://academy.kpglobalbusiness.com/" },
+                { name: "KP Global Media Network", href: "https://entrepreneurjouryny.com/" },
+                { name: "KP Global Business Community", href: "https://kpgbc.kpglobalbusiness.com/" },
+                { name: "KP Global Jobs", href: "https://jobs.kpglobalbusiness.com/" }
               ].map((link, idx) => (
                 <li key={idx}>
-                  <a href="#" className="text-gray-400 hover:text-white transition-all duration-300 flex items-center gap-1 group font-light">
-                    {link} <ArrowUpRight className="w-3.5 h-3.5 opacity-0 group-hover:opacity-100 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all duration-300" />
+                  <a 
+                    href={link.href} 
+                    target="_blank" 
+                    rel="noopener noreferrer" 
+                    className="text-gray-400 hover:text-white transition-all duration-300 flex items-center gap-1 group font-light"
+                  >
+                    {link.name} <ArrowUpRight className="w-3.5 h-3.5 opacity-0 group-hover:opacity-100 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all duration-300" />
                   </a>
                 </li>
               ))}
