@@ -1,13 +1,14 @@
 "use client";
 
 import React from 'react';
-import { Target, Compass, Sparkles, Compass as CompassIcon, Users, Briefcase, Award, Globe } from 'lucide-react';
+import { Target, Compass, Sparkles, Compass as CompassIcon, Users, Briefcase, Award, Globe, ArrowRight } from 'lucide-react';
 import Link from 'next/link';
 import { ScrollReveal, TextReveal } from "@/components/Animations";
+import PageHero from "@/components/PageHero";
 
 export default function AboutPage() {
   return (
-    <div className="relative bg-[#020202] text-white min-h-screen overflow-hidden font-sans pt-24 pb-20">
+    <div className="relative bg-[#020202] text-white min-h-screen overflow-hidden font-sans pt-0 pb-20">
       
       {/* Laser Grid Background */}
       <div className="absolute inset-0 pointer-events-none opacity-10 z-0">
@@ -19,29 +20,10 @@ export default function AboutPage() {
       <div className="relative z-10">
         
         {/* Section 1: Hero Banner */}
-        <div className="relative w-full h-[55vh] md:h-[65vh] flex items-center justify-center overflow-hidden mb-24">
-          <div className="absolute inset-0 bg-cover bg-center" style={{ backgroundImage: "url('/about_hero_bg.jpg')" }}></div>
-          <div className="absolute inset-0 bg-gradient-to-b from-black/80 via-black/50 to-[#020202]"></div>
-          
-          <div className="max-w-7xl mx-auto px-6 relative text-center">
-            <ScrollReveal variant="fade-up">
-              <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/5 border border-white/10 mb-6 backdrop-blur-md">
-                <span className="w-2 h-2 rounded-full bg-blue-500 animate-pulse"></span>
-                <span className="text-xs font-semibold text-purple-200 tracking-widest uppercase">WELCOME</span>
-              </div>
-            </ScrollReveal>
-            
-            <h1 className="text-5xl md:text-8xl font-black uppercase tracking-tight text-white mb-6">
-              <TextReveal text="ABOUT US" delay={0.2} />
-            </h1>
-            
-            <ScrollReveal variant="fade-up" delay={0.4}>
-              <p className="text-gray-400 max-w-2xl mx-auto font-light text-sm md:text-base leading-relaxed">
-                Empowering global enterprise through unified software ecosystems, technical training, digital broadcasting networks, and dynamic B2B corridors.
-              </p>
-            </ScrollReveal>
-          </div>
-        </div>
+        <PageHero 
+          title="About Us" 
+          description="Empowering global enterprise through unified software ecosystems, technical training, digital broadcasting networks, and dynamic B2B corridors." 
+        />
 
         <div className="max-w-7xl mx-auto px-6 space-y-36">
           
@@ -260,11 +242,13 @@ export default function AboutPage() {
                   </p>
                   
                   <Link 
-                    href="#contact" 
-                    className="inline-flex items-center justify-between w-full px-6 py-4 rounded-xl bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-500 hover:to-purple-500 text-white font-semibold text-sm transition-all duration-300 shadow-lg shadow-blue-500/20 hover:scale-[1.02] active:scale-95 group/btn"
+                    href="/contact" 
+                    className="inline-flex items-center justify-center gap-3 px-6 py-3.5 bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 hover:from-blue-500 hover:to-purple-500 text-white font-bold text-xs uppercase tracking-wider rounded-full transition-all duration-300 shadow-lg shadow-blue-500/25 hover:scale-105 active:scale-95 hover:shadow-[0_0_30px_rgba(99,102,241,0.4)] group"
                   >
-                    <span>Let's Get In Touch</span>
-                    <span className="text-white/80 group-hover/btn:translate-x-1 transition-transform duration-300">→</span>
+                    Let's Get In Touch
+                    <div className="w-5 h-5 rounded-full bg-white/20 flex items-center justify-center transition-all duration-300 group-hover:translate-x-1 group-hover:rotate-45">
+                      <ArrowRight className="w-3 h-3 text-white" />
+                    </div>
                   </Link>
                 </div>
               </div>

@@ -1,6 +1,10 @@
 import { use } from "react";
 import AboutPage from "../about/about";
 import PartnersPage from "../partners/partners";
+import ContactPage from "../contact/contact";
+import BlogPage from "../blog/blog";
+import { INITIAL_POSTS } from "../blog/blogData";
+import SinglePostPage from "../blog/SinglePostPage";
 
 export default function CatchAllPage({ params }) {
   const resolvedParams = use(params);
@@ -13,6 +17,20 @@ export default function CatchAllPage({ params }) {
 
   if (currentSlug === "partners") {
     return <PartnersPage />;
+  }
+
+  if (currentSlug === "contact") {
+    return <ContactPage />;
+  }
+
+  if (currentSlug === "blog") {
+    return <BlogPage />;
+  }
+
+  // Check if current slug matches any blog post
+  const matchedPost = INITIAL_POSTS.find((post) => post.slug === currentSlug);
+  if (matchedPost) {
+    return <SinglePostPage post={matchedPost} />;
   }
 
   return (

@@ -93,7 +93,7 @@ export default function Contact() {
   };
 
   return (
-    <section ref={sectionRef} className="relative py-32 bg-[#020202] overflow-hidden font-sans min-h-screen flex items-center">
+    <section id="contact" ref={sectionRef} className="relative py-32 bg-[#020202] overflow-hidden font-sans min-h-screen flex items-center">
       
       {/* Background Ambience */}
       <div className="absolute inset-0 z-0 pointer-events-none opacity-30">
@@ -337,13 +337,16 @@ export default function Contact() {
                     <button
                       onClick={handleSubmit}
                       disabled={!isStepValid()}
-                      className={`px-8 py-3 rounded-xl text-[10px] font-black tracking-[0.3em] uppercase flex items-center gap-3 transition-all ${
+                      className={`px-8 py-3.5 rounded-full text-xs font-bold uppercase tracking-wider flex items-center gap-3 transition-all duration-300 group ${
                         isStepValid() 
-                        ? 'bg-gradient-to-r from-blue-600 to-purple-600 text-white hover:scale-105 shadow-[0_0_30px_rgba(59,130,246,0.4)]' 
+                        ? 'bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 text-white hover:scale-105 active:scale-95 shadow-[0_0_30px_rgba(99,102,241,0.4)]' 
                         : 'bg-white/10 text-gray-500 cursor-not-allowed'
                       }`}
                     >
-                      Transmit <Send className="w-4 h-4" />
+                      Transmit
+                      <div className="w-5 h-5 rounded-full bg-white/20 flex items-center justify-center transition-all duration-300 group-hover:translate-x-1 group-hover:-translate-y-1">
+                        <Send className="w-3 h-3 text-white" />
+                      </div>
                     </button>
                   )}
                 </div>

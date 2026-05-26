@@ -106,11 +106,11 @@ export default function Footer() {
             {/* Explore Services Button */}
             <a 
               href="#services" 
-              className="inline-flex items-center gap-3 px-6 py-3.5 rounded-full bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-500 hover:to-purple-500 text-white font-semibold text-sm transition-all duration-300 shadow-lg shadow-blue-500/20 hover:scale-105 group"
+              className="inline-flex items-center gap-3 px-5 py-2.5 bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 rounded-full text-xs font-bold uppercase tracking-wider text-white shadow-lg shadow-blue-500/25 group transition-all hover:scale-105 active:scale-95 hover:shadow-[0_0_30px_rgba(99,102,241,0.4)]"
             >
               Explore Services
-              <div className="w-6 h-6 rounded-full bg-white/20 flex items-center justify-center group-hover:translate-x-1 transition-transform duration-300">
-                <ArrowRight className="w-3.5 h-3.5" />
+              <div className="w-5 h-5 rounded-full bg-white/20 flex items-center justify-center transition-all duration-300 group-hover:translate-x-1 group-hover:rotate-45">
+                <ArrowRight className="w-3 h-3 text-white" />
               </div>
             </a>
           </div>

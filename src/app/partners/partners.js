@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import { Star, ShieldCheck, Heart, ArrowUpRight, CheckCircle2, ChevronRight } from 'lucide-react';
 import Link from 'next/link';
 import { ScrollReveal, TextReveal } from "@/components/Animations";
+import PageHero from "@/components/PageHero";
 
 const supportersRow1 = [
   { name: "Zoho Premium Partner", logo: "/logos/Zoho-premium-partner.png", type: "Enterprise" },
@@ -36,7 +37,7 @@ export default function PartnersPage() {
     : allSupporters.filter(item => item.type === selectedFilter);
 
   return (
-    <div className="relative bg-[#020202] text-white min-h-screen overflow-hidden font-sans pt-24 pb-20">
+    <div className="relative bg-[#020202] text-white min-h-screen overflow-hidden font-sans pt-0 pb-20">
       
       {/* Dynamic Laser Background Grid */}
       <div className="absolute inset-0 pointer-events-none opacity-10 z-0">
@@ -47,64 +48,10 @@ export default function PartnersPage() {
 
       <div className="relative z-10">
         
-        {/* SECTION 1: HERO SECTION WITH FULL IMAGE BACKGROUND */}
-        <div className="relative w-full min-h-[75vh] md:min-h-[85vh] flex items-center justify-center overflow-hidden mb-16 border-b border-white/5 pt-12 pb-16">
-          
-          <div 
-            className="absolute inset-0 bg-cover bg-center z-0 transition-transform duration-1000 scale-102"
-            style={{ 
-              backgroundImage: "url('/partners_hero.png')",
-              filter: "brightness(0.6) contrast(1.1)" 
-            }}
-          ></div>
-          
-          <div className="absolute inset-0 bg-gradient-to-t from-[#020202] via-[#020202]/60 to-[#020202]/95 z-0"></div>
-          <div className="absolute inset-0 bg-gradient-to-r from-[#020202]/95 via-[#020202]/40 to-[#020202]/95 z-0"></div>
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[70vw] h-[70vw] bg-blue-500/10 rounded-full blur-[150px] z-0"></div>
-
-          <div className="relative z-10 max-w-7xl mx-auto px-6 text-center space-y-8">
-            <ScrollReveal variant="fade-up">
-              <div className="inline-flex items-center gap-3 px-4 py-1.5 rounded-full bg-white/5 border border-white/10 backdrop-blur-md">
-                <Star className="w-4 h-4 text-blue-400" />
-                <span className="text-xs font-semibold text-purple-200 tracking-wider uppercase">Strategic Partners</span>
-              </div>
-            </ScrollReveal>
-
-            <h1 className="text-4xl md:text-7xl lg:text-8xl font-black uppercase tracking-tight leading-none text-white max-w-5xl mx-auto">
-              <TextReveal text="UNIFIED GLOBAL NETWORK" delay={0.2} />
-            </h1>
-
-            <ScrollReveal variant="fade-up" delay={0.4}>
-              <p className="text-gray-300 max-w-3xl mx-auto font-light text-sm md:text-lg leading-relaxed">
-                Bridging technical brilliance with massive entrepreneurial networks. We work in unison with 
-                enterprises, skill development centers, B2B digital communities, and global career pathways.
-              </p>
-            </ScrollReveal>
-
-            {/* Quick Metrics Grid */}
-            <ScrollReveal variant="fade-up" delay={0.6}>
-              <div className="grid grid-cols-2 md:grid-cols-4 gap-6 max-w-4xl mx-auto mt-12 border border-white/10 bg-black/60 rounded-[2.5rem] p-8 backdrop-blur-xl shadow-2xl relative overflow-hidden group hover:border-blue-500/20 transition-all duration-500">
-                <div className="absolute inset-0 bg-gradient-to-br from-blue-500/5 to-purple-500/5 opacity-30 pointer-events-none"></div>
-                {[
-                  { val: "10+", label: "Strategic Alliances" },
-                  { val: "5+", label: "Global Nodes" },
-                  { val: "100%", label: "Symmetrical Trust" },
-                  { val: "24/7", label: "Synergy Integration" }
-                ].map((stat, idx) => (
-                  <div key={idx} className="text-center relative z-10 group-hover:scale-105 transition-transform duration-300">
-                    <div className="text-3xl md:text-4xl font-black text-transparent bg-clip-text bg-gradient-to-tr from-white to-gray-400 font-mono">
-                      {stat.val}
-                    </div>
-                    <div className="text-[10px] md:text-xs font-bold text-blue-400 uppercase tracking-widest mt-1">
-                      {stat.label}
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </ScrollReveal>
-
-          </div>
-        </div>
+        <PageHero 
+          title="Partners" 
+          description="Bridging technical brilliance with massive entrepreneurial networks. We work in unison with enterprises, skill development centers, B2B digital communities, and global career pathways." 
+        />
 
         {/* SECTION 2: SUPPORTERS / LOGOS AREA */}
         <div className="bg-gradient-to-b from-[#030303] to-[#020202] py-24 border-y border-white/5 relative">
