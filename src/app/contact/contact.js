@@ -367,7 +367,7 @@ export default function ContactPage() {
                 {/* Image Box */}
                 <div className="relative flex-1 w-full h-full min-h-[420px] lg:min-h-0 rounded-[1.8rem] overflow-hidden">
                   <Image
-                    src="/contact_executive.png"
+                    src="/contact_executive.webp"
                     alt="KP Global Executive Liaison"
                     fill
                     sizes="(max-width: 1024px) 100vw, 40vw"

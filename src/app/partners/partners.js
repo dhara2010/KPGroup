@@ -3,27 +3,28 @@
 import React, { useState } from 'react';
 import { Star, ShieldCheck, Heart, ArrowUpRight, CheckCircle2, ChevronRight } from 'lucide-react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { ScrollReveal, TextReveal } from "@/components/Animations";
 import PageHero from "@/components/PageHero";
 
 const supportersRow1 = [
-  { name: "Zoho Premium Partner", logo: "/logos/Zoho-premium-partner.png", type: "Enterprise" },
-  { name: "KP Global IT Solutions", logo: "/logos/KP-Global-IT-Solutions-logo.png", type: "Vertical" },
-  { name: "KP Global Academy of Skills", logo: "/logos/Untitled-design-4.png", type: "Vertical" },
-  { name: "Aequitas Infotech", logo: "/logos/Aequitas-Infotech.png", type: "Enterprise" },
-  { name: "Weapplinse Technologies", logo: "/logos/Untitled-design-6.png", type: "Enterprise" },
-  { name: "1 Million Entrepreneurs", logo: "/logos/1MEIF.png", type: "Ecosystem" },
-  { name: "VyapaarJagat", logo: "/logos/vyapaarjagat.png", type: "Ecosystem" }
+  { name: "Zoho Premium Partner", logo: "/logos/Zoho-premium-partner.webp", type: "Enterprise" },
+  { name: "KP Global IT Solutions", logo: "/logos/KP-Global-IT-Solutions-logo.webp", type: "Vertical" },
+  { name: "KP Global Academy of Skills", logo: "/logos/Untitled-design-4.webp", type: "Vertical" },
+  { name: "Aequitas Infotech", logo: "/logos/Aequitas-Infotech.webp", type: "Enterprise" },
+  { name: "Weapplinse Technologies", logo: "/logos/Untitled-design-6.webp", type: "Enterprise" },
+  { name: "1 Million Entrepreneurs", logo: "/logos/1MEIF.webp", type: "Ecosystem" },
+  { name: "VyapaarJagat", logo: "/logos/vyapaarjagat.webp", type: "Ecosystem" }
 ];
 
 const supportersRow2 = [
-  { name: "PeersGlobal", logo: "/logos/peersglobal.png", type: "Ecosystem" },
-  { name: "Greenpreneur", logo: "/logos/greenpreneur.png", type: "Ecosystem" },
-  { name: "Fempreneur", logo: "/logos/fempreneur.png", type: "Ecosystem" },
-  { name: "Entrepreneur Journy", logo: "/logos/entrepreneurjouryny.png", type: "Ecosystem" },
-  { name: "KP Global Jobs", logo: "/logos/KP_Global_Jobs-removebg-preview.png", type: "Vertical" },
-  { name: "KP Global Business Community", logo: "/logos/KP-Global-Business-Community-Entrepreneurs-3.png", type: "Vertical" },
-  { name: "KP Global Network", logo: "/logos/Untitled_design__5_-removebg-preview.png", type: "Vertical" }
+  { name: "PeersGlobal", logo: "/logos/peersglobal.webp", type: "Ecosystem" },
+  { name: "Greenpreneur", logo: "/logos/greenpreneur.webp", type: "Ecosystem" },
+  { name: "Fempreneur", logo: "/logos/fempreneur.webp", type: "Ecosystem" },
+  { name: "Entrepreneur Journy", logo: "/logos/entrepreneurjouryny.webp", type: "Ecosystem" },
+  { name: "KP Global Jobs", logo: "/logos/KP_Global_Jobs-removebg-preview.webp", type: "Vertical" },
+  { name: "KP Global Business Community", logo: "/logos/KP-Global-Business-Community-Entrepreneurs-3.webp", type: "Vertical" },
+  { name: "KP Global Network", logo: "/logos/Untitled_design__5_-removebg-preview.webp", type: "Vertical" }
 ];
 
 const allSupporters = [...supportersRow1, ...supportersRow2];
@@ -103,11 +104,15 @@ export default function PartnersPage() {
 
                   <div className="h-16 w-full flex items-center justify-center relative">
                     <div className="absolute inset-0 bg-blue-500/5 rounded-full blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-                    <img 
-                      src={supporter.logo} 
-                      alt={supporter.name} 
-                      className="max-h-full max-w-[85%] object-contain filter brightness-110 group-hover:scale-108 transition-transform duration-500 z-10"
-                    />
+                    <div className="relative h-full w-[85%]">
+                      <Image 
+                        src={supporter.logo} 
+                        alt={supporter.name} 
+                        fill
+                        sizes="180px"
+                        className="object-contain filter brightness-110 group-hover:scale-108 transition-transform duration-500 z-10"
+                      />
+                    </div>
                   </div>
                   
                   <div className="w-full text-center mt-4 pt-4 border-t border-white/[0.03] group-hover:border-white/[0.08] transition-colors duration-500">
@@ -144,12 +149,14 @@ export default function PartnersPage() {
                   {[...supportersRow1, ...supportersRow1, ...supportersRow1].map((supporter, idx) => (
                     <div 
                       key={`marquee1-${idx}`} 
-                      className="flex items-center justify-center w-[250px] h-[100px] shrink-0 p-4 rounded-[1.5rem] bg-white border border-white/10 hover:scale-105 transition-transform duration-300 group cursor-default shadow-lg"
+                      className="relative flex items-center justify-center w-[250px] h-[100px] shrink-0 p-4 rounded-[1.5rem] bg-white border border-white/10 hover:scale-105 transition-transform duration-300 group cursor-default shadow-lg"
                     >
-                      <img 
+                      <Image 
                         src={supporter.logo} 
                         alt={supporter.name}
-                        className="w-full h-full object-contain filter grayscale group-hover:grayscale-0 transition-all duration-300 opacity-80 group-hover:opacity-100"
+                        fill
+                        sizes="250px"
+                        className="p-4 object-contain filter grayscale group-hover:grayscale-0 transition-all duration-300 opacity-80 group-hover:opacity-100"
                       />
                     </div>
                   ))}

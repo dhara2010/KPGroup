@@ -14,13 +14,7 @@ export const metadata = {
 
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
-import {
-  CustomCursor,
-  SmoothScroll,
-  ScrollProgress,
-  InteractiveCanvas,
-  PageTransition,
-} from "@/components/LayoutWrappers";
+import ClientProviders from "@/components/ClientProviders";
 
 export default function RootLayout({ children }) {
   return (
@@ -29,16 +23,13 @@ export default function RootLayout({ children }) {
       className={`${poppins.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col bg-black font-sans">
-        <InteractiveCanvas />
-        <ScrollProgress />
-        <CustomCursor />
-        <SmoothScroll>
+        <ClientProviders>
           <Navbar />
-          <PageTransition>
+          <div className="flex-1 flex flex-col">
             {children}
-          </PageTransition>
+          </div>
           <Footer />
-        </SmoothScroll>
+        </ClientProviders>
       </body>
     </html>
   );

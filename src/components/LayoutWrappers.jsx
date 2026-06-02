@@ -9,8 +9,8 @@ export function InteractiveCanvas() {
   return (
     <div className="fixed inset-0 w-full h-full pointer-events-none z-0 bg-[#020202] overflow-hidden">
       {/* Animated Neon Ambient Orbs */}
-      <div className="absolute top-[-10%] left-[-10%] w-[60vw] h-[60vw] bg-blue-600/5 rounded-full blur-[140px] animate-pulse duration-[8000ms]" />
-      <div className="absolute bottom-[-10%] right-[-10%] w-[60vw] h-[60vw] bg-purple-600/5 rounded-full blur-[140px] animate-pulse duration-[12000ms]" />
+      <div className="absolute top-[-10%] left-[-10%] w-[60vw] h-[60vw] bg-blue-600/5 rounded-full blur-[80px] animate-pulse duration-[8000ms]" />
+      <div className="absolute bottom-[-10%] right-[-10%] w-[60vw] h-[60vw] bg-purple-600/5 rounded-full blur-[80px] animate-pulse duration-[12000ms]" />
       
       {/* Futuristic Cyber Tech Grid */}
       <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.015)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.015)_1px,transparent_1px)] bg-[size:50px_50px] opacity-30" />

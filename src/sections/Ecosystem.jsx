@@ -14,7 +14,7 @@ export default function Ecosystem() {
       className: "md:col-span-2 md:row-span-2",
       gradient: "from-blue-500/50 via-purple-500/20 to-transparent",
       iconColor: "text-blue-400",
-      image: "/eco_it_bg.png"
+      image: "/eco_it_bg.webp"
     },
     {
       title: "Media Network",
@@ -23,7 +23,7 @@ export default function Ecosystem() {
       className: "md:col-span-1",
       gradient: "from-purple-500/50 to-transparent",
       iconColor: "text-purple-400",
-      image: "/eco_media_bg.png"
+      image: "/eco_media_bg.webp"
     },
     {
       title: "Skill Academy",
@@ -32,7 +32,7 @@ export default function Ecosystem() {
       className: "md:col-span-1",
       gradient: "from-pink-500/50 to-transparent",
       iconColor: "text-pink-400",
-      image: "/eco_academy_bg.png"
+      image: "/eco_academy_bg.webp"
     },
     {
       title: "Careers",
@@ -41,7 +41,7 @@ export default function Ecosystem() {
       className: "md:col-span-1",
       gradient: "from-emerald-500/50 to-transparent",
       iconColor: "text-emerald-400",
-      image: "/eco_careers_bg.png"
+      image: "/eco_careers_bg.webp"
     },
     {
       title: "Business Community",
@@ -50,7 +50,7 @@ export default function Ecosystem() {
       className: "md:col-span-2",
       gradient: "from-orange-500/50 to-transparent",
       iconColor: "text-orange-400",
-      image: "/eco_community_bg.png"
+      image: "/eco_community_bg.webp"
     }
   ];
 

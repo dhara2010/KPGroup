@@ -8,6 +8,7 @@ import {
 } from "lucide-react";
 import { ScrollReveal } from "@/components/Animations";
 import PageHero from "@/components/PageHero";
+import Image from "next/image";
 
 import { INITIAL_POSTS, RECENT_COMMENTS } from "./blogData";
 
@@ -215,12 +216,14 @@ export default function BlogPage() {
 
                                 <div className="grid grid-cols-1 md:grid-cols-12 gap-8 items-center">
                                   <div className="md:col-span-7 relative rounded-2xl overflow-hidden aspect-video max-h-[300px] border border-white/5 bg-black/40">
-                                    <img 
+                                    <Image 
                                       src={monthFeaturedPost.image} 
                                       alt={monthFeaturedPost.title} 
-                                      className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-102"
+                                      fill
+                                      sizes="(max-width: 768px) 100vw, 50vw"
+                                      className="object-cover transition-transform duration-700 group-hover:scale-102"
                                     />
-                                    <div className="absolute top-3 left-3 px-3 py-1 rounded-full bg-blue-500/85 backdrop-blur-md text-[9px] uppercase tracking-widest font-black text-white shadow-lg">
+                                    <div className="absolute top-3 left-3 px-3 py-1 rounded-full bg-blue-500/85 backdrop-blur-md text-[9px] uppercase tracking-widest font-black text-white shadow-lg z-10">
                                       FEATURED INSIGHT
                                     </div>
                                   </div>
@@ -496,12 +499,14 @@ function renderStandardGridPost(post, activePostId, handlePostClick, setSelected
         {/* Post Image */}
         {post.image && (
           <div className="relative rounded-2xl overflow-hidden mb-5 aspect-[16/10] bg-black/40 border border-white/5">
-            <img 
+            <Image 
               src={post.image} 
               alt={post.title} 
-              className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-103" 
+              fill
+              sizes="(max-width: 768px) 100vw, 33vw"
+              className="object-cover transition-transform duration-700 group-hover:scale-103" 
             />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent pointer-events-none" />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent pointer-events-none z-10" />
           </div>
         )}
 

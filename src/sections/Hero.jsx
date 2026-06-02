@@ -105,7 +105,7 @@ function Hero() {
           className="absolute inset-0 z-0 origin-center transition-transform duration-100 ease-out will-change-transform"
         >
           <Image
-            src="/hero_bg.png"
+            src="/hero_bg.webp"
             alt="Hero Background"
             fill
             priority

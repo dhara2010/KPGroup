@@ -1,12 +1,14 @@
 import Hero from "@/sections/Hero";
-import Ecosystem from "@/sections/Ecosystem";
-import Architecture from "@/sections/Architecture";
-import Testimonials from "@/sections/Testimonials";
-import Contact from "@/sections/Contact";
-import FAQ from "@/sections/FAQ";
-import Supporters from "@/sections/Supporters";
-import Team from "@/sections/Team";
+import dynamic from "next/dynamic";
 import { Scroll3DSection } from "@/components/Animations";
+
+const Ecosystem = dynamic(() => import("@/sections/Ecosystem"));
+const Architecture = dynamic(() => import("@/sections/Architecture"));
+const Testimonials = dynamic(() => import("@/sections/Testimonials"));
+const Contact = dynamic(() => import("@/sections/Contact"));
+const FAQ = dynamic(() => import("@/sections/FAQ"));
+const Supporters = dynamic(() => import("@/sections/Supporters"));
+const Team = dynamic(() => import("@/sections/Team"));
 
 export default function Home() {
   return (

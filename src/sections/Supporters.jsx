@@ -2,26 +2,27 @@
 
 import React from 'react';
 import { Star } from 'lucide-react';
+import Image from 'next/image';
 import { ScrollReveal, TextReveal } from "@/components/Animations";
 
 const supportersRow1 = [
-  { name: "Zoho Premium Partner", logo: "/logos/Zoho-premium-partner.png" },
-  { name: "KP Global IT Solutions", logo: "/logos/KP-Global-IT-Solutions-logo.png" },
-  { name: "KP Global Academy of Skills", logo: "/logos/Untitled-design-4.png" },
-  { name: "Aequitas Infotech", logo: "/logos/Aequitas-Infotech.png" },
-  { name: "Weapplinse Technologies", logo: "/logos/Untitled-design-6.png" },
-  { name: "1 Million Entrepreneurs", logo: "/logos/1MEIF.png" },
-  { name: "VyapaarJagat", logo: "/logos/vyapaarjagat.png" }
+  { name: "Zoho Premium Partner", logo: "/logos/Zoho-premium-partner.webp" },
+  { name: "KP Global IT Solutions", logo: "/logos/KP-Global-IT-Solutions-logo.webp" },
+  { name: "KP Global Academy of Skills", logo: "/logos/Untitled-design-4.webp" },
+  { name: "Aequitas Infotech", logo: "/logos/Aequitas-Infotech.webp" },
+  { name: "Weapplinse Technologies", logo: "/logos/Untitled-design-6.webp" },
+  { name: "1 Million Entrepreneurs", logo: "/logos/1MEIF.webp" },
+  { name: "VyapaarJagat", logo: "/logos/vyapaarjagat.webp" }
 ];
 
 const supportersRow2 = [
-  { name: "PeersGlobal", logo: "/logos/peersglobal.png" },
-  { name: "Greenpreneur", logo: "/logos/greenpreneur.png" },
-  { name: "Fempreneur", logo: "/logos/fempreneur.png" },
-  { name: "Entrepreneur Journy", logo: "/logos/entrepreneurjouryny.png" },
-  { name: "KP Global Jobs", logo: "/logos/KP_Global_Jobs-removebg-preview.png" },
-  { name: "KP Global Business Community", logo: "/logos/KP-Global-Business-Community-Entrepreneurs-3.png" },
-  { name: "KP Global Network", logo: "/logos/Untitled_design__5_-removebg-preview.png" }
+  { name: "PeersGlobal", logo: "/logos/peersglobal.webp" },
+  { name: "Greenpreneur", logo: "/logos/greenpreneur.webp" },
+  { name: "Fempreneur", logo: "/logos/fempreneur.webp" },
+  { name: "Entrepreneur Journy", logo: "/logos/entrepreneurjouryny.webp" },
+  { name: "KP Global Jobs", logo: "/logos/KP_Global_Jobs-removebg-preview.webp" },
+  { name: "KP Global Business Community", logo: "/logos/KP-Global-Business-Community-Entrepreneurs-3.webp" },
+  { name: "KP Global Network", logo: "/logos/Untitled_design__5_-removebg-preview.webp" }
 ];
 
 export default function Supporters() {
@@ -38,7 +39,7 @@ export default function Supporters() {
         {/* Header */}
         <div className="mb-20 flex flex-col text-center items-center">
           <ScrollReveal variant="3d-unfold">
-            <div className="inline-flex items-center gap-3 px-4 py-1.5 rounded-full bg-white/5 border border-white/10 mb-6 backdrop-blur-md">
+            <div className="inline-flex items-center gap-3 px-4 py-1.5 rounded-full bg-white/10 border border-white/10 mb-6">
               <Star className="w-4 h-4 text-purple-400" />
               <span className="text-xs font-medium text-purple-200 tracking-wider uppercase">Our Clients</span>
             </div>
@@ -70,12 +71,14 @@ export default function Supporters() {
               {[...supportersRow1, ...supportersRow1, ...supportersRow1].map((supporter, idx) => (
                 <div 
                   key={`r1-${idx}`} 
-                  className="flex items-center justify-center w-[280px] h-[120px] shrink-0 p-4 rounded-[1.5rem] bg-white border border-white/10 hover:scale-105 transition-transform duration-300 group cursor-default shadow-lg"
+                  className="relative flex items-center justify-center w-[280px] h-[120px] shrink-0 p-4 rounded-[1.5rem] bg-white border border-white/10 hover:scale-105 transition-transform duration-300 group cursor-default shadow-lg"
                 >
-                  <img 
+                  <Image 
                     src={supporter.logo} 
                     alt={supporter.name}
-                    className="w-full h-full object-contain filter grayscale group-hover:grayscale-0 transition-all duration-300 opacity-80 group-hover:opacity-100 scale-110"
+                    fill
+                    sizes="280px"
+                    className="p-4 object-contain filter grayscale group-hover:grayscale-0 transition-all duration-300 opacity-80 group-hover:opacity-100 scale-110"
                   />
                 </div>
               ))}
@@ -88,12 +91,14 @@ export default function Supporters() {
               {[...supportersRow2, ...supportersRow2, ...supportersRow2].map((supporter, idx) => (
                 <div 
                   key={`r2-${idx}`} 
-                  className="flex items-center justify-center w-[280px] h-[120px] shrink-0 p-4 rounded-[1.5rem] bg-white border border-white/10 hover:scale-105 transition-transform duration-300 group cursor-default shadow-lg"
+                  className="relative flex items-center justify-center w-[280px] h-[120px] shrink-0 p-4 rounded-[1.5rem] bg-white border border-white/10 hover:scale-105 transition-transform duration-300 group cursor-default shadow-lg"
                 >
-                  <img 
+                  <Image 
                     src={supporter.logo} 
                     alt={supporter.name}
-                    className="w-full h-full object-contain filter grayscale group-hover:grayscale-0 transition-all duration-300 opacity-80 group-hover:opacity-100 scale-110"
+                    fill
+                    sizes="280px"
+                    className="p-4 object-contain filter grayscale group-hover:grayscale-0 transition-all duration-300 opacity-80 group-hover:opacity-100 scale-110"
                   />
                 </div>
               ))}

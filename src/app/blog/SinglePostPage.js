@@ -2,6 +2,7 @@
 
 import React, { useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { 
   User, MessageSquare, Calendar, ArrowLeft, Link2, Check, Share2, 
   Tag, Terminal, Key, Activity, ChevronRight, Send, Heart
@@ -131,12 +132,15 @@ export default function SinglePostPage({ post }) {
               
               {/* Big Featured Image */}
               <div className="relative rounded-3xl overflow-hidden aspect-[16/9] w-full border border-white/10 bg-black/40 shadow-[0_0_50px_rgba(0,0,0,0.8)] group/cover">
-                <img 
-                  src={post.image || "/blog_3d_fluid.png"} 
+                <Image 
+                  src={post.image || "/blog_3d_fluid.webp"} 
                   alt={post.title} 
-                  className="w-full h-full object-cover transition-transform duration-[1200ms] group-hover/cover:scale-103" 
+                  fill
+                  priority
+                  sizes="(max-width: 768px) 100vw, 80vw"
+                  className="object-cover transition-transform duration-[1200ms] group-hover/cover:scale-103" 
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent pointer-events-none" />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent pointer-events-none z-10" />
                 <div className="absolute top-4 left-4 w-2.5 h-2.5 border-t-2 border-l-2 border-white/30" />
                 <div className="absolute top-4 right-4 w-2.5 h-2.5 border-t-2 border-r-2 border-white/30" />
                 <div className="absolute bottom-4 left-4 w-2.5 h-2.5 border-b-2 border-l-2 border-white/30" />
@@ -203,12 +207,14 @@ export default function SinglePostPage({ post }) {
                         <div key={i} className="grid grid-cols-1 md:grid-cols-2 gap-6 my-8">
                           {sec.images.map((imgSrc, idx) => (
                             <div key={idx} className="relative rounded-2xl overflow-hidden aspect-[16/10] border border-white/5 bg-black/40 shadow-lg group/gal">
-                              <img 
+                              <Image 
                                 src={imgSrc} 
                                 alt={`gallery-img-${idx}`} 
-                                className="w-full h-full object-cover transition-transform duration-700 group-hover/gal:scale-103" 
+                                fill
+                                sizes="(max-width: 768px) 100vw, 40vw"
+                                className="object-cover transition-transform duration-700 group-hover/gal:scale-103" 
                               />
-                              <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent opacity-0 group-hover/gal:opacity-100 transition-opacity duration-300" />
+                              <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent opacity-0 group-hover/gal:opacity-100 transition-opacity duration-300 z-10" />
                             </div>
                           ))}
                         </div>

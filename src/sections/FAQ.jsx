@@ -55,7 +55,7 @@ export default function FAQ() {
         {/* Header */}
         <div className="mb-20 flex flex-col text-center items-center">
           <ScrollReveal variant="3d-unfold">
-            <div className="inline-flex items-center gap-3 px-4 py-1.5 rounded-full bg-white/5 border border-white/10 mb-6 backdrop-blur-md">
+            <div className="inline-flex items-center gap-3 px-4 py-1.5 rounded-full bg-white/10 border border-white/10 mb-6">
               <HelpCircle className="w-4 h-4 text-purple-400" />
               <span className="text-xs font-medium text-purple-200 tracking-wider uppercase">Popular Questions</span>
             </div>

@@ -1,6 +1,6 @@
-import React from 'react';
-import { ChevronRight } from 'lucide-react';
+import Image from 'next/image';
 import Link from 'next/link';
+import { ChevronRight } from 'lucide-react';
 
 export default function PageHero({ title, description, parentPage = "Home", parentHref = "/" }) {
   return (
@@ -9,10 +9,12 @@ export default function PageHero({ title, description, parentPage = "Home", pare
       <div className="absolute inset-0 z-0">
         <div className="absolute inset-0 bg-gradient-to-b from-black/85 via-black/55 to-[#020202] z-10" />
         <div className="absolute inset-0 bg-gradient-to-r from-blue-900/60 via-purple-900/70 to-cyan-900/60 z-10" />
-        <img
-          src="/common_hero_banner.png"
+        <Image
+          src="/common_hero_banner.webp"
           alt="KP Page Banner"
-          className="w-full h-full object-cover object-center opacity-40 filter blur-[2px] scale-105"
+          fill
+          priority
+          className="object-cover object-center opacity-40 filter blur-[2px] scale-105"
         />
       </div>
 

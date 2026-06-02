@@ -1,19 +1,19 @@
 export const staticData = {
   partners: [
-    { id: 1, name: "Zoho Premium Partner", logo: "/logos/Zoho-premium-partner.png", type: "Enterprise" },
-    { id: 2, name: "KP Global IT Solutions", logo: "/logos/KP-Global-IT-Solutions-logo.png", type: "Vertical" },
-    { id: 3, name: "KP Global Academy of Skills", logo: "/logos/Untitled-design-4.png", type: "Vertical" },
-    { id: 4, name: "Aequitas Infotech", logo: "/logos/Aequitas-Infotech.png", type: "Enterprise" },
-    { id: 5, name: "Weapplinse Technologies", logo: "/logos/Untitled-design-6.png", type: "Enterprise" },
-    { id: 6, name: "1 Million Entrepreneurs", logo: "/logos/1MEIF.png", type: "Ecosystem" },
-    { id: 7, name: "VyapaarJagat", logo: "/logos/vyapaarjagat.png", type: "Ecosystem" },
-    { id: 8, name: "PeersGlobal", logo: "/logos/peersglobal.png", type: "Ecosystem" },
-    { id: 9, name: "Greenpreneur", logo: "/logos/greenpreneur.png", type: "Ecosystem" },
-    { id: 10, name: "Fempreneur", logo: "/logos/fempreneur.png", type: "Ecosystem" },
-    { id: 11, name: "Entrepreneur Journy", logo: "/logos/entrepreneurjouryny.png", type: "Ecosystem" },
-    { id: 12, name: "KP Global Jobs", logo: "/logos/KP_Global_Jobs-removebg-preview.png", type: "Vertical" },
-    { id: 13, name: "KP Global Business Community", logo: "/logos/KP-Global-Business-Community-Entrepreneurs-3.png", type: "Vertical" },
-    { id: 14, name: "KP Global Network", logo: "/logos/Untitled_design__5_-removebg-preview.png", type: "Vertical" }
+    { id: 1, name: "Zoho Premium Partner", logo: "/logos/Zoho-premium-partner.webp", type: "Enterprise" },
+    { id: 2, name: "KP Global IT Solutions", logo: "/logos/KP-Global-IT-Solutions-logo.webp", type: "Vertical" },
+    { id: 3, name: "KP Global Academy of Skills", logo: "/logos/Untitled-design-4.webp", type: "Vertical" },
+    { id: 4, name: "Aequitas Infotech", logo: "/logos/Aequitas-Infotech.webp", type: "Enterprise" },
+    { id: 5, name: "Weapplinse Technologies", logo: "/logos/Untitled-design-6.webp", type: "Enterprise" },
+    { id: 6, name: "1 Million Entrepreneurs", logo: "/logos/1MEIF.webp", type: "Ecosystem" },
+    { id: 7, name: "VyapaarJagat", logo: "/logos/vyapaarjagat.webp", type: "Ecosystem" },
+    { id: 8, name: "PeersGlobal", logo: "/logos/peersglobal.webp", type: "Ecosystem" },
+    { id: 9, name: "Greenpreneur", logo: "/logos/greenpreneur.webp", type: "Ecosystem" },
+    { id: 10, name: "Fempreneur", logo: "/logos/fempreneur.webp", type: "Ecosystem" },
+    { id: 11, name: "Entrepreneur Journy", logo: "/logos/entrepreneurjouryny.webp", type: "Ecosystem" },
+    { id: 12, name: "KP Global Jobs", logo: "/logos/KP_Global_Jobs-removebg-preview.webp", type: "Vertical" },
+    { id: 13, name: "KP Global Business Community", logo: "/logos/KP-Global-Business-Community-Entrepreneurs-3.webp", type: "Vertical" },
+    { id: 14, name: "KP Global Network", logo: "/logos/Untitled_design__5_-removebg-preview.webp", type: "Vertical" }
   ],
   testimonials: [
     { id: 1, name: "Avani Parmar", role: "Skill Academy Graduate", videoSrc: "/videos/Avani_parmar.mp4", accent: "#7c3aed", quote: "KP Global completely transformed my perspective on what's possible. The mentorship and community here are unparalleled — I've never felt more supported." },

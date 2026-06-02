@@ -3,6 +3,7 @@
 import React from 'react';
 import { Target, Compass, Sparkles, Compass as CompassIcon, Users, Briefcase, Award, Globe, ArrowRight } from 'lucide-react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { ScrollReveal, TextReveal } from "@/components/Animations";
 import PageHero from "@/components/PageHero";
 
@@ -78,11 +79,13 @@ export default function AboutPage() {
             {/* Right Block: Image */}
             <ScrollReveal variant="fade-left" className="lg:col-span-5 relative group">
               <div className="absolute -inset-4 bg-gradient-to-r from-blue-500/20 to-purple-500/20 rounded-[2.5rem] blur-xl opacity-70 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none"></div>
-              <div className="relative rounded-[2rem] overflow-hidden border border-white/10 bg-[#0a0a0a] shadow-2xl">
-                <img 
-                  src="/about_team_meeting.png" 
+              <div className="relative rounded-[2rem] overflow-hidden border border-white/10 bg-[#0a0a0a] shadow-2xl aspect-[4/3] w-full">
+                <Image 
+                  src="/about_team_meeting.webp" 
                   alt="Team Meeting" 
-                  className="w-full h-auto object-cover transition-transform duration-700 group-hover:scale-105"
+                  fill
+                  sizes="(max-width: 1024px) 100vw, 40vw"
+                  className="object-cover transition-transform duration-700 group-hover:scale-105"
                 />
               </div>
             </ScrollReveal>
@@ -93,13 +96,18 @@ export default function AboutPage() {
           <div className="relative rounded-[2.5rem] overflow-hidden border border-white/5 bg-[#030303] p-8 md:p-16">
             
             {/* Visual background */}
-            <div className="absolute inset-0 bg-cover bg-center opacity-10" style={{ backgroundImage: "url('/about_vision_visual.png')" }}></div>
-            <div className="absolute inset-0 bg-gradient-to-r from-black via-black/80 to-transparent"></div>
+            <Image 
+              src="/about_vision_visual.webp"
+              alt="Vision Visual"
+              fill
+              className="object-cover opacity-10 pointer-events-none"
+            />
+            <div className="absolute inset-0 bg-gradient-to-r from-black via-black/80 to-transparent z-10 pointer-events-none"></div>
 
             <div className="relative z-10 grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16">
               
               {/* Our Vision */}
-              <ScrollReveal variant="zoom-in" className="space-y-6 bg-white/[0.02] border border-white/5 rounded-3xl p-8 backdrop-blur-xl hover:border-white/15 transition-all duration-300">
+              <ScrollReveal variant="zoom-in" className="space-y-6 bg-[#080808]/75 border border-white/5 rounded-3xl p-8 backdrop-blur-md hover:border-white/15 transition-all duration-300">
                 <div className="w-12 h-12 rounded-2xl bg-blue-500/10 border border-blue-500/20 flex items-center justify-center text-blue-400">
                   <Compass className="w-6 h-6" />
                 </div>
@@ -113,7 +121,7 @@ export default function AboutPage() {
               </ScrollReveal>
 
               {/* Our Mission */}
-              <ScrollReveal variant="zoom-in" delay={0.2} className="space-y-6 bg-white/[0.02] border border-white/5 rounded-3xl p-8 backdrop-blur-xl hover:border-white/15 transition-all duration-300">
+              <ScrollReveal variant="zoom-in" delay={0.2} className="space-y-6 bg-[#080808]/75 border border-white/5 rounded-3xl p-8 backdrop-blur-md hover:border-white/15 transition-all duration-300">
                 <div className="w-12 h-12 rounded-2xl bg-purple-500/10 border border-purple-500/20 flex items-center justify-center text-purple-400">
                   <Target className="w-6 h-6" />
                 </div>
@@ -131,11 +139,17 @@ export default function AboutPage() {
 
           {/* Section 4: Video Banner / Image Banner */}
           <ScrollReveal variant="blur-in" className="relative w-full aspect-[21/9] rounded-[2rem] overflow-hidden border border-white/10 group">
-            <div className="absolute inset-0 bg-cover bg-center" style={{ backgroundImage: "url('/about_video_bg.png')" }}></div>
-            <div className="absolute inset-0 bg-black/40 group-hover:bg-black/30 transition-colors duration-500"></div>
+            <Image 
+              src="/about_video_bg.webp" 
+              alt="Video Banner" 
+              fill
+              sizes="100vw"
+              className="object-cover"
+            />
+            <div className="absolute inset-0 bg-black/40 group-hover:bg-black/30 transition-colors duration-500 z-10"></div>
 
             {/* Overlap Bottom Slogan Card */}
-            <div className="absolute bottom-6 left-1/2 -translate-x-1/2 w-[90%] md:w-auto bg-black/90 border border-white/10 backdrop-blur-xl px-6 py-4 rounded-2xl text-center shadow-2xl">
+            <div className="absolute bottom-6 left-1/2 -translate-x-1/2 w-[90%] md:w-auto bg-black/95 border border-white/10 px-6 py-4 rounded-2xl text-center shadow-2xl z-20">
               <span className="text-xs md:text-sm font-bold text-white uppercase tracking-wider">
                 One Global Platform For Technology, Skills, Media, Business, and Career Growth.
               </span>
@@ -148,11 +162,13 @@ export default function AboutPage() {
             {/* Left Block: Image */}
             <ScrollReveal variant="fade-right" className="lg:col-span-5 relative group">
               <div className="absolute -inset-4 bg-gradient-to-r from-blue-500/20 to-purple-500/20 rounded-[2.5rem] blur-xl opacity-70 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none"></div>
-              <div className="relative rounded-[2rem] overflow-hidden border border-white/10 bg-[#0a0a0a] shadow-2xl">
-                <img 
-                  src="/about_boardroom_bg.jpg" 
+              <div className="relative rounded-[2rem] overflow-hidden border border-white/10 bg-[#0a0a0a] shadow-2xl aspect-[4/3] w-full">
+                <Image 
+                  src="/about_boardroom_bg.webp" 
                   alt="Boardroom Meeting" 
-                  className="w-full h-auto object-cover transition-transform duration-700 group-hover:scale-105"
+                  fill
+                  sizes="(max-width: 1024px) 100vw, 40vw"
+                  className="object-cover transition-transform duration-700 group-hover:scale-105"
                 />
               </div>
             </ScrollReveal>
@@ -208,9 +224,16 @@ export default function AboutPage() {
 
           </div>
 
-          {/* Section 6: Our Commitment Symmetrical Panel */}
           <ScrollReveal variant="fade-up" className="relative w-full rounded-[2.5rem] overflow-hidden border border-white/10 p-8 md:p-16 shadow-2xl bg-gradient-to-r from-black via-black/80 to-blue-950/25">
-            <div className="absolute inset-0 bg-cover bg-center opacity-30 mix-blend-luminosity z-0" style={{ backgroundImage: "url('/about_commitment_bg.png')" }}></div>
+            <div className="absolute inset-0 opacity-30 mix-blend-luminosity z-0 pointer-events-none">
+              <Image 
+                src="/about_commitment_bg.webp" 
+                alt="Commitment Background" 
+                fill
+                sizes="100vw"
+                className="object-cover"
+              />
+            </div>
             
             {/* Ambient blur node */}
             <div className="absolute top-1/2 left-1/4 -translate-y-1/2 w-80 h-80 bg-blue-500/10 rounded-full blur-[100px] pointer-events-none"></div>
@@ -229,7 +252,7 @@ export default function AboutPage() {
               </div>
 
               {/* Right Column: Sleek Frosted Glass Card */}
-              <div className="lg:col-span-5 bg-white/[0.02] border border-white/10 rounded-[2rem] p-8 backdrop-blur-2xl shadow-2xl relative overflow-hidden group hover:border-white/20 transition-all duration-300">
+              <div className="lg:col-span-5 bg-white/[0.03] border border-white/10 rounded-[2rem] p-8 backdrop-blur-md shadow-2xl relative overflow-hidden group hover:border-white/20 transition-all duration-300">
                 <div className="absolute top-0 right-0 w-32 h-32 bg-purple-500/10 rounded-full blur-3xl pointer-events-none"></div>
                 
                 <div className="space-y-6">

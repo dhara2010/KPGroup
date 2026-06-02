@@ -2,6 +2,7 @@
 
 import React from 'react';
 import { Users } from 'lucide-react';
+import Image from 'next/image';
 import { ScrollReveal, TextReveal, ThreeDTilt } from "@/components/Animations";
 
 const team = [
@@ -15,7 +16,7 @@ const team = [
   {
     id: 2,
     name: "Nisarg Bhatt",
-    role: "Bussiness Advisor & Stratagic Partner",
+    role: "Bussiness Advisor & Strategic Partner",
     image: "/team/Nisarg-bhatt.webp",
     color: "from-cyan-500 to-blue-500"
   },
@@ -29,7 +30,7 @@ const team = [
   {
     id: 4,
     name: "Punit Kanjariya",
-    role: "Head of Ahmedavad",
+    role: "Head of Ahmedabad",
     image: "/team/Punit-kanjariya.webp",
     color: "from-violet-600 to-indigo-500"
   }
@@ -49,7 +50,7 @@ export default function Team() {
         {/* Header */}
         <div className="mb-20 flex flex-col text-center items-center">
           <ScrollReveal variant="3d-unfold">
-            <div className="inline-flex items-center gap-3 px-4 py-1.5 rounded-full bg-white/5 border border-white/10 mb-6 backdrop-blur-md">
+            <div className="inline-flex items-center gap-3 px-4 py-1.5 rounded-full bg-white/10 border border-white/10 mb-6">
               <Users className="w-4 h-4 text-cyan-400" />
               <span className="text-xs font-medium text-cyan-200 tracking-wider uppercase">Leadership</span>
             </div>
@@ -85,12 +86,14 @@ export default function Team() {
                 >
                   {/* Image Container */}
                   <div className="relative w-full aspect-[4/5] overflow-hidden bg-[#111]" style={{ transform: "translateZ(10px)" }}>
-                    <img 
+                    <Image 
                       src={member.image} 
                       alt={member.name}
-                      className="w-full h-full object-cover object-top transition-all duration-700 group-hover:scale-110"
+                      fill
+                      sizes="(max-width: 768px) 100vw, 25vw"
+                      className="object-cover object-top transition-all duration-700 group-hover:scale-110"
                     />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black via-black/30 to-transparent"></div>
+                    <div className="absolute inset-0 bg-gradient-to-t from-black via-black/30 to-transparent z-10" />
                   </div>
 
                   {/* Content */}

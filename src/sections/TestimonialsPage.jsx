@@ -176,7 +176,7 @@ function PortraitCard({ reel, onPlay, className = "" }) {
       onMouseEnter={() => setHov(true)}
       onMouseLeave={() => setHov(false)}
     >
-      <video ref={vRef} src={reel.videoSrc} muted loop playsInline preload="metadata"
+      <video ref={vRef} src={reel.videoSrc} muted loop playsInline preload="none"
         className="absolute inset-0 w-full h-full object-cover transition-all duration-700"
         style={{ opacity: hov ? 0.8 : 0.45, transform: hov ? "scale(1.04)" : "scale(1)" }}
       />
@@ -241,7 +241,7 @@ function VideoCard({ reel, onPlay, bgColor = "#e8d8b8", className = "" }) {
       onMouseEnter={() => setHov(true)}
       onMouseLeave={() => setHov(false)}
     >
-      <video ref={vRef} src={reel.videoSrc} muted loop playsInline preload="metadata"
+      <video ref={vRef} src={reel.videoSrc} muted loop playsInline preload="none"
         className="absolute inset-0 w-full h-full object-cover transition-all duration-600"
         style={{ opacity: hov ? 0.88 : 0.55, transform: hov ? "scale(1.04)" : "scale(1)" }}
       />
@@ -294,7 +294,7 @@ function MiniCard({ reel, onPlay, className = "" }) {
     >
       {/* Thumb */}
       <div style={{ width: 70, height: 70, borderRadius: 14, overflow: "hidden", flexShrink: 0, background: "#1c4a40", position: "relative" }}>
-        <video src={reel.videoSrc} muted playsInline preload="metadata"
+        <video src={reel.videoSrc} muted playsInline preload="none"
           style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", opacity: 0.6 }} />
         <div style={{ position: "absolute", inset: 0, display: "flex", alignItems: "center", justifyContent: "center" }}>
           <div style={{ width: 26, height: 26, borderRadius: "50%", background: "rgba(255,255,255,0.88)", display: "flex", alignItems: "center", justifyContent: "center", transform: hov ? "scale(1.1)" : "scale(1)", transition: "transform 0.25s" }}>
@@ -451,7 +451,7 @@ export default function TestimonialsPage() {
             </p>
             <div style={{ marginTop: 16, display: "flex", alignItems: "center", gap: 8 }}>
               <div style={{ width: 34, height: 34, borderRadius: "50%", overflow: "hidden", background: "#1c4a40", position: "relative", flexShrink: 0 }}>
-                <video src={REELS[8].videoSrc} muted playsInline preload="metadata" style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", opacity: 0.7 }} />
+                <video src={REELS[8].videoSrc} muted playsInline preload="none" style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", opacity: 0.7 }} />
               </div>
               <div>
                 <p style={{ fontWeight: 800, fontSize: 12, color: "#1a1a1a", margin: 0 }}>{REELS[8].name}</p>

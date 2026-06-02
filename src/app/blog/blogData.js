@@ -30,7 +30,7 @@ export const INITIAL_POSTS = [
     author: "kpglobalbusiness",
     commentsCount: 0,
     category: "Blog",
-    image: "/blog_3d_fluid.png",
+    image: "/blog_3d_fluid.webp",
     excerpt: "Many business owners and marketing teams find themselves overwhelmed with their files and assets. If you are struggling to keep track of your brand assets, design agencies...",
     content: "Many business owners and marketing teams find themselves overwhelmed with their files and assets. If you are struggling to keep track of your brand assets, design agencies can help you establish a structured directory layout. In this guide, we dive into the folder naming conventions, cloud asset storage solutions, version control structures, and tagging mechanisms that keep modern corporate environments clean, optimized, and productive.",
     tags: ["SEO Strategy", "Agency Operations"],
@@ -63,7 +63,7 @@ export const INITIAL_POSTS = [
       },
       {
         type: "gallery",
-        images: ["/blog_designing.png", "/blog_meeting.png"]
+        images: ["/blog_designing.webp", "/blog_meeting.webp"]
       },
       {
         type: "heading",
@@ -92,7 +92,7 @@ export const INITIAL_POSTS = [
     author: "kpglobalbusiness",
     commentsCount: 1,
     category: "Feature Presentation",
-    image: "/blog_designing.png",
+    image: "/blog_designing.webp",
     excerpt: "Many business owners and marketing teams find themselves overwhelmed with their files and assets. If you are struggling to keep track of your brand assets, design agencies...",
     content: "Many business owners and marketing teams find themselves overwhelmed with their files and assets. If you are struggling to keep track of your brand assets, design agencies know how to design user interfaces and physical branding materials that stick in a client's memory. From immersive color palettes to unified animation behaviors, discover the strategies to build customer journeys that leave an impact.",
     comments: [
@@ -113,7 +113,7 @@ export const INITIAL_POSTS = [
     author: "kpglobalbusiness",
     commentsCount: 1,
     category: "Predictive Analytics",
-    image: "/blog_meeting.png",
+    image: "/blog_meeting.webp",
     excerpt: "Many business owners and marketing teams find themselves overwhelmed with their files and assets. If you are struggling to keep track of your brand assets, design agencies...",
     content: "Many business owners and marketing teams find themselves overwhelmed with their files and assets. If you are struggling to keep track of your brand assets, design agencies leverage automated integration platforms, AI predictions, and cloud computing. We explain how adopting software-first practices reduces overhead, accelerates delivery pipelines, and positions startup teams to scale securely.",
     comments: [

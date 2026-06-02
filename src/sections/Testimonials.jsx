@@ -6,6 +6,7 @@ import {
   GraduationCap, Briefcase, Activity,
   ChevronRight, PlayCircle
 } from 'lucide-react';
+import Image from 'next/image';
 import { ScrollReveal, TextReveal, ThreeDTilt } from "@/components/Animations";
 
 const categories = [
@@ -101,7 +102,7 @@ export default function Testimonials() {
         {/* Header - Consistent Animation */}
         <div className="mb-20 flex flex-col text-center items-center">
           <ScrollReveal variant="3d-unfold">
-            <div className="inline-flex items-center gap-3 px-4 py-1.5 rounded-full bg-white/5 border border-white/10 mb-6 backdrop-blur-md">
+            <div className="inline-flex items-center gap-3 px-4 py-1.5 rounded-full bg-white/10 border border-white/10 mb-6">
               <Activity className="w-4 h-4 text-purple-400 animate-pulse" />
               <span className="text-xs font-medium text-purple-200 tracking-wider uppercase">Global Impact</span>
             </div>
@@ -155,12 +156,14 @@ export default function Testimonials() {
                     // Video Testimonial Card
                     <>
                       <div className="absolute inset-0 z-0">
-                        <img 
+                        <Image 
                           src={testimonial.image} 
                           alt={testimonial.name}
-                          className="w-full h-full object-cover opacity-50 group-hover:opacity-70 transition-all duration-700 group-hover:scale-105"
+                          fill
+                          sizes="(max-width: 1024px) 100vw, 60vw"
+                          className="object-cover opacity-50 group-hover:opacity-70 transition-all duration-700 group-hover:scale-105"
                         />
-                        <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent"></div>
+                        <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent z-10"></div>
                       </div>
                       
                       {/* Play Button Overlay */}
@@ -210,11 +213,15 @@ export default function Testimonials() {
                       </p>
 
                       <div className="flex items-center gap-4 pt-6 border-t border-white/5" style={{ transform: "translateZ(40px)" }}>
-                        <img 
-                          src={testimonial.image} 
-                          alt={testimonial.name}
-                          className="w-12 h-12 rounded-full object-cover border border-white/10"
-                        />
+                        <div className="relative w-12 h-12 rounded-full overflow-hidden border border-white/10 shrink-0">
+                          <Image 
+                            src={testimonial.image} 
+                            alt={testimonial.name}
+                            fill
+                            sizes="48px"
+                            className="object-cover"
+                          />
+                        </div>
                         <div>
                           <h4 className="text-sm font-black text-white tracking-tight uppercase">{testimonial.name}</h4>
                           <p className="text-[10px] text-gray-500 font-bold uppercase tracking-widest mt-1">{testimonial.role}</p>

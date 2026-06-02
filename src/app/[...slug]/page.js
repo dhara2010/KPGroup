@@ -1,10 +1,22 @@
 import { use } from "react";
-import AboutPage from "../about/about";
-import PartnersPage from "../partners/partners";
-import ContactPage from "../contact/contact";
-import BlogPage from "../blog/blog";
+import dynamic from "next/dynamic";
 import { INITIAL_POSTS } from "../blog/blogData";
-import SinglePostPage from "../blog/SinglePostPage";
+
+const AboutPage = dynamic(() => import("../about/about"), {
+  loading: () => <div className="min-h-screen bg-black flex items-center justify-center text-gray-500 font-mono">LOADING_MODULE...</div>
+});
+const PartnersPage = dynamic(() => import("../partners/partners"), {
+  loading: () => <div className="min-h-screen bg-black flex items-center justify-center text-gray-500 font-mono">LOADING_MODULE...</div>
+});
+const ContactPage = dynamic(() => import("../contact/contact"), {
+  loading: () => <div className="min-h-screen bg-black flex items-center justify-center text-gray-500 font-mono">LOADING_MODULE...</div>
+});
+const BlogPage = dynamic(() => import("../blog/blog"), {
+  loading: () => <div className="min-h-screen bg-black flex items-center justify-center text-gray-500 font-mono">LOADING_MODULE...</div>
+});
+const SinglePostPage = dynamic(() => import("../blog/SinglePostPage"), {
+  loading: () => <div className="min-h-screen bg-black flex items-center justify-center text-gray-500 font-mono">LOADING_MODULE...</div>
+});
 
 export default function CatchAllPage({ params }) {
   const resolvedParams = use(params);

@@ -90,7 +90,7 @@ export default function Navbar() {
                   {/* Dropdown Menu Overlay */}
                   {hasDropdown && isDropdownOpen && (
                     <div
-                      className="absolute left-1/2 -translate-x-1/2 top-full mt-3 w-64 bg-[#0a0a0a]/95 border border-white/10 rounded-2xl overflow-hidden shadow-[0_20px_50px_rgba(0,0,0,0.5)] z-50 py-3 backdrop-blur-2xl"
+                      className="absolute left-1/2 -translate-x-1/2 top-full w-64 bg-[#0a0a0a]/95 border border-white/10 rounded-2xl overflow-hidden shadow-[0_20px_50px_rgba(0,0,0,0.5)] z-50 py-3 backdrop-blur-2xl"
                     >
                       {/* Accent Top Bar */}
                       <div className="absolute top-0 inset-x-0 h-[2px] bg-gradient-to-r from-blue-500 to-purple-600"></div>
