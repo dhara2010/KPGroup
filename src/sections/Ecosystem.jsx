@@ -3,6 +3,7 @@
 import React, { useRef, useState, useEffect } from 'react';
 import { MonitorSmartphone, Radio, GraduationCap, Briefcase, Network, ArrowUpRight } from 'lucide-react';
 import Image from 'next/image';
+import Link from 'next/link';
 import { ScrollReveal, TextReveal, ThreeDTilt } from "@/components/Animations";
 
 export default function Ecosystem() {
@@ -14,7 +15,8 @@ export default function Ecosystem() {
       className: "md:col-span-2 md:row-span-2",
       gradient: "from-blue-500/50 via-purple-500/20 to-transparent",
       iconColor: "text-blue-400",
-      image: "/eco_it_bg.webp"
+      image: "/eco_it_bg.webp",
+      href: "https://kpgbit.kpglobalbusiness.com/"
     },
     {
       title: "Media Network",
@@ -23,7 +25,8 @@ export default function Ecosystem() {
       className: "md:col-span-1",
       gradient: "from-purple-500/50 to-transparent",
       iconColor: "text-purple-400",
-      image: "/eco_media_bg.webp"
+      image: "/eco_media_bg.webp",
+      href: "https://entrepreneurjouryny.com/"
     },
     {
       title: "Skill Academy",
@@ -32,7 +35,8 @@ export default function Ecosystem() {
       className: "md:col-span-1",
       gradient: "from-pink-500/50 to-transparent",
       iconColor: "text-pink-400",
-      image: "/eco_academy_bg.webp"
+      image: "/eco_academy_bg.webp",
+      href: "https://academy.kpglobalbusiness.com/"
     },
     {
       title: "Careers",
@@ -41,7 +45,8 @@ export default function Ecosystem() {
       className: "md:col-span-1",
       gradient: "from-emerald-500/50 to-transparent",
       iconColor: "text-emerald-400",
-      image: "/eco_careers_bg.webp"
+      image: "/eco_careers_bg.webp",
+      href: "/careers"
     },
     {
       title: "Business Community",
@@ -50,7 +55,8 @@ export default function Ecosystem() {
       className: "md:col-span-2",
       gradient: "from-orange-500/50 to-transparent",
       iconColor: "text-orange-400",
-      image: "/eco_community_bg.webp"
+      image: "/eco_community_bg.webp",
+      href: "https://kpgbc.kpglobalbusiness.com/"
     }
   ];
 
@@ -86,64 +92,71 @@ export default function Ecosystem() {
               delay={0.08 * idx}
               className={card.className}
             >
-              <ThreeDTilt 
-                scale={1.02} 
-                tiltMax={8} 
-                glareOpacity={0.1}
-                className="h-full cursor-pointer"
+              <Link
+                href={card.href}
+                target={card.href.startsWith('http') ? '_blank' : undefined}
+                rel={card.href.startsWith('http') ? 'noopener noreferrer' : undefined}
+                className="block h-full"
               >
-                <div 
-                  className="group relative p-[1px] rounded-[2rem] overflow-hidden transition-all duration-500 h-full border border-white/10"
-                  style={{ transformStyle: "preserve-3d" }}
+                <ThreeDTilt 
+                  scale={1.02} 
+                  tiltMax={8} 
+                  glareOpacity={0.1}
+                  className="h-full cursor-pointer"
                 >
-                  {/* Card Content Wrapper */}
                   <div 
-                    className="relative h-full bg-black rounded-[calc(2rem-1px)] p-8 flex flex-col justify-between overflow-hidden"
+                    className="group relative p-[1px] rounded-[2rem] overflow-hidden transition-all duration-500 h-full border border-white/10"
                     style={{ transformStyle: "preserve-3d" }}
                   >
-                    
-                    {/* Background Image with Hover Scale */}
-                    <div className="absolute inset-0 z-0 overflow-hidden rounded-[calc(2rem-1px)]">
-                      <Image 
-                        src={card.image}
-                        alt={card.title}
-                        fill
-                        priority={idx === 0}
-                        className="object-cover opacity-50 group-hover:opacity-70 group-hover:scale-110 transition-all duration-700 ease-out"
-                      />
-                      {/* Overlay to keep text readable */}
-                      <div className="absolute inset-0 bg-gradient-to-t from-black via-black/60 to-black/10"></div>
-                    </div>
-
-                    {/* Inner Hover Glow */}
-                    <div className={`absolute -right-20 -top-20 w-40 h-40 bg-gradient-to-br ${card.gradient} blur-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-700 z-0`}></div>
-
+                    {/* Card Content Wrapper */}
                     <div 
-                      className="relative z-10 flex justify-between items-start"
-                      style={{ transform: "translateZ(30px)" }}
+                      className="relative h-full bg-black rounded-[calc(2rem-1px)] p-8 flex flex-col justify-between overflow-hidden"
+                      style={{ transformStyle: "preserve-3d" }}
                     >
-                      <div className={`w-14 h-14 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center ${card.iconColor} group-hover:scale-110 group-hover:rotate-3 transition-transform duration-500`}>
-                        <card.icon className="w-7 h-7" strokeWidth={1.5} />
+                      
+                      {/* Background Image with Hover Scale */}
+                      <div className="absolute inset-0 z-0 overflow-hidden rounded-[calc(2rem-1px)]">
+                        <Image 
+                          src={card.image}
+                          alt={card.title}
+                          fill
+                          priority={idx === 0}
+                          className="object-cover opacity-50 group-hover:opacity-70 group-hover:scale-110 transition-all duration-700 ease-out"
+                        />
+                        {/* Overlay to keep text readable */}
+                        <div className="absolute inset-0 bg-gradient-to-t from-black via-black/60 to-black/10"></div>
                       </div>
-                      <div className="w-10 h-10 rounded-full border border-white/10 flex items-center justify-center text-white/30 group-hover:bg-white group-hover:text-black group-hover:border-transparent transition-all duration-300 transform group-hover:rotate-45">
-                        <ArrowUpRight className="w-5 h-5" />
-                      </div>
-                    </div>
 
-                    <div 
-                      className="relative z-10 mt-auto pt-8"
-                      style={{ transform: "translateZ(20px)" }}
-                    >
-                      <h3 className="text-2xl font-bold text-white mb-2 group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-gradient-to-r group-hover:from-white group-hover:to-gray-400 transition-all duration-300">
-                        {card.title}
-                      </h3>
-                      <p className="text-gray-400 leading-relaxed font-light line-clamp-3">
-                        {card.desc}
-                      </p>
+                      {/* Inner Hover Glow */}
+                      <div className={`absolute -right-20 -top-20 w-40 h-40 bg-gradient-to-br ${card.gradient} blur-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-700 z-0`}></div>
+
+                      <div 
+                        className="relative z-10 flex justify-between items-start"
+                        style={{ transform: "translateZ(30px)" }}
+                      >
+                        <div className={`w-14 h-14 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center ${card.iconColor} group-hover:scale-110 group-hover:rotate-3 transition-transform duration-500`}>
+                          <card.icon className="w-7 h-7" strokeWidth={1.5} />
+                        </div>
+                        <div className="w-10 h-10 rounded-full border border-white/10 flex items-center justify-center text-white/30 group-hover:bg-white group-hover:text-black group-hover:border-transparent transition-all duration-300 transform group-hover:rotate-45">
+                          <ArrowUpRight className="w-5 h-5" />
+                        </div>
+                      </div>
+
+                      <div 
+                        className="relative z-10 mt-auto pt-8"
+                        style={{ transform: "translateZ(20px)" }}
+                      >
+                        <h3 className="text-2xl font-bold text-white mb-2 group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-gradient-to-r group-hover:from-white group-hover:to-gray-400 transition-all duration-300">
+                          {card.title}
+                        </h3>
+                        <p className="text-gray-400 leading-relaxed font-light line-clamp-3">
+                          {card.desc}
+                        </p>
+                      </div>
                     </div>
                   </div>
-                </div>
-              </ThreeDTilt>
+                </ThreeDTilt>
+              </Link>
             </ScrollReveal>
           ))}
         </div>

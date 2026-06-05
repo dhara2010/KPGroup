@@ -105,6 +105,8 @@ export function SmoothScroll({ children }) {
       infinite: false,
     });
 
+    window.lenis = lenis;
+
     function raf(time) {
       lenis.raf(time);
       requestAnimationFrame(raf);
@@ -118,6 +120,9 @@ export function SmoothScroll({ children }) {
     return () => {
       lenis.off("scroll", handleScroll);
       lenis.destroy();
+      if (window.lenis === lenis) {
+        window.lenis = undefined;
+      }
     };
   }, []);
 

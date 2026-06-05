@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import { Menu, X, ChevronDown, Rocket, ArrowRight } from "lucide-react";
+import { Menu, X, ChevronDown, Rocket, ArrowRight, Sun, Moon } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
@@ -21,8 +21,28 @@ export default function Navbar() {
   const [hoveredIndex, setHoveredIndex] = useState(null);
   const [activeDropdown, setActiveDropdown] = useState(null);
   const [mobileDropdownOpen, setMobileDropdownOpen] = useState(null);
+  const [theme, setTheme] = useState("dark");
 
+  useEffect(() => {
+    const savedTheme = localStorage.getItem("theme") || "dark";
+    setTheme(savedTheme);
+    if (savedTheme === "light") {
+      document.documentElement.classList.add("light");
+    } else {
+      document.documentElement.classList.remove("light");
+    }
+  }, []);
 
+  const toggleTheme = () => {
+    const nextTheme = theme === "dark" ? "light" : "dark";
+    setTheme(nextTheme);
+    localStorage.setItem("theme", nextTheme);
+    if (nextTheme === "light") {
+      document.documentElement.classList.add("light");
+    } else {
+      document.documentElement.classList.remove("light");
+    }
+  };
 
   // Handle scroll effect
   useEffect(() => {
@@ -45,7 +65,9 @@ export default function Navbar() {
       >
         <div
           className={`relative flex items-center justify-between w-full px-6 py-4 transition-all duration-500 rounded-2xl ${isScrolled
-            ? "bg-black/60 backdrop-blur-xl border border-white/10 shadow-[0_4px_30px_rgba(0,0,0,0.1)]"
+            ? theme === "dark"
+              ? "bg-black/60 backdrop-blur-xl border border-white/10 shadow-[0_4px_30px_rgba(0,0,0,0.1)]"
+              : "bg-white/60 backdrop-blur-xl border border-black/10 shadow-[0_4px_30px_rgba(0,0,0,0.05)]"
             : "bg-transparent border border-transparent"
             }`}
         >
@@ -56,7 +78,7 @@ export default function Navbar() {
             >
               <Rocket className="w-5 h-5 text-white" />
             </div>
-            <span className="text-xl font-bold text-white tracking-wide">
+            <span className={`text-xl font-bold tracking-wide transition-colors ${theme === "dark" ? "text-white" : "text-black"}`}>
               KP<span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-400">Global</span>
             </span>
           </Link>
@@ -69,7 +91,7 @@ export default function Navbar() {
 
               const linkContent = (
                 <div
-                  className={`relative px-4 py-2 rounded-full cursor-pointer transition-all duration-300 ${hoveredIndex === idx ? "bg-white/10" : "bg-transparent"
+                  className={`relative px-4 py-2 rounded-full cursor-pointer transition-all duration-300 ${hoveredIndex === idx ? (theme === "dark" ? "bg-white/10" : "bg-black/5") : "bg-transparent"
                     }`}
                   onMouseEnter={() => {
                     setHoveredIndex(idx);
@@ -81,10 +103,10 @@ export default function Navbar() {
                     setActiveDropdown(null);
                   }}
                 >
-                  <span className={`relative z-10 text-sm font-medium transition-colors flex items-center gap-1 ${isDropdownOpen ? "text-blue-500 font-semibold" : "text-gray-300 hover:text-white"
+                  <span className={`relative z-10 text-sm font-medium transition-colors flex items-center gap-1 ${isDropdownOpen ? "text-blue-500 font-semibold" : (theme === "dark" ? "text-gray-300 hover:text-white" : "text-gray-750 hover:text-black")
                     }`}>
                     {link.name}
-                    {hasDropdown && <ChevronDown className={`w-3.5 h-3.5 transition-transform duration-300 ${isDropdownOpen ? "rotate-180 text-blue-500" : "text-gray-400"}`} />}
+                    {hasDropdown && <ChevronDown className={`w-3.5 h-3.5 transition-transform duration-300 ${isDropdownOpen ? "rotate-180 text-blue-500" : theme === "light" ? "text-gray-500" : "text-gray-400"}`} />}
                   </span>
 
                   {/* Dropdown Menu Overlay */}
@@ -153,8 +175,29 @@ export default function Navbar() {
 
           {/* CTA & Mobile Toggle */}
           <div className="flex items-center gap-4">
+            {/* Theme Toggle Button */}
             <button
-              className="hidden md:block px-6 py-2.5 bg-white/10 hover:bg-white/20 backdrop-blur-md border border-white/20 rounded-full text-sm font-semibold text-white transition-all hover:scale-105 active:scale-95"
+              onClick={toggleTheme}
+              className={`p-2.5 rounded-full backdrop-blur-md border transition-all duration-300 hover:scale-110 active:scale-90 flex items-center justify-center cursor-pointer ${
+                theme === "dark"
+                  ? "bg-white/10 hover:bg-white/20 border-white/20 text-white shadow-[0_4px_12px_rgba(0,0,0,0.15)]"
+                  : "bg-black/5 hover:bg-black/10 border-black/10 text-black shadow-[0_4px_12px_rgba(0,0,0,0.05)]"
+              }`}
+              aria-label="Toggle theme"
+            >
+              {theme === "dark" ? (
+                <Sun className="w-4 h-4 text-amber-400" />
+              ) : (
+                <Moon className="w-4 h-4 text-indigo-600" fill="currentColor" />
+              )}
+            </button>
+
+            <button
+              className={`hidden md:block px-6 py-2.5 backdrop-blur-md border rounded-full text-sm font-semibold transition-all hover:scale-105 active:scale-95 ${
+                theme === "dark"
+                  ? "bg-white/10 hover:bg-white/20 border-white/20 text-white"
+                  : "bg-black/5 hover:bg-black/10 border-black/10 text-black"
+              }`}
             >
               Contact Sales
             </button>
@@ -170,7 +213,9 @@ export default function Navbar() {
 
             {/* Mobile Menu Button */}
             <button
-              className="md:hidden p-2 text-gray-300 hover:text-white"
+              className={`md:hidden p-2 transition-colors ${
+                theme === "dark" ? "text-gray-300 hover:text-white" : "text-gray-600 hover:text-black"
+              }`}
               onClick={() => setMobileMenuOpen(true)}
             >
               <Menu className="w-6 h-6" />
@@ -182,23 +227,45 @@ export default function Navbar() {
       {/* Mobile Menu Overlay */}
       {mobileMenuOpen && (
         <div
-          className="fixed inset-0 z-[60] bg-black/95 backdrop-blur-3xl p-6 flex flex-col md:hidden"
+          className={`fixed inset-0 z-[60] backdrop-blur-3xl p-6 flex flex-col md:hidden transition-colors duration-300 ${
+            theme === "dark" ? "bg-black/95 text-white" : "bg-white/95 text-black"
+          }`}
         >
           <div className="flex items-center justify-between mb-10">
             <div className="flex items-center gap-2">
               <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center">
                 <Rocket className="w-5 h-5 text-white" />
               </div>
-              <span className="text-xl font-bold text-white tracking-wide">
+              <span className={`text-xl font-bold tracking-wide ${theme === "dark" ? "text-white" : "text-black"}`}>
                 KP<span className="text-purple-400">Global</span>
               </span>
             </div>
-            <button
-              className="p-2 text-gray-400 hover:text-white bg-white/5 rounded-full"
-              onClick={() => setMobileMenuOpen(false)}
-            >
-              <X className="w-6 h-6" />
-            </button>
+            <div className="flex items-center gap-3">
+              {/* Mobile theme toggle */}
+              <button
+                onClick={toggleTheme}
+                className={`p-2 rounded-full border transition-all duration-300 ${
+                  theme === "dark"
+                    ? "bg-white/5 border-white/10 text-white"
+                    : "bg-black/5 border-black/10 text-black"
+                }`}
+                aria-label="Toggle theme"
+              >
+                {theme === "dark" ? (
+                  <Sun className="w-5 h-5 text-amber-400" />
+                ) : (
+                  <Moon className="w-5 h-5 text-indigo-600" fill="currentColor" />
+                )}
+              </button>
+              <button
+                className={`p-2 rounded-full transition-colors ${
+                  theme === "dark" ? "text-gray-400 hover:text-white bg-white/5" : "text-gray-600 hover:text-black bg-black/5"
+                }`}
+                onClick={() => setMobileMenuOpen(false)}
+              >
+                <X className="w-6 h-6" />
+              </button>
+            </div>
           </div>
 
           <div className="flex flex-col gap-4 overflow-y-auto max-h-[60vh] pr-2">
@@ -207,12 +274,14 @@ export default function Navbar() {
               const isExpanded = mobileDropdownOpen === link.name;
 
               return (
-                <div key={idx} className="border-b border-white/10 pb-4">
+                <div key={idx} className={`border-b pb-4 ${theme === "dark" ? "border-white/10" : "border-black/10"}`}>
                   {hasDropdown ? (
                     <div>
                       <button
                         onClick={() => setMobileDropdownOpen(isExpanded ? null : link.name)}
-                        className="w-full flex items-center justify-between text-2xl font-medium text-gray-300 hover:text-white transition-colors"
+                        className={`w-full flex items-center justify-between text-2xl font-medium transition-colors ${
+                          theme === "dark" ? "text-gray-300 hover:text-white" : "text-gray-700 hover:text-black"
+                        }`}
                       >
                         {link.name}
                         <ChevronDown className={`w-6 h-6 transition-transform duration-300 ${isExpanded ? "rotate-180 text-blue-500" : "text-gray-400"}`} />
@@ -234,7 +303,9 @@ export default function Navbar() {
                                   key={subIdx}
                                   href={subLink.href}
                                   onClick={() => setMobileMenuOpen(false)}
-                                  className="text-lg font-medium text-gray-400 hover:text-white transition-colors block text-left"
+                                  className={`text-lg font-medium transition-colors block text-left ${
+                                    theme === "dark" ? "text-gray-400 hover:text-white" : "text-gray-600 hover:text-black"
+                                  }`}
                                 >
                                   {subLink.name}
                                 </Link>
@@ -252,7 +323,9 @@ export default function Navbar() {
                                   key={subIdx}
                                   href={subLink.href}
                                   onClick={() => setMobileMenuOpen(false)}
-                                  className="text-lg font-medium text-gray-400 hover:text-white transition-colors block text-left"
+                                  className={`text-lg font-medium transition-colors block text-left ${
+                                    theme === "dark" ? "text-gray-400 hover:text-white" : "text-gray-600 hover:text-black"
+                                  }`}
                                 >
                                   {subLink.name}
                                 </Link>
@@ -265,7 +338,9 @@ export default function Navbar() {
                   ) : (
                     <Link
                       href={link.href}
-                      className="text-2xl font-medium text-gray-300 hover:text-white transition-colors block text-left"
+                      className={`text-2xl font-medium transition-colors block text-left ${
+                        theme === "dark" ? "text-gray-300 hover:text-white" : "text-gray-700 hover:text-black"
+                      }`}
                       onClick={() => setMobileMenuOpen(false)}
                     >
                       {link.name}
@@ -277,7 +352,11 @@ export default function Navbar() {
           </div>
 
           <div className="mt-auto flex flex-col gap-4">
-            <button className="w-full py-2 bg-white/10 rounded-xl text-lg font-semibold text-white transition-colors hover:bg-white/20">
+            <button
+              className={`w-full py-2 rounded-xl text-lg font-semibold transition-colors ${
+                theme === "dark" ? "bg-white/10 text-white hover:bg-white/20" : "bg-black/5 text-black hover:bg-black/10"
+              }`}
+            >
               Contact Sales
             </button>
             <Link

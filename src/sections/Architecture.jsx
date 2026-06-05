@@ -1,240 +1,541 @@
 "use client";
 
-import React, { useState, useEffect, useRef } from 'react';
-import { MonitorSmartphone, Radio, GraduationCap, Briefcase, Network, Globe, ArrowUpRight } from 'lucide-react';
-import { ScrollReveal, TextReveal, ThreeDTilt } from "@/components/Animations";
+import React, { useEffect, useRef, useState } from "react";
+import {
+  MonitorSmartphone,
+  Radio,
+  GraduationCap,
+  Briefcase,
+  Network,
+} from "lucide-react";
 
 const divisions = [
   {
-    id: 'it',
+    id: "it",
     title: "IT SOLUTIONS",
     icon: MonitorSmartphone,
     color: "from-blue-600 to-cyan-400",
-    accent: "#3b82f6",
     desc: "Cloud Systems & AI",
-    details: "Next-gen software, cloud infrastructure, and AI-driven enterprise solutions."
+    details:
+      "Next-gen software, cloud infrastructure, and AI-driven enterprise solutions.",
+    subservices: [
+      "Custom Software Development",
+      "Cloud Infrastructure & DevOps",
+      "AI & Machine Learning",
+      "Enterprise Cyber Security",
+    ],
   },
   {
-    id: 'media',
+    id: "media",
     title: "MEDIA NETWORK",
     icon: Radio,
     color: "from-purple-600 to-violet-500",
-    accent: "#a855f7",
     desc: "Digital Broadcasting",
-    details: "Global reach broadcasting and digital marketing network connecting brands to millions."
+    details:
+      "Global reach broadcasting and digital marketing network connecting brands to millions.",
+    subservices: [
+      "Digital Broadcasting & PR",
+      "Strategic Viral Marketing",
+      "Content & Video Production",
+      "Corporate Branding",
+    ],
   },
   {
-    id: 'academy',
+    id: "academy",
     title: "SKILL ACADEMY",
     icon: GraduationCap,
-    color: "from-blue-600 to-purple-600",
-    accent: "#6366f1",
-    desc: "Tech Mastery",
-    details: "Empowering the workforce of tomorrow with advanced technical training and leadership skills."
+    color: "from-pink-500 to-rose-400",
+    desc: "Tech Mastery Training",
+    details:
+      "Empowering the workforce of tomorrow with advanced technical training and leadership skills.",
+    subservices: [
+      "Advanced Tech Training",
+      "Corporate Bootcamps",
+      "Executive Leadership",
+      "Industry Certifications",
+    ],
   },
   {
-    id: 'careers',
+    id: "careers",
     title: "CAREERS",
     icon: Briefcase,
-    color: "from-cyan-500 to-blue-500",
-    accent: "#06b6d4",
-    desc: "Global Talent",
-    details: "Join a global team of innovators and shape the future of international business."
+    color: "from-emerald-500 to-teal-400",
+    desc: "Global Talent Recruitment",
+    details:
+      "Join a global team of innovators and shape the future of international business.",
+    subservices: [
+      "Global Talent Placement",
+      "Executive Search & Hiring",
+      "Internship & Training Paths",
+      "Career Consulting",
+    ],
   },
   {
-    id: 'community',
+    id: "community",
     title: "COMMUNITY",
     icon: Network,
-    color: "from-violet-600 to-purple-700",
-    accent: "#8b5cf6",
-    desc: "Business Synergy",
-    details: "A thriving ecosystem of partners, investors, and enterprise leaders shaping global markets."
-  }
+    color: "from-orange-500 to-amber-400",
+    desc: "Business Synergy Ecosystem",
+    details:
+      "A thriving ecosystem of partners, investors, and enterprise leaders shaping global markets.",
+    subservices: [
+      "B2B Partnership Corridors",
+      "Investor Network Relations",
+      "Startup Incubators & Capital",
+      "Global Enterprise Forums",
+    ],
+  },
 ];
 
 export default function Architecture() {
-  const [activeNode, setActiveNode] = useState(null);
-  const [isVisible, setIsVisible] = useState(false);
-  const [isMounted, setIsMounted] = useState(false);
-  const [rotationAngle, setRotationAngle] = useState(0);
-  const [isHovered, setIsHovered] = useState(false);
   const sectionRef = useRef(null);
+  const videoRef = useRef(null);
+
+  const [progress, setProgress] = useState(0);
+  const [isMobile, setIsMobile] = useState(false);
+  const [videoError, setVideoError] = useState(false);
+
+  const [isLocked, setIsLocked] = useState(false);
+  const isLockedRef = useRef(false);
+
+  const [innerActiveIndex, setInnerActiveIndex] = useState(0);
+  const innerIndexRef = useRef(0);
+
+  const lastProgressRef = useRef(0);
+  const touchStartY = useRef(0);
+  const lastTransitionTime = useRef(0);
 
   useEffect(() => {
-    setIsMounted(true);
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setIsVisible(true);
-          observer.disconnect();
-        }
-      },
-      { threshold: 0.1 }
-    );
-    if (sectionRef.current) observer.observe(sectionRef.current);
-    return () => observer.disconnect();
+    const handleResize = () => {
+      setIsMobile(window.innerWidth < 1024);
+    };
+
+    handleResize();
+    window.addEventListener("resize", handleResize);
+
+    return () => window.removeEventListener("resize", handleResize);
   }, []);
 
-  // Continuous smooth orbital rotation loop
   useEffect(() => {
-    if (!isVisible) return;
-    let animationFrameId;
-    const animate = () => {
-      setRotationAngle((prev) => (prev + 0.15) % 360);
-      animationFrameId = requestAnimationFrame(animate);
-    };
-    animationFrameId = requestAnimationFrame(animate);
-    return () => cancelAnimationFrame(animationFrameId);
-  }, [isVisible]);
+    const update = () => {
+      if (!sectionRef.current) return;
 
-  const getPosition = (index, total, radius, offset = 0) => {
-    const angle = (index * (360 / total) - 90 + offset) * (Math.PI / 180);
-    return {
-      x: Math.cos(angle) * radius,
-      y: Math.sin(angle) * radius
+      const rect = sectionRef.current.getBoundingClientRect();
+      const total = rect.height - window.innerHeight;
+      const current = -rect.top;
+      const progressVal = Math.max(0, Math.min(1, current / total));
+
+      setProgress(progressVal);
+
+      const last = lastProgressRef.current;
+      const revealStart = 0.38;
+
+      if (!isLockedRef.current) {
+        if (last < revealStart && progressVal >= revealStart) {
+          isLockedRef.current = true;
+          setIsLocked(true);
+          innerIndexRef.current = 0;
+          setInnerActiveIndex(0);
+
+          setTimeout(() => {
+            const targetScrollY =
+              window.scrollY + rect.top + total * revealStart;
+
+            window.scrollTo(0, targetScrollY);
+
+            if (window.lenis) {
+              window.lenis.scrollTo(targetScrollY, { immediate: true });
+            }
+          }, 0);
+        } else if (last > revealStart && progressVal <= revealStart) {
+          isLockedRef.current = true;
+          setIsLocked(true);
+          innerIndexRef.current = divisions.length - 1;
+          setInnerActiveIndex(divisions.length - 1);
+
+          setTimeout(() => {
+            const targetScrollY =
+              window.scrollY + rect.top + total * revealStart;
+
+            window.scrollTo(0, targetScrollY);
+
+            if (window.lenis) {
+              window.lenis.scrollTo(targetScrollY, { immediate: true });
+            }
+          }, 0);
+        }
+      }
+
+      lastProgressRef.current = progressVal;
     };
+
+    update();
+    window.addEventListener("scroll", update);
+    window.addEventListener("resize", update);
+
+    return () => {
+      window.removeEventListener("scroll", update);
+      window.removeEventListener("resize", update);
+    };
+  }, []);
+
+  const handleInnerScroll = (isDown) => {
+    const now = Date.now();
+    const COOLDOWN = 800;
+
+    if (now - lastTransitionTime.current < COOLDOWN) return;
+
+    if (isDown) {
+      if (innerIndexRef.current < divisions.length - 1) {
+        innerIndexRef.current += 1;
+        setInnerActiveIndex(innerIndexRef.current);
+        lastTransitionTime.current = now;
+      } else {
+        isLockedRef.current = false;
+        setIsLocked(false);
+      }
+    } else {
+      if (innerIndexRef.current > 0) {
+        innerIndexRef.current -= 1;
+        setInnerActiveIndex(innerIndexRef.current);
+        lastTransitionTime.current = now;
+      } else {
+        isLockedRef.current = false;
+        setIsLocked(false);
+      }
+    }
   };
 
-  return (
-    <section ref={sectionRef} className="relative py-32 bg-[#020202] overflow-hidden select-none min-h-screen flex flex-col justify-center">
-      {/* Background Atmosphere */}
-      <div className="absolute inset-0 z-0">
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(59,130,246,0.05)_0%,transparent_70%)]"></div>
-        <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.02)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.02)_1px,transparent_1px)] bg-[size:100px_100px] [mask-image:radial-gradient(ellipse_at_center,black,transparent_80%)]"></div>
-      </div>
+  useEffect(() => {
+    const handleWheel = (e) => {
+      e.preventDefault();
+      handleInnerScroll(e.deltaY > 0);
+    };
 
-      <div className="max-w-7xl mx-auto px-6 relative z-10 w-full">
-        {/* Header - Symmetrical Reveal */}
-        <div className="mb-40 flex flex-col text-center items-center">
-          <ScrollReveal variant="3d-unfold">
-            <div className="inline-flex items-center gap-3 px-4 py-1.5 rounded-full bg-white/5 border border-white/10 mb-6 backdrop-blur-md">
-              <span className="w-2 h-2 rounded-full bg-blue-500 animate-pulse"></span>
-              <span className="text-xs font-medium text-purple-200 tracking-wider uppercase">Architecture</span>
-            </div>
-          </ScrollReveal>
-          <h2 className="text-4xl md:text-6xl font-black text-white mb-6 uppercase tracking-tight">
-            <TextReveal text="THE ECOSYSTEM Architecture" delay={0.2} />
-          </h2>
-          <ScrollReveal variant="3d-unfold" delay={0.4}>
-            <p className="text-gray-400 max-w-2xl font-light leading-relaxed mx-auto">
-              A perfectly symmetrical architecture where every division is equidistant from the core network, 
-              ensuring balanced data flow and synchronized synergy.
-            </p>
-          </ScrollReveal>
+    const handleTouchStart = (e) => {
+      touchStartY.current = e.touches[0].clientY;
+    };
+
+    const handleTouchMove = (e) => {
+      e.preventDefault();
+
+      const currentY = e.touches[0].clientY;
+      const deltaY = touchStartY.current - currentY;
+
+      if (Math.abs(deltaY) > 40) {
+        handleInnerScroll(deltaY > 0);
+        touchStartY.current = currentY;
+      }
+    };
+
+    const handleKeyDown = (e) => {
+      const keys = ["ArrowDown", "ArrowUp", "PageDown", "PageUp", " "];
+
+      if (keys.includes(e.key)) {
+        e.preventDefault();
+
+        const isDown = ["ArrowDown", "PageDown", " "].includes(e.key);
+        handleInnerScroll(isDown);
+      }
+    };
+
+    if (isLocked) {
+      if (window.lenis) window.lenis.stop();
+
+      window.addEventListener("wheel", handleWheel, { passive: false });
+      window.addEventListener("touchstart", handleTouchStart, {
+        passive: true,
+      });
+      window.addEventListener("touchmove", handleTouchMove, {
+        passive: false,
+      });
+      window.addEventListener("keydown", handleKeyDown, { passive: false });
+    } else {
+      if (window.lenis) window.lenis.start();
+    }
+
+    return () => {
+      window.removeEventListener("wheel", handleWheel);
+      window.removeEventListener("touchstart", handleTouchStart);
+      window.removeEventListener("touchmove", handleTouchMove);
+      window.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [isLocked]);
+
+  useEffect(() => {
+    if (videoRef.current) {
+      videoRef.current.play().catch(() => { });
+    }
+  }, []);
+
+  const introEnd = 0.22;
+  const revealStart = 0.38;
+
+  const p1 = Math.min(progress / introEnd, 1);
+  const p2 =
+    progress > introEnd && progress < revealStart
+      ? (progress - introEnd) / (revealStart - introEnd)
+      : 0;
+
+  let p3 = 0;
+  let activeIndex = 0;
+
+  if (isLocked) {
+    p3 = innerActiveIndex / (divisions.length - 1);
+    activeIndex = innerActiveIndex;
+  } else {
+    if (progress >= revealStart) {
+      p3 = 1;
+      activeIndex = divisions.length - 1;
+    }
+  }
+
+  const showIntro = progress < introEnd;
+  const showServices = progress >= revealStart || isLocked;
+
+  const tunnelStyle = showServices
+    ? {
+      position: "absolute",
+      left: "0%",
+      top: "0%",
+      width: "100%",
+      height: "100%",
+      borderRadius: "0px",
+      zIndex: 0,
+    }
+    : {
+      position: "absolute",
+      left: isMobile ? `${5 * (1 - p1)}%` : `${10 * (1 - p1)}%`,
+      top: isMobile ? `${20 * (1 - p1)}%` : `${20 * (1 - p1)}%`,
+      width: isMobile ? `${90 + p1 * 10}%` : `${40 + p1 * 60}%`,
+      height: isMobile ? `${50 + p1 * 50}%` : `${60 + p1 * 40}%`,
+      borderRadius: `${42 * (1 - p1)}px`,
+      zIndex: 0,
+      boxShadow: `0 30px 100px rgba(0, 255, 255, ${0.25 * (1 - p1)
+        })`,
+    };
+
+  const tunnelScale = 1 + p1 * 0.8;
+  const tunnelTranslateY = progress * -60;
+
+  const overlayColors = [
+    "rgba(6, 182, 212, 0.15)",
+    "rgba(59, 130, 246, 0.25)",
+    "rgba(168, 85, 247, 0.25)",
+    "rgba(236, 72, 153, 0.25)",
+    "rgba(16, 185, 129, 0.25)",
+    "rgba(249, 115, 22, 0.25)",
+  ];
+
+  const colorIndex = showServices ? activeIndex + 1 : 0;
+  const activeOverlay = overlayColors[colorIndex];
+
+  return (
+    <section ref={sectionRef} className="relative h-[200vh] bg-black text-white">
+      <div className="sticky top-0 flex h-screen w-full items-center justify-center overflow-hidden bg-black">
+        {/* Tunnel Container */}
+        <div
+          className="overflow-hidden bg-black transition-all duration-300 border-black"
+          style={{
+            ...tunnelStyle,
+            borderWidth: showServices ? "0px" : `${14 * (1 - p1)}px`,
+          }}
+        >
+          <div
+            className="absolute z-0 transition-transform duration-300"
+            style={{
+              left: showServices ? "0vw" : (isMobile ? `${-5 * (1 - p1)}vw` : `${-10 * (1 - p1)}vw`),
+              top: showServices ? "0vh" : `${-20 * (1 - p1)}vh`,
+              width: "100vw",
+              height: "100vh",
+              transform: `scale(${tunnelScale}) translateY(${tunnelTranslateY}px)`,
+            }}
+          >
+            <div className="absolute inset-0 z-0 bg-black" />
+
+            {videoError ? (
+              <div className="tunnel z-10">
+                {Array.from({ length: 36 }).map((_, i) => (
+                  <span key={i} style={{ "--i": i }} />
+                ))}
+              </div>
+            ) : (
+              <video
+                ref={videoRef}
+                className="absolute inset-0 z-10 h-full w-full object-cover"
+                src="/videos/tunnel.mp4"
+                autoPlay
+                muted
+                loop
+                playsInline
+                onError={() => setVideoError(true)}
+              />
+            )}
+
+            <div className="absolute inset-0 z-20 bg-[radial-gradient(circle_at_center,transparent_20%,black_85%)]" />
+            <div className="absolute inset-0 z-20 bg-black/45" />
+
+            <div
+              className="absolute inset-0 z-30 pointer-events-none transition-colors duration-1000"
+              style={{
+                backgroundColor: activeOverlay,
+                mixBlendMode: "overlay",
+              }}
+            />
+          </div>
         </div>
 
-        {/* Circular Map Container */}
-        <ScrollReveal variant="3d-zoom" delay={0.5} className="relative w-full aspect-square max-w-[600px] md:max-w-[800px] mx-auto flex items-center justify-center rounded-full" style={{ transformStyle: "preserve-3d" }}>
-          <ThreeDTilt 
-            tiltMax={10} 
-            glareOpacity={0} 
-            scale={1.0} 
-            perspective={1200}
-            className="w-full h-full absolute inset-0 flex items-center justify-center"
-            style={{ transformStyle: "preserve-3d" }}
+        {/* Intro */}
+        <div
+          className="absolute inset-0 z-20 flex items-center justify-center px-6 transition-all duration-500 font-sans"
+          style={{
+            opacity: showIntro ? 1 - p1 : 0,
+            transform: `scale(${1 + p1 * 1.5}) translateY(-20px)`,
+            pointerEvents: showIntro ? "auto" : "none",
+          }}
+        >
+          <div className="grid w-full max-w-7xl grid-cols-1 items-center gap-12 lg:grid-cols-12">
+            <div className="hidden lg:block lg:col-span-6" />
+
+            <div className="lg:col-span-6">
+              <p className="mb-5 text-xs font-black uppercase tracking-[0.45em] text-cyan-300">
+                Infrastructure
+              </p>
+
+              <h2 className="text-4xl font-light uppercase leading-tight tracking-[0.14em] text-white md:text-6xl">
+                Step into a new world
+                <span className="mt-3 block bg-gradient-to-r from-blue-400 via-purple-300 to-cyan-300 bg-clip-text font-black text-transparent">
+                  and let your ecosystem run wild
+                </span>
+              </h2>
+
+              <p className="mt-8 max-w-xl text-sm leading-relaxed text-gray-400 font-light">
+                KP Global integrates all business verticals into one premium,
+                high-speed ecosystem. Scroll down to route core networks.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        {/* Services */}
+        <div
+          className="absolute inset-0 z-30 flex h-full w-full items-center justify-center overflow-hidden font-sans"
+          style={{
+            opacity: showServices ? 1 : 0,
+            pointerEvents: showServices ? "auto" : "none",
+            transition: "opacity 0.5s ease-in-out",
+          }}
+        >
+          <div
+            className="flex h-full w-full flex-col"
+            style={{
+              transform: `translateY(${-p3 * 100 * (divisions.length - 1)}vh)`,
+              transition: "transform 0.8s cubic-bezier(0.16, 1, 0.3, 1)",
+            }}
           >
-            {/* Animated Background Rings */}
-            <div className="absolute inset-0 flex items-center justify-center pointer-events-none" style={{ transformStyle: "preserve-3d" }}>
-              <div className="absolute w-[80%] h-[80%] border border-white/5 rounded-full" style={{ transform: "translateZ(10px)" }}></div>
-              <div className="absolute w-[60%] h-[60%] border border-white/5 rounded-full animate-spin-slow" style={{ transform: "translateZ(20px)" }}></div>
-              <div className="absolute w-[40%] h-[40%] border border-white/10 rounded-full animate-reverse-spin" style={{ transform: "translateZ(30px)" }}></div>
-            </div>
+            {divisions.map((item) => {
+              const Icon = item.icon;
 
-            {/* Central Hub: The Nucleus */}
-            <div className="relative z-20" style={{ transform: "translateZ(75px)", transformStyle: "preserve-3d" }}>
-              <div className={`w-32 h-32 md:w-56 md:h-56 rounded-full bg-black border-2 border-white/20 flex flex-col items-center justify-center p-6 shadow-[0_0_80px_rgba(59,130,246,0.15)] group transition-all duration-1000 ${isVisible ? 'scale-100 opacity-100' : 'scale-0 opacity-0'}`}>
-                <div className="absolute inset-0 rounded-full bg-[radial-gradient(circle_at_center,rgba(59,130,246,0.2)_0%,transparent_70%)] animate-pulse"></div>
-                <Globe className="w-8 h-8 md:w-12 md:h-12 text-blue-500 mb-4 animate-pulse" />
-                <h3 className="text-xs md:text-2xl font-black text-white text-center leading-none tracking-[0.2em] uppercase">
-                  KP<br/>CORE
-                </h3>
-              </div>
-            </div>
-
-            {/* SVG Connector Spokes */}
-            <svg className="absolute inset-0 w-full h-full pointer-events-none z-10" viewBox="0 0 100 100" style={{ transform: "translateZ(15px)" }}>
-              {isMounted && divisions.map((node, i) => {
-                const radius = 35; // % based
-                const angle = (i * (360 / divisions.length) - 90 + rotationAngle) * (Math.PI / 180);
-                const x2 = 50 + Math.cos(angle) * radius;
-                const y2 = 50 + Math.sin(angle) * radius;
-                
-                return (
-                  <g key={`spoke-${node.id}`}>
-                    <line
-                      x1="50" y1="50" x2={x2} y2={y2}
-                      stroke={activeNode?.id === node.id ? node.accent : "rgba(255,255,255,0.05)"}
-                      strokeWidth={activeNode?.id === node.id ? "0.4" : "0.1"}
-                      className="transition-all duration-500"
-                    />
-                    {/* Flow dots */}
-                    {isVisible && (
-                      <circle r="0.5" fill={node.accent} className="animate-data-stream">
-                        <animateMotion
-                          dur={`${2 + i}s`}
-                          repeatCount="indefinite"
-                          path={`M 50 50 L ${x2} ${y2}`}
-                        />
-                      </circle>
-                    )}
-                  </g>
-                );
-              })}
-            </svg>
-
-            {/* Outer Nodes: Perfect Circle Placement */}
-            {isMounted && divisions.map((node, i) => {
-              const radius = window.innerWidth < 768 ? 160 : 320;
-              const pos = getPosition(i, divisions.length, radius, rotationAngle);
-              
               return (
                 <div
-                  key={node.id}
-                  className={`absolute z-30 transition-opacity transition-transform duration-1000 ${isVisible ? 'opacity-100 scale-100' : 'opacity-0 scale-0 pointer-events-none'}`}
-                  style={{
-                    transform: `translate3d(${pos.x}px, ${pos.y}px, 50px)`,
-                    transformStyle: "preserve-3d",
-                    transition: 'opacity 1s cubic-bezier(0.16, 1, 0.3, 1), scale 1s cubic-bezier(0.16, 1, 0.3, 1), transform 0s',
-                    transitionDelay: isVisible ? '0ms' : `${i * 100}ms`
-                  }}
-                  onMouseEnter={() => {
-                    setActiveNode(node);
-                    setIsHovered(true);
-                  }}
-                  onMouseLeave={() => {
-                    setActiveNode(null);
-                    setIsHovered(false);
-                  }}
+                  key={item.id}
+                  className="relative flex h-screen w-full shrink-0 items-center justify-center px-6"
                 >
-                  <div className={`group relative flex flex-col items-center transition-all duration-500 ${activeNode?.id === node.id ? 'scale-110' : ''}`} style={{ transformStyle: "preserve-3d" }}>
-                    {/* Node Circle Panel */}
-                    <div className={`relative w-20 h-20 md:w-32 md:h-32 rounded-full bg-black border transition-all duration-500 flex flex-col items-center justify-center gap-2 p-4 ${activeNode?.id === node.id ? 'border-white/50 shadow-[0_0_40px_rgba(255,255,255,0.1)] scale-110' : 'border-white/10 group-hover:border-white/30'}`} style={{ transform: "translateZ(20px)" }}>
-                      <div className={`w-10 h-10 md:w-14 md:h-14 rounded-full bg-gradient-to-br ${node.color} flex items-center justify-center shadow-lg transition-transform duration-500 group-hover:rotate-12`}>
-                        <node.icon className="w-5 h-5 md:w-7 md:h-7 text-white" />
+                  <div className="grid w-full max-w-7xl grid-cols-1 items-center gap-8 lg:grid-cols-12 lg:gap-14">
+                    <div className="space-y-5 lg:col-span-5">
+                      <div
+                        className={`flex h-16 w-16 items-center justify-center rounded-3xl bg-gradient-to-br ${item.color} shadow-lg shadow-black/40 lg:h-20 lg:w-20`}
+                      >
+                        <Icon className="h-8 w-8 text-white lg:h-10 lg:w-10" />
                       </div>
-                      <span className="hidden md:block text-[8px] font-black text-white/40 tracking-widest uppercase">
-                        {node.title.split(' ')[0]}
-                      </span>
+
+                      <div>
+                        <p className="text-[10px] font-black uppercase tracking-[0.35em] text-white/40 font-mono lg:text-xs">
+                          ROUTING CORE // {item.id.toUpperCase()}_SVC
+                        </p>
+
+                        <h3 className="mt-3 text-4xl font-black uppercase leading-none tracking-tight text-white md:text-5xl lg:text-7xl">
+                          {item.title}
+                        </h3>
+                      </div>
+
+                      <p className="text-sm font-bold uppercase tracking-widest text-gray-200 lg:text-lg">
+                        {item.desc}
+                      </p>
+
+                      <p className="max-w-lg text-sm leading-relaxed text-gray-300 font-light">
+                        {item.details}
+                      </p>
                     </div>
 
-                    {/* Label Floating Above/Below */}
-                    <div className={`absolute transition-all duration-500 ${pos.y > 0 ? 'top-full mt-4' : 'bottom-full mb-4'} ${activeNode?.id === node.id ? 'opacity-100 scale-100' : 'opacity-0 scale-90 invisible'}`} style={{ transform: "translateZ(80px)" }}>
-                      <div className="bg-black/90 backdrop-blur-xl border border-white/20 px-6 py-4 rounded-2xl text-center shadow-2xl w-[240px]">
-                        <h4 className="text-xs font-black text-white uppercase tracking-widest mb-1">{node.title}</h4>
-                        <p className="text-[10px] text-blue-400 font-bold uppercase tracking-tighter mb-2">{node.desc}</p>
-                        <p className="text-[9px] text-gray-400 font-medium leading-relaxed tracking-tight whitespace-normal">
-                          {node.details}
-                        </p>
-                      </div>
+                    <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:col-span-7">
+                      {item.subservices.map((sub, sIdx) => (
+                        <div
+                          key={sIdx}
+                          className="rounded-2xl border border-white/10 bg-black/60 p-5 backdrop-blur-xl transition-all duration-300 hover:scale-[1.02] hover:border-white/20 hover:bg-black/75 lg:p-6"
+                        >
+                          <span
+                            className={`mb-4 block h-2 w-2 rounded-full bg-gradient-to-r ${item.color}`}
+                          />
+                          <h4 className="text-xs font-black uppercase tracking-wider text-white lg:text-sm">
+                            {sub}
+                          </h4>
+                        </div>
+                      ))}
                     </div>
                   </div>
                 </div>
               );
             })}
-          </ThreeDTilt>
-        </ScrollReveal>
+          </div>
+        </div>
+
+        <style jsx>{`
+          .tunnel {
+            position: absolute;
+            inset: 0;
+            overflow: hidden;
+            perspective: 900px;
+            background: radial-gradient(circle at center, #07172a 0%, #000 65%);
+          }
+
+          .tunnel span {
+            position: absolute;
+            left: 50%;
+            top: 0%;
+            width: 78vw;
+            height: 44vw;
+            border: 1px solid rgba(0, 255, 255, 0.35);
+            box-shadow: 0 0 22px rgba(0, 255, 255, 0.45);
+            transform: translate(-50%, -50%)
+              translateZ(calc(var(--i) * -120px));
+            animation: tunnelMove 4.2s linear infinite;
+            animation-delay: calc(var(--i) * -0.14s);
+          }
+
+          .tunnel span:nth-child(2n) {
+            border-color: rgba(168, 85, 247, 0.32);
+            box-shadow: 0 0 22px rgba(168, 85, 247, 0.4);
+          }
+
+          @keyframes tunnelMove {
+            0% {
+              transform: translate(-50%, -50%) translateZ(-2600px)
+                scale(0.2);
+              opacity: 0;
+            }
+
+            15% {
+              opacity: 1;
+            }
+
+            100% {
+              transform: translate(-50%, -50%) translateZ(450px) scale(1.4);
+              opacity: 0;
+            }
+          }
+        `}</style>
       </div>
     </section>
   );
 }
-

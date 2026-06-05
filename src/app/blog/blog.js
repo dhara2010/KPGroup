@@ -1,20 +1,19 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { 
+import {
   Search, User, MessageSquare, Calendar, ArrowRight, Tag, X, Clock, Terminal, Activity, ChevronRight, ArrowLeft, Send, Share2
 } from "lucide-react";
 import { ScrollReveal } from "@/components/Animations";
 import PageHero from "@/components/PageHero";
 import Image from "next/image";
-
-import { INITIAL_POSTS, RECENT_COMMENTS } from "./blogData";
+import { RECENT_COMMENTS } from "./blogData";
 
 export default function BlogPage() {
   const router = useRouter();
-  const [posts, setPosts] = useState(INITIAL_POSTS);
+  const [posts, setPosts] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
   const [activeSearch, setActiveSearch] = useState("");
   const [selectedCategory, setSelectedCategory] = useState(null);
@@ -27,7 +26,7 @@ export default function BlogPage() {
     const parseMonth = (mStr) => {
       const [m, y] = mStr.split(" ");
       const months = [
-        "January", "February", "March", "April", "May", "June", 
+        "January", "February", "March", "April", "May", "June",
         "July", "August", "September", "October", "November", "December"
       ];
       return new Date(parseInt(y), months.indexOf(m), 1);
@@ -35,11 +34,31 @@ export default function BlogPage() {
     return parseMonth(b) - parseMonth(a);
   });
 
+
+  useEffect(() => {
+    const fetchBlogs = async () => {
+      try {
+        const res = await fetch("/api/blogs");
+        const data = await res.json();
+        if (Array.isArray(data)) {
+          setPosts(data);
+        } else {
+          console.error("Error fetching blogs: response is not an array", data);
+        }
+      } catch (error) {
+        console.error("Error fetching blogs:", error);
+      }
+    };
+
+    fetchBlogs();
+  }, []);
+
+
   // Filter posts based on active search, category, and month selection
-  const filteredPosts = posts.filter((post) => {
+  const filteredPosts = (Array.isArray(posts) ? posts : []).filter((post) => {
     const matchesSearch = activeSearch
       ? post.title.toLowerCase().includes(activeSearch.toLowerCase()) ||
-        post.content.toLowerCase().includes(activeSearch.toLowerCase())
+      post.content.toLowerCase().includes(activeSearch.toLowerCase())
       : true;
     const matchesCategory = selectedCategory ? post.category === selectedCategory : true;
     const matchesMonth = selectedMonth ? post.month === selectedMonth : true;
@@ -74,7 +93,7 @@ export default function BlogPage() {
   return (
     <div className="relative min-h-screen overflow-hidden font-sans pt-0 pb-20 bg-[#020202] text-white">
       {styleTag}
-      
+
       {/* Moving background grid & neon ambient lights */}
       <div className="absolute inset-0 pointer-events-none z-0">
         <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.008)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.008)_1px,transparent_1px)] bg-[size:50px_50px] opacity-40 animate-grid-move"></div>
@@ -84,18 +103,18 @@ export default function BlogPage() {
 
       <div className="relative z-10">
         {/* Immersive Cyber Header Section */}
-        <PageHero 
-          title="Insights Blog" 
-          description="System journals, software reports, and development notes from our engineering and strategic leads." 
+        <PageHero
+          title="Insights Blog"
+          description="System journals, software reports, and development notes from our engineering and strategic leads."
         />
 
         {/* Main Content Layout Grid */}
         <div className="max-w-7xl mx-auto px-6 relative z-10">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-            
+
             {/* Left Column: Bento Grid Feed */}
             <div className="lg:col-span-8 space-y-8">
-              
+
               {/* Active Filter Bar */}
               {isFiltering && (
                 <div className="flex flex-wrap items-center gap-3 p-4 bg-white/[0.02] border border-white/10 rounded-2xl mb-6 backdrop-blur-xl">
@@ -127,8 +146,8 @@ export default function BlogPage() {
                       </button>
                     </span>
                   )}
-                  <button 
-                    onClick={clearFilters} 
+                  <button
+                    onClick={clearFilters}
                     className="text-xs text-gray-500 hover:text-white underline ml-auto transition-colors"
                   >
                     Clear All
@@ -153,7 +172,7 @@ export default function BlogPage() {
                       const parseMonth = (mStr) => {
                         const [m, y] = mStr.split(" ");
                         const months = [
-                          "January", "February", "March", "April", "May", "June", 
+                          "January", "February", "March", "April", "May", "June",
                           "July", "August", "September", "October", "November", "December"
                         ];
                         return new Date(parseInt(y), months.indexOf(m), 1);
@@ -163,7 +182,7 @@ export default function BlogPage() {
 
                     return sortedMonths.map((monthName) => {
                       const postsInMonth = groupedPosts[monthName];
-                      
+
                       // Highlight layout: render post ID 2 horizontal featured split if inside December 2024 and filters are inactive
                       const hasFeatured = !isFiltering && monthName === "December 2024" && postsInMonth.some(p => p.id === 2);
                       const monthFeaturedPost = hasFeatured ? postsInMonth.find(p => p.id === 2) : null;
@@ -172,13 +191,12 @@ export default function BlogPage() {
                       const isSelectedMonthBox = selectedMonth === monthName;
 
                       return (
-                        <div 
+                        <div
                           key={monthName}
-                          className={`space-y-6 border rounded-[2rem] p-6 md:p-8 backdrop-blur-xl relative group transition-all duration-500 ${
-                            isSelectedMonthBox 
-                              ? "border-cyan-500/40 bg-cyan-950/5 shadow-[0_0_50px_rgba(6,182,212,0.08)]" 
+                          className={`space-y-6 border rounded-[2rem] p-6 md:p-8 backdrop-blur-xl relative group transition-all duration-500 ${isSelectedMonthBox
+                              ? "border-cyan-500/40 bg-cyan-950/5 shadow-[0_0_50px_rgba(6,182,212,0.08)]"
                               : "border-white/5 bg-[#050505]/20 hover:border-cyan-500/10"
-                          }`}
+                            }`}
                         >
                           {/* Corner decorations */}
                           <div className={`absolute top-0 left-0 w-2 h-2 border-t border-l transition-colors ${isSelectedMonthBox ? "border-cyan-400" : "border-white/10 group-hover:border-cyan-500/30"}`} />
@@ -200,14 +218,13 @@ export default function BlogPage() {
                           {/* Featured post (if any in this month) */}
                           {monthFeaturedPost && (
                             <ScrollReveal variant="fade-up">
-                              <div 
+                              <div
                                 id={`post-${monthFeaturedPost.id}`}
                                 onClick={() => handlePostClick(monthFeaturedPost)}
-                                className={`bg-[#050505]/60 border rounded-3xl p-6 md:p-8 backdrop-blur-2xl cursor-pointer transition-all duration-500 relative overflow-hidden group/featured ${
-                                  activePostId === monthFeaturedPost.id 
-                                    ? "border-cyan-400 shadow-[0_0_40px_rgba(34,211,238,0.2)] scale-[1.01]" 
+                                className={`bg-[#050505]/60 border rounded-3xl p-6 md:p-8 backdrop-blur-2xl cursor-pointer transition-all duration-500 relative overflow-hidden group/featured ${activePostId === monthFeaturedPost.id
+                                    ? "border-cyan-400 shadow-[0_0_40px_rgba(34,211,238,0.2)] scale-[1.01]"
                                     : "border-white/5 hover:border-blue-500/20 hover:bg-[#070707]/70 hover:shadow-[0_0_40px_rgba(59,130,246,0.12)]"
-                                }`}
+                                  }`}
                               >
                                 <div className="absolute top-0 left-0 w-2.5 h-2.5 border-t-2 border-l-2 border-white/20 group-hover/featured:border-cyan-400 transition-colors" />
                                 <div className="absolute top-0 right-0 w-2.5 h-2.5 border-t-2 border-r-2 border-white/20 group-hover/featured:border-cyan-400 transition-colors" />
@@ -216,9 +233,9 @@ export default function BlogPage() {
 
                                 <div className="grid grid-cols-1 md:grid-cols-12 gap-8 items-center">
                                   <div className="md:col-span-7 relative rounded-2xl overflow-hidden aspect-video max-h-[300px] border border-white/5 bg-black/40">
-                                    <Image 
-                                      src={monthFeaturedPost.image} 
-                                      alt={monthFeaturedPost.title} 
+                                    <Image
+                                      src={monthFeaturedPost.image}
+                                      alt={monthFeaturedPost.title}
                                       fill
                                       sizes="(max-width: 768px) 100vw, 50vw"
                                       className="object-cover transition-transform duration-700 group-hover:scale-102"
@@ -246,9 +263,9 @@ export default function BlogPage() {
                                     <p className="text-gray-400 font-light text-xs md:text-sm leading-relaxed line-clamp-3">
                                       {monthFeaturedPost.excerpt}
                                     </p>
-                                    
+
                                     <div className="flex flex-wrap items-center gap-3 text-[10px] font-semibold text-gray-500 border-t border-white/5 pt-3">
-                                      <button 
+                                      <button
                                         onClick={(e) => {
                                           e.stopPropagation();
                                           setSelectedMonth(monthFeaturedPost.month);
@@ -303,7 +320,7 @@ export default function BlogPage() {
                   <Clock className="w-12 h-12 text-gray-600 mx-auto mb-4 animate-bounce" />
                   <h3 className="text-lg font-bold text-white uppercase tracking-widest font-mono">No matching system logs</h3>
                   <p className="text-gray-500 text-xs mt-1 mb-6 font-mono">Status: FILTER_EMPTY_RESULT_0x004</p>
-                  <button 
+                  <button
                     onClick={clearFilters}
                     className="px-6 py-2.5 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-500 hover:to-purple-500 rounded-full text-xs font-bold uppercase tracking-wider text-white transition-all duration-300"
                   >
@@ -316,7 +333,7 @@ export default function BlogPage() {
 
             {/* Right Column: Sidebar Widgets */}
             <div className="lg:col-span-4 space-y-6">
-              
+
               {/* Search Widget */}
               <ScrollReveal variant="fade-left">
                 <div className="bg-[#050505]/60 border border-white/5 rounded-3xl p-6 backdrop-blur-2xl relative group">
@@ -326,14 +343,14 @@ export default function BlogPage() {
                     SEARCH HUB
                   </h3>
                   <form onSubmit={handleSearchSubmit} className="relative flex gap-2">
-                    <input 
-                      type="text" 
+                    <input
+                      type="text"
                       placeholder="Enter system tag or keyword..."
                       value={searchQuery}
                       onChange={(e) => setSearchQuery(e.target.value)}
                       className="flex-1 bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-xs text-white placeholder-gray-500 focus:outline-none focus:border-cyan-500 focus:shadow-[0_0_15px_rgba(6,182,212,0.15)] transition-all duration-300"
                     />
-                    <button 
+                    <button
                       type="submit"
                       className="px-4 py-3 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-500 hover:to-purple-500 text-white rounded-xl text-xs font-bold transition-all duration-300 flex items-center justify-center"
                     >
@@ -352,7 +369,7 @@ export default function BlogPage() {
                   </h3>
                   <div className="flex flex-col gap-1">
                     {posts.map((post) => (
-                      <button 
+                      <button
                         key={post.id}
                         onClick={() => handleRecentPostClick(post.id)}
                         className="block text-left text-xs font-medium text-gray-400 hover:text-cyan-400 transition-all duration-300 py-2 border-b border-white/[0.02] last:border-b-0 leading-relaxed hover:pl-2 group"
@@ -376,12 +393,12 @@ export default function BlogPage() {
                   </h3>
                   <div className="flex flex-col gap-2">
                     {RECENT_COMMENTS.map((comment, index) => (
-                      <div 
+                      <div
                         key={index}
                         className="text-xs text-gray-400 py-2 border-b border-white/[0.02] last:border-b-0 leading-relaxed"
                       >
                         <span className="text-gray-300 font-semibold">{comment.author}</span> on{" "}
-                        <button 
+                        <button
                           onClick={() => handleRecentPostClick(comment.postId)}
                           className="text-blue-400 hover:text-cyan-400 transition-colors font-medium text-left hover:underline"
                         >
@@ -404,17 +421,16 @@ export default function BlogPage() {
                     {archivesList.map((month) => {
                       const count = posts.filter((p) => p.month === month).length;
                       return (
-                        <button 
+                        <button
                           key={month}
                           onClick={() => {
                             setSelectedMonth(selectedMonth === month ? null : month);
                             setSelectedCategory(null);
                           }}
-                          className={`block text-left text-xs py-2 border-b border-white/[0.02] last:border-b-0 transition-all duration-300 group hover:pl-2 ${
-                            selectedMonth === month 
-                              ? "text-cyan-400 font-bold pl-2" 
+                          className={`block text-left text-xs py-2 border-b border-white/[0.02] last:border-b-0 transition-all duration-300 group hover:pl-2 ${selectedMonth === month
+                              ? "text-cyan-400 font-bold pl-2"
                               : "text-gray-400 hover:text-cyan-400"
-                          }`}
+                            }`}
                         >
                           <span className="inline-flex items-center w-full justify-between">
                             <span className="inline-flex items-center">
@@ -441,17 +457,16 @@ export default function BlogPage() {
                     {categoriesList.map((cat) => {
                       const count = posts.filter((p) => p.category === cat).length;
                       return (
-                        <button 
+                        <button
                           key={cat}
                           onClick={() => {
                             setSelectedCategory(selectedCategory === cat ? null : cat);
                             setSelectedMonth(null);
                           }}
-                          className={`block text-left text-xs py-2 border-b border-white/[0.02] last:border-b-0 transition-all duration-300 group hover:pl-2 ${
-                            selectedCategory === cat 
-                              ? "text-purple-400 font-bold pl-2" 
+                          className={`block text-left text-xs py-2 border-b border-white/[0.02] last:border-b-0 transition-all duration-300 group hover:pl-2 ${selectedCategory === cat
+                              ? "text-purple-400 font-bold pl-2"
                               : "text-gray-400 hover:text-purple-400"
-                          }`}
+                            }`}
                         >
                           <span className="inline-flex items-center w-full justify-between">
                             <span className="inline-flex items-center">
@@ -479,14 +494,13 @@ export default function BlogPage() {
 // Sub-component: Standard Grid Post (Bento style)
 function renderStandardGridPost(post, activePostId, handlePostClick, setSelectedCategory, setSelectedMonth) {
   return (
-    <div 
+    <div
       id={`post-${post.id}`}
       onClick={() => handlePostClick(post)}
-      className={`bg-[#050505]/40 border rounded-3xl p-6 backdrop-blur-2xl cursor-pointer transition-all duration-500 relative overflow-hidden flex flex-col justify-between h-full group ${
-        activePostId === post.id 
-          ? "border-cyan-400 shadow-[0_0_40px_rgba(34,211,238,0.2)] scale-[1.01]" 
+      className={`bg-[#050505]/40 border rounded-3xl p-6 backdrop-blur-2xl cursor-pointer transition-all duration-500 relative overflow-hidden flex flex-col justify-between h-full group ${activePostId === post.id
+          ? "border-cyan-400 shadow-[0_0_40px_rgba(34,211,238,0.2)] scale-[1.01]"
           : "border-white/5 hover:border-purple-500/20 hover:bg-[#070707]/50"
-      }`}
+        }`}
     >
       <div className="absolute top-0 left-0 w-2 h-2 border-t border-l border-white/5 group-hover:border-purple-500/40 transition-colors" />
       <div className="absolute bottom-0 right-0 w-2 h-2 border-b border-r border-white/5 group-hover:border-purple-500/40 transition-colors" />
@@ -499,12 +513,12 @@ function renderStandardGridPost(post, activePostId, handlePostClick, setSelected
         {/* Post Image */}
         {post.image && (
           <div className="relative rounded-2xl overflow-hidden mb-5 aspect-[16/10] bg-black/40 border border-white/5">
-            <Image 
-              src={post.image} 
-              alt={post.title} 
+            <Image
+              src={post.image}
+              alt={post.title}
               fill
               sizes="(max-width: 768px) 100vw, 33vw"
-              className="object-cover transition-transform duration-700 group-hover:scale-103" 
+              className="object-cover transition-transform duration-700 group-hover:scale-103"
             />
             <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent pointer-events-none z-10" />
           </div>
@@ -514,7 +528,7 @@ function renderStandardGridPost(post, activePostId, handlePostClick, setSelected
         <div className="flex flex-wrap items-center gap-3 text-[10px] font-semibold text-gray-500 mb-3 border-b border-white/5 pb-3">
           <span className="flex items-center gap-1"><User className="w-3 h-3 text-cyan-400" />{post.author}</span>
           <span>•</span>
-          <button 
+          <button
             onClick={(e) => {
               e.stopPropagation();
               setSelectedMonth(post.month);
@@ -549,7 +563,7 @@ function renderStandardGridPost(post, activePostId, handlePostClick, setSelected
         >
           {post.category}
         </button>
-        
+
         <span className="inline-flex items-center gap-2 text-[10px] font-bold uppercase tracking-wider text-gray-300 group-hover:text-cyan-400 transition-colors group/btn">
           Read Log
           <ArrowRight className="w-3 h-3 text-cyan-400 transition-transform duration-300 group-hover/btn:translate-x-1" />
@@ -562,14 +576,13 @@ function renderStandardGridPost(post, activePostId, handlePostClick, setSelected
 // Sub-component: Terminal styled system update card
 function renderTerminalPost(post, activePostId, handlePostClick) {
   return (
-    <div 
+    <div
       id={`post-${post.id}`}
       onClick={() => handlePostClick(post)}
-      className={`bg-black/80 border rounded-3xl p-6 backdrop-blur-2xl cursor-pointer transition-all duration-500 relative overflow-hidden flex flex-col justify-between h-full group ${
-        activePostId === post.id 
-          ? "border-cyan-400 shadow-[0_0_40px_rgba(34,211,238,0.2)]" 
+      className={`bg-black/80 border rounded-3xl p-6 backdrop-blur-2xl cursor-pointer transition-all duration-500 relative overflow-hidden flex flex-col justify-between h-full group ${activePostId === post.id
+          ? "border-cyan-400 shadow-[0_0_40px_rgba(34,211,238,0.2)]"
           : "border-white/5 hover:border-emerald-500/20"
-      }`}
+        }`}
     >
       {activePostId === post.id && (
         <div className="absolute inset-0 w-[120%] bg-gradient-to-r from-transparent via-cyan-400/5 to-transparent skew-x-12 animate-pulse-glow pointer-events-none" />
@@ -612,7 +625,8 @@ function renderTerminalPost(post, activePostId, handlePostClick) {
 
 // Visual CSS adjustments
 const styleTag = (
-  <style dangerouslySetInnerHTML={{__html: `
+  <style dangerouslySetInnerHTML={{
+    __html: `
     @keyframes pulseGlow {
       0% { left: -100%; opacity: 0; }
       50% { opacity: 0.5; }

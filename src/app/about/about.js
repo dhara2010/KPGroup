@@ -7,6 +7,61 @@ import Image from 'next/image';
 import { ScrollReveal, TextReveal } from "@/components/Animations";
 import PageHero from "@/components/PageHero";
 
+// Custom Animated Counter using requestAnimationFrame and IntersectionObserver
+function AnimatedCounter({ target, duration = 1500 }) {
+  const [count, setCount] = React.useState("");
+  const elementRef = React.useRef(null);
+  const hasAnimated = React.useRef(false);
+
+  React.useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting && !hasAnimated.current) {
+          hasAnimated.current = true;
+
+          const numberMatch = String(target).match(/^([\d.]+)(.*)$/);
+          if (numberMatch) {
+            const numValue = parseFloat(numberMatch[1]);
+            const suffix = numberMatch[2];
+            const isFloat = String(numberMatch[1]).includes(".");
+
+            let startTimestamp = null;
+            const step = (timestamp) => {
+              if (!startTimestamp) startTimestamp = timestamp;
+              const progress = Math.min((timestamp - startTimestamp) / duration, 1);
+              const currentValue = progress * numValue;
+
+              if (isFloat) {
+                setCount(currentValue.toFixed(1) + suffix);
+              } else {
+                setCount(Math.floor(currentValue) + suffix);
+              }
+
+              if (progress < 1) {
+                window.requestAnimationFrame(step);
+              }
+            };
+            window.requestAnimationFrame(step);
+          } else {
+            setCount(target);
+          }
+
+          observer.disconnect();
+        }
+      },
+      { threshold: 0.1 }
+    );
+
+    if (elementRef.current) {
+      observer.observe(elementRef.current);
+    }
+
+    return () => observer.disconnect();
+  }, [target, duration]);
+
+  return <span ref={elementRef}>{count || target}</span>;
+}
+
 export default function AboutPage() {
   return (
     <div className="relative bg-[#020202] text-white min-h-screen overflow-hidden font-sans pt-0 pb-20">
@@ -48,28 +103,28 @@ export default function AboutPage() {
               </ScrollReveal>
 
               {/* Stats Block */}
-              <ScrollReveal variant="fade-up" delay={0.2} className="grid grid-cols-2 gap-8 border-t border-white/5 pt-8">
+              <ScrollReveal variant="fade-up" delay={0.2} className="grid grid-cols-2 gap-8 border-t border-white/5 pt-8 font-sans">
                 <div>
                   <div className="text-4xl md:text-5xl font-black text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-400 font-mono tracking-tighter">
-                    100+
+                    <AnimatedCounter target="100+" />
                   </div>
                   <div className="text-xs uppercase font-bold text-gray-500 tracking-wider mt-1">Happy Clients</div>
                 </div>
                 <div>
                   <div className="text-4xl md:text-5xl font-black text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-400 font-mono tracking-tighter">
-                    100+
+                    <AnimatedCounter target="100+" />
                   </div>
                   <div className="text-xs uppercase font-bold text-gray-500 tracking-wider mt-1">Projects Done</div>
                 </div>
                 <div>
                   <div className="text-4xl md:text-5xl font-black text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-400 font-mono tracking-tighter">
-                    20+
+                    <AnimatedCounter target="20+" />
                   </div>
                   <div className="text-xs uppercase font-bold text-gray-500 tracking-wider mt-1">Professional Team</div>
                 </div>
                 <div>
                   <div className="text-4xl md:text-5xl font-black text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-400 font-mono tracking-tighter">
-                    5+
+                    <AnimatedCounter target="5+" />
                   </div>
                   <div className="text-xs uppercase font-bold text-gray-500 tracking-wider mt-1">Years Experience</div>
                 </div>

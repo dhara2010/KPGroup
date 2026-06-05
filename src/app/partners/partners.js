@@ -1,45 +1,48 @@
 "use client";
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Star, ShieldCheck, Heart, ArrowUpRight, CheckCircle2, ChevronRight } from 'lucide-react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { ScrollReveal, TextReveal } from "@/components/Animations";
 import PageHero from "@/components/PageHero";
 
-const supportersRow1 = [
-  { name: "Zoho Premium Partner", logo: "/logos/Zoho-premium-partner.webp", type: "Enterprise" },
-  { name: "KP Global IT Solutions", logo: "/logos/KP-Global-IT-Solutions-logo.webp", type: "Vertical" },
-  { name: "KP Global Academy of Skills", logo: "/logos/Untitled-design-4.webp", type: "Vertical" },
-  { name: "Aequitas Infotech", logo: "/logos/Aequitas-Infotech.webp", type: "Enterprise" },
-  { name: "Weapplinse Technologies", logo: "/logos/Untitled-design-6.webp", type: "Enterprise" },
-  { name: "1 Million Entrepreneurs", logo: "/logos/1MEIF.webp", type: "Ecosystem" },
-  { name: "VyapaarJagat", logo: "/logos/vyapaarjagat.webp", type: "Ecosystem" }
-];
-
-const supportersRow2 = [
-  { name: "PeersGlobal", logo: "/logos/peersglobal.webp", type: "Ecosystem" },
-  { name: "Greenpreneur", logo: "/logos/greenpreneur.webp", type: "Ecosystem" },
-  { name: "Fempreneur", logo: "/logos/fempreneur.webp", type: "Ecosystem" },
-  { name: "Entrepreneur Journy", logo: "/logos/entrepreneurjouryny.webp", type: "Ecosystem" },
-  { name: "KP Global Jobs", logo: "/logos/KP_Global_Jobs-removebg-preview.webp", type: "Vertical" },
-  { name: "KP Global Business Community", logo: "/logos/KP-Global-Business-Community-Entrepreneurs-3.webp", type: "Vertical" },
-  { name: "KP Global Network", logo: "/logos/Untitled_design__5_-removebg-preview.webp", type: "Vertical" }
-];
-
-const allSupporters = [...supportersRow1, ...supportersRow2];
 
 export default function PartnersPage() {
-  const [selectedFilter, setSelectedFilter] = useState('All');
-  const filters = ['All', 'Enterprise', 'Vertical', 'Ecosystem'];
+  const [selectedFilter, setSelectedFilter] = useState("All");
+  const [partners, setPartners] = useState([]);
 
-  const filteredSupporters = selectedFilter === 'All' 
-    ? allSupporters 
-    : allSupporters.filter(item => item.type === selectedFilter);
+  const filters = ["All", "Enterprise", "Vertical", "Ecosystem"];
+
+  useEffect(() => {
+    const fetchPartners = async () => {
+      try {
+        const res = await fetch("/api/partners");
+        const data = await res.json();
+        if (Array.isArray(data)) {
+          setPartners(data);
+        } else {
+          console.log("Failed to fetch partners: response is not an array", data);
+        }
+      } catch (error) {
+        console.log("Failed to fetch partners", error);
+      }
+    };
+
+    fetchPartners();
+  }, []);
+
+  const filteredSupporters =
+    selectedFilter === "All"
+      ? (Array.isArray(partners) ? partners : [])
+      : (Array.isArray(partners) ? partners.filter((item) => item.type === selectedFilter) : []);
+
+  const supportersRow1 = Array.isArray(partners) ? partners.slice(0, Math.ceil(partners.length / 2)) : [];
+  const supportersRow2 = Array.isArray(partners) ? partners.slice(Math.ceil(partners.length / 2)) : [];
 
   return (
     <div className="relative bg-[#020202] text-white min-h-screen overflow-hidden font-sans pt-0 pb-20">
-      
+
       {/* Dynamic Laser Background Grid */}
       <div className="absolute inset-0 pointer-events-none opacity-10 z-0">
         <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.01)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.01)_1px,transparent_1px)] bg-[size:45px_45px]"></div>
@@ -48,10 +51,10 @@ export default function PartnersPage() {
       </div>
 
       <div className="relative z-10">
-        
-        <PageHero 
-          title="Partners" 
-          description="Bridging technical brilliance with massive entrepreneurial networks. We work in unison with enterprises, skill development centers, B2B digital communities, and global career pathways." 
+
+        <PageHero
+          title="Partners"
+          description="Bridging technical brilliance with massive entrepreneurial networks. We work in unison with enterprises, skill development centers, B2B digital communities, and global career pathways."
         />
 
         {/* SECTION 2: SUPPORTERS / LOGOS AREA */}
@@ -72,11 +75,10 @@ export default function PartnersPage() {
                 <button
                   key={filter}
                   onClick={() => setSelectedFilter(filter)}
-                  className={`px-5 py-2 text-xs font-bold uppercase tracking-wider rounded-full border transition-all duration-300 ${
-                    selectedFilter === filter
+                  className={`px-5 py-2 text-xs font-bold uppercase tracking-wider rounded-full border transition-all duration-300 ${selectedFilter === filter
                       ? 'bg-white text-black border-white shadow-lg shadow-white/5'
                       : 'bg-transparent border-white/10 text-gray-400 hover:text-white hover:border-white/20'
-                  }`}
+                    }`}
                 >
                   {filter}
                 </button>
@@ -86,8 +88,8 @@ export default function PartnersPage() {
 
           {/* Animated Bento Grid */}
           <div className="max-w-7xl mx-auto px-6 mb-20">
-            <div 
-              key={selectedFilter} 
+            <div
+              key={selectedFilter}
               className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-6"
             >
               {filteredSupporters.map((supporter, idx) => (
@@ -105,16 +107,16 @@ export default function PartnersPage() {
                   <div className="h-16 w-full flex items-center justify-center relative">
                     <div className="absolute inset-0 bg-blue-500/5 rounded-full blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
                     <div className="relative h-full w-[85%]">
-                      <Image 
-                        src={supporter.logo} 
-                        alt={supporter.name} 
+                      <Image
+                        src={supporter.logo}
+                        alt={supporter.name}
                         fill
                         sizes="180px"
                         className="object-contain filter brightness-110 group-hover:scale-108 transition-transform duration-500 z-10"
                       />
                     </div>
                   </div>
-                  
+
                   <div className="w-full text-center mt-4 pt-4 border-t border-white/[0.03] group-hover:border-white/[0.08] transition-colors duration-500">
                     <span className="text-[10px] font-black text-gray-500 group-hover:text-blue-400 uppercase tracking-widest block transition-colors duration-300">
                       {supporter.name}
@@ -125,7 +127,8 @@ export default function PartnersPage() {
             </div>
           </div>
 
-          <style dangerouslySetInnerHTML={{__html: `
+          <style dangerouslySetInnerHTML={{
+            __html: `
             @keyframes partnerFloatIn {
               from {
                 opacity: 0;
@@ -147,12 +150,12 @@ export default function PartnersPage() {
               <div className="flex w-max animate-[marquee_35s_linear_infinite] hover:[animation-play-state:paused]">
                 <div className="flex gap-6 px-3">
                   {[...supportersRow1, ...supportersRow1, ...supportersRow1].map((supporter, idx) => (
-                    <div 
-                      key={`marquee1-${idx}`} 
+                    <div
+                      key={`marquee1-${idx}`}
                       className="relative flex items-center justify-center w-[250px] h-[100px] shrink-0 p-4 rounded-[1.5rem] bg-white border border-white/10 hover:scale-105 transition-transform duration-300 group cursor-default shadow-lg"
                     >
-                      <Image 
-                        src={supporter.logo} 
+                      <Image
+                        src={supporter.logo}
                         alt={supporter.name}
                         fill
                         sizes="250px"
@@ -169,7 +172,8 @@ export default function PartnersPage() {
 
       </div>
 
-      <style dangerouslySetInnerHTML={{__html: `
+      <style dangerouslySetInnerHTML={{
+        __html: `
         @keyframes marquee {
           0% { transform: translateX(0); }
           100% { transform: translateX(-33.33%); }

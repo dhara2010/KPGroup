@@ -17,6 +17,9 @@ const BlogPage = dynamic(() => import("../blog/blog"), {
 const SinglePostPage = dynamic(() => import("../blog/SinglePostPage"), {
   loading: () => <div className="min-h-screen bg-black flex items-center justify-center text-gray-500 font-mono">LOADING_MODULE...</div>
 });
+const VisionPage = dynamic(() => import("../../sections/Vision"), {
+  loading: () => <div className="min-h-screen bg-black flex items-center justify-center text-gray-500 font-mono">LOADING_MODULE...</div>
+});
 
 export default function CatchAllPage({ params }) {
   const resolvedParams = use(params);
@@ -33,6 +36,10 @@ export default function CatchAllPage({ params }) {
 
   if (currentSlug === "contact") {
     return <ContactPage />;
+  }
+
+   if (currentSlug === "vision") {
+    return <VisionPage />;
   }
 
   if (currentSlug === "blog") {

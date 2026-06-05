@@ -25,14 +25,35 @@ export default function ContactPage() {
   const [isSubmitted, setIsSubmitted] = useState(false);
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
-    if (!formData.consent) return;
+  e.preventDefault();
+
+  if (!formData.consent) return;
+
+  try {
     setIsSubmitting(true);
-    // Simulate API transmission
-    await new Promise((resolve) => setTimeout(resolve, 1800));
+
+    const response = await fetch("/api/forms", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(formData),
+    });
+
+    const data = await response.json();
+
+    if (data.success) {
+      setIsSubmitted(true);
+    } else {
+      alert(data.message);
+    }
+  } catch (error) {
+    console.error(error);
+    alert("Something went wrong");
+  } finally {
     setIsSubmitting(false);
-    setIsSubmitted(true);
-  };
+  }
+};
 
   const servicesList = [
     "KP Global IT Solution",
