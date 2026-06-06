@@ -1,3 +1,10 @@
 *.mp4 filter=lfs diff=lfs merge=lfs -text
 public/videos/tunnel.mp4 -text -filter -diff -merge
 public/videos/tunnel2.mp4 -text -filter -diff -merge
+public/videos/Bhavya_Chauhan.mp4 -text -filter -diff -merge
+public/videos/Gadhvi_dhara.mp4 -text -filter -diff -merge
+public/videos/Pranjal_chavda.mp4 -text -filter -diff -merge
+public/videos/Suhani_kanani.mp4 -text -filter -diff -merge
+public/videos/sujal.mp4 -text -filter -diff -merge
+public/videos/Tapti-Bar.mp4 -text -filter -diff -merge
+public/videos/Vishva-Chorela.mp4 -text -filter -diff -merge
