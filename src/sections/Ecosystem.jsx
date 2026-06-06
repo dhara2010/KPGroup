@@ -120,6 +120,7 @@ export default function Ecosystem() {
                           src={card.image}
                           alt={card.title}
                           fill
+                          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 66vw, 33vw"
                           priority={idx === 0}
                           className="object-cover opacity-50 group-hover:opacity-70 group-hover:scale-110 transition-all duration-700 ease-out"
                         />
