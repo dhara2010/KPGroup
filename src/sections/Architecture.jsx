@@ -341,10 +341,11 @@ export default function Architecture() {
             borderWidth: showServices ? "0px" : `${14 * (1 - p1)}px`,
           }}
         >
+          {/* Parallax Video layer */}
           <div
             className="absolute z-0 transition-transform duration-300"
             style={{
-              left: showServices ? "0vw" : (isMobile ? `${-5 * (1 - p1)}vw` : `${-10 * (1 - p1)}vw`),
+              left: showServices ? "0vw" : (isMobile ? `${-5 * (1 - p1)}vw` : `${-30 * (1 - p1)}vw`),
               top: showServices ? "0vh" : `${-20 * (1 - p1)}vh`,
               width: "100vw",
               height: "100vh",
@@ -383,110 +384,117 @@ export default function Architecture() {
               }}
             />
           </div>
-        </div>
 
-        {/* Intro */}
-        <div
-          className="absolute inset-0 z-20 flex items-center justify-center px-6 transition-all duration-500 font-sans"
-          style={{
-            opacity: showIntro ? 1 - p1 : 0,
-            transform: `scale(${1 + p1 * 1.5}) translateY(-20px)`,
-            pointerEvents: showIntro ? "auto" : "none",
-          }}
-        >
-          <div className="grid w-full max-w-7xl grid-cols-1 items-center gap-12 lg:grid-cols-12">
-            <div className="hidden lg:block lg:col-span-6" />
-
-            <div className="lg:col-span-6">
-              <p className="mb-5 text-xs font-black uppercase tracking-[0.45em] text-cyan-300">
-                Infrastructure
-              </p>
-
-              <h2 className="text-4xl font-light uppercase leading-tight tracking-[0.14em] text-white md:text-6xl">
-                Step into a new world
-                <span className="mt-3 block bg-gradient-to-r from-blue-400 via-purple-300 to-cyan-300 bg-clip-text font-black text-transparent">
-                  and let your ecosystem run wild
-                </span>
-              </h2>
-
-              <p className="mt-8 max-w-xl text-sm leading-relaxed text-gray-400 font-light">
-                KP Global integrates all business verticals into one premium,
-                high-speed ecosystem. Scroll down to route core networks.
-              </p>
-            </div>
-          </div>
-        </div>
-
-        {/* Services */}
-        <div
-          className="absolute inset-0 z-30 flex h-full w-full items-center justify-center overflow-hidden font-sans"
-          style={{
-            opacity: showServices ? 1 : 0,
-            pointerEvents: showServices ? "auto" : "none",
-            transition: "opacity 0.5s ease-in-out",
-          }}
-        >
+          {/* Fixed Content Wrapper inside Tunnel */}
           <div
-            className="flex h-full w-full flex-col"
+            className="absolute z-10 transition-transform duration-300"
             style={{
-              transform: `translateY(${-p3 * 100 * (divisions.length - 1)}vh)`,
-              transition: "transform 0.8s cubic-bezier(0.16, 1, 0.3, 1)",
+              left: showServices ? "0vw" : (isMobile ? `${-5 * (1 - p1)}vw` : `${-30 * (1 - p1)}vw`),
+              top: showServices ? "0vh" : `${-20 * (1 - p1)}vh`,
+              width: "100vw",
+              height: "100vh",
             }}
           >
-            {divisions.map((item) => {
-              const Icon = item.icon;
+            {/* Intro */}
+            <div
+              className="absolute inset-0 z-20 flex items-center justify-center px-6 transition-all duration-500 font-sans"
+              style={{
+                opacity: showIntro ? 1 - p1 : 0,
+                transform: `scale(${1 + p1 * 1.5}) translateY(-20px)`,
+                pointerEvents: showIntro ? "auto" : "none",
+              }}
+            >
+              <div className="flex flex-col items-center text-center max-w-4xl mx-auto">
+                <p className="mb-5 text-xs font-black uppercase tracking-[0.45em] text-cyan-300">
+                  Infrastructure
+                </p>
 
-              return (
-                <div
-                  key={item.id}
-                  className="relative flex h-screen w-full shrink-0 items-center justify-center px-6"
-                >
-                  <div className="grid w-full max-w-7xl grid-cols-1 items-center gap-8 lg:grid-cols-12 lg:gap-14">
-                    <div className="space-y-5 lg:col-span-5">
-                      <div
-                        className={`flex h-16 w-16 items-center justify-center rounded-3xl bg-gradient-to-br ${item.color} shadow-lg shadow-black/40 lg:h-20 lg:w-20`}
-                      >
-                        <Icon className="h-8 w-8 text-white lg:h-10 lg:w-10" />
-                      </div>
+                <h2 className="text-4xl font-light uppercase leading-tight tracking-[0.14em] text-white md:text-6xl">
+                  Step into a new world
+                  <span className="mt-3 block bg-gradient-to-r from-blue-400 via-purple-300 to-cyan-300 bg-clip-text font-black text-transparent">
+                    and let your ecosystem run wild
+                  </span>
+                </h2>
 
-                      <div>
-                        <p className="text-[10px] font-black uppercase tracking-[0.35em] text-white/40 font-mono lg:text-xs">
-                          ROUTING CORE // {item.id.toUpperCase()}_SVC
-                        </p>
+                <p className="mt-8 max-w-xl text-sm leading-relaxed text-gray-400 font-light">
+                  KP Global integrates all business verticals into one premium,
+                  high-speed ecosystem. Scroll down to route core networks.
+                </p>
+              </div>
+            </div>
 
-                        <h3 className="mt-3 text-4xl font-black uppercase leading-none tracking-tight text-white md:text-5xl lg:text-7xl">
-                          {item.title}
-                        </h3>
-                      </div>
+            {/* Services */}
+            <div
+              className="absolute inset-0 z-30 flex h-full w-full items-center justify-center overflow-hidden font-sans"
+              style={{
+                opacity: showServices ? 1 : 0,
+                pointerEvents: showServices ? "auto" : "none",
+                transition: "opacity 0.5s ease-in-out",
+              }}
+            >
+              <div
+                className="flex h-full w-full flex-col"
+                style={{
+                  transform: `translateY(${-p3 * 100 * (divisions.length - 1)}vh)`,
+                  transition: "transform 0.8s cubic-bezier(0.16, 1, 0.3, 1)",
+                }}
+              >
+                {divisions.map((item) => {
+                  const Icon = item.icon;
 
-                      <p className="text-sm font-bold uppercase tracking-widest text-gray-200 lg:text-lg">
-                        {item.desc}
-                      </p>
+                  return (
+                    <div
+                      key={item.id}
+                      className="relative flex h-screen w-full shrink-0 items-center justify-center px-6"
+                    >
+                      <div className="grid w-full max-w-7xl grid-cols-1 items-center gap-8 lg:grid-cols-12 lg:gap-14 pt-16 lg:pt-24">
+                        <div className="space-y-5 lg:col-span-5">
+                          <div
+                            className={`flex h-16 w-16 items-center justify-center rounded-3xl bg-gradient-to-br ${item.color} shadow-lg shadow-black/40 lg:h-20 lg:w-20`}
+                          >
+                            <Icon className="h-8 w-8 text-white lg:h-10 lg:w-10" />
+                          </div>
 
-                      <p className="max-w-lg text-sm leading-relaxed text-gray-300 font-light">
-                        {item.details}
-                      </p>
-                    </div>
+                          <div>
+                            <p className="text-[10px] font-black uppercase tracking-[0.35em] text-white/40 font-mono lg:text-xs">
+                              ROUTING CORE // {item.id.toUpperCase()}_SVC
+                            </p>
 
-                    <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:col-span-7">
-                      {item.subservices.map((sub, sIdx) => (
-                        <div
-                          key={sIdx}
-                          className="rounded-2xl border border-white/10 bg-black/60 p-5 backdrop-blur-xl transition-all duration-300 hover:scale-[1.02] hover:border-white/20 hover:bg-black/75 lg:p-6"
-                        >
-                          <span
-                            className={`mb-4 block h-2 w-2 rounded-full bg-gradient-to-r ${item.color}`}
-                          />
-                          <h4 className="text-xs font-black uppercase tracking-wider text-white lg:text-sm">
-                            {sub}
-                          </h4>
+                            <h3 className="mt-3 text-4xl font-black uppercase leading-none tracking-tight text-white md:text-5xl lg:text-7xl">
+                              {item.title}
+                            </h3>
+                          </div>
+
+                          <p className="text-sm font-bold uppercase tracking-widest text-gray-200 lg:text-lg">
+                            {item.desc}
+                          </p>
+
+                          <p className="max-w-lg text-sm leading-relaxed text-gray-300 font-light">
+                            {item.details}
+                          </p>
                         </div>
-                      ))}
+
+                        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:col-span-7">
+                          {item.subservices.map((sub, sIdx) => (
+                            <div
+                              key={sIdx}
+                              className="rounded-2xl border border-white/10 bg-black/60 p-5 backdrop-blur-xl transition-all duration-300 hover:scale-[1.02] hover:border-white/20 hover:bg-black/75 lg:p-6"
+                            >
+                              <span
+                                className={`mb-4 block h-2 w-2 rounded-full bg-gradient-to-r ${item.color}`}
+                              />
+                              <h4 className="text-xs font-black uppercase tracking-wider text-white lg:text-sm">
+                                {sub}
+                              </h4>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
                     </div>
-                  </div>
-                </div>
-              );
-            })}
+                  );
+                })}
+              </div>
+            </div>
           </div>
         </div>
 
