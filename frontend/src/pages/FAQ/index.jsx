@@ -1,4 +1,4 @@
-import FAQPage from "@/sections/FAQPage";
+import FAQ from "@/sections/FAQ";
 
 export const metadata = {
   title: "FAQ | KP Global Business",
@@ -6,6 +6,6 @@ export const metadata = {
     "Got questions? Find answers to frequently asked questions about the KP Global Business ecosystem, services, and partnerships.",
 };
 
-export default function FAQ() {
-  return <FAQPage />;
+export default function FAQPage() {
+  return <FAQ isPage={true} />;
 }

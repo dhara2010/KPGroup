@@ -7,10 +7,10 @@ import Lenis from "lenis";
 // InteractiveCanvas component: pure CSS design featuring animated neon glow orbs and static grids
 export function InteractiveCanvas() {
   return (
-    <div className="fixed inset-0 w-full h-full pointer-events-none z-0 bg-[#020202] overflow-hidden">
+    <div className="fixed inset-0 w-full h-full pointer-events-none z-0 bg-bg overflow-hidden">
       {/* Animated Neon Ambient Orbs */}
-      <div className="absolute top-[-10%] left-[-10%] w-[60vw] h-[60vw] bg-[#064B63]/10 rounded-full blur-[80px] animate-pulse duration-[8000ms]" />
-      <div className="absolute bottom-[-10%] right-[-10%] w-[60vw] h-[60vw] bg-[#064B63]/10 rounded-full blur-[80px] animate-pulse duration-[12000ms]" />
+      <div className="absolute top-[-10%] left-[-10%] w-[60vw] h-[60vw] bg-accent-soft rounded-full blur-[80px] animate-pulse duration-[8000ms]" />
+      <div className="absolute bottom-[-10%] right-[-10%] w-[60vw] h-[60vw] bg-accent-soft rounded-full blur-[80px] animate-pulse duration-[12000ms]" />
       
       {/* Futuristic Cyber Tech Grid */}
       <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.015)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.015)_1px,transparent_1px)] bg-[size:50px_50px] opacity-30" />
@@ -37,7 +37,7 @@ export function ScrollProgress() {
 
   return (
     <div
-      className="fixed top-0 left-0 right-0 h-[3px] bg-gradient-to-r from-blue-500 via-indigo-500 to-purple-600 origin-[0%] z-[9999] shadow-[0_0_12px_rgba(59,130,246,0.6)] pointer-events-none transition-all duration-75"
+      className="fixed top-0 left-0 right-0 h-[3px] bg-gradient-to-r from-primary via-primary-dark to-accent origin-[0%] z-[9999] shadow-[0_0_12px_rgba(59,130,246,0.6)] pointer-events-none transition-all duration-75"
       style={{ width: `${progress}%` }}
     />
   );
@@ -73,7 +73,7 @@ export function CustomCursor() {
     <>
       {/* Inner cursor dot */}
       <div
-        className="fixed w-2.5 h-2.5 bg-white rounded-full pointer-events-none z-[9999] -translate-x-1/2 -translate-y-1/2"
+        className="fixed w-2.5 h-2.5 bg-bg rounded-full pointer-events-none z-[9999] -translate-x-1/2 -translate-y-1/2"
         style={{
           left: `${position.x}px`,
           top: `${position.y}px`
@@ -81,7 +81,7 @@ export function CustomCursor() {
       />
       {/* Outer cursor ring */}
       <div
-        className="fixed w-8 h-8 border-[1.5px] border-[#E2E8F0]/60 rounded-full pointer-events-none z-[9998] -translate-x-1/2 -translate-y-1/2 transition-all duration-75 ease-out"
+        className="fixed w-8 h-8 border-[1.5px] border-border/60 rounded-full pointer-events-none z-[9998] -translate-x-1/2 -translate-y-1/2 transition-all duration-75 ease-out"
         style={{
           left: `${position.x}px`,
           top: `${position.y}px`

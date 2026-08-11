@@ -23,8 +23,8 @@ export const INITIAL_POSTS = [
   },
   {
     id: 2,
-    title: "How to a Organize Files at a Design Agency",
-    slug: "how-to-a-organize-files-at-a-design-agency",
+    title: "How to Organize Files at a Design Agency",
+    slug: "how-to-organize-files-at-a-design-agency",
     date: "December 19, 2024",
     month: "December 2024",
     author: "kpglobalbusiness",

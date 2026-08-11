@@ -1,99 +1,46 @@
 
 import React, { useEffect, useRef, useState } from "react";
 
-import { Play, Sparkles, ArrowRight, Activity, Cpu, Zap } from "lucide-react";
+import { Play, Sparkles, ArrowRight, Activity, Cpu, Zap, Star } from "lucide-react";
 
 import { ScrollReveal } from "@/components/Animations";
-
+import { Button } from "@/components/ui/Button";
+import { Heading, Text, Eyebrow } from "@/components/ui/Typography";
 function GlassOrbitalSphere({ scale, opacity, zIndex, centerOpacity, ringOpacity, mousePos, isLg, progress }) {
-  // Rotate slightly based on mouse position
-  const rotateX = mousePos.y * 15;
-  const rotateY = mousePos.x * 15;
+  // Smooth 2D rotation on scroll to preserve 100% 1:1 circular geometry without 3D perspective distortion
+  const scrollRotate = progress * 160;
 
-  // Move center slightly based on scroll progress to transition to viewport center
-  const leftPos = isLg ? `${68 - progress * 18}%` : "50%";
+  // Smoothly move from right-side placement to viewport center as user scrolls
+  const leftPos = isLg ? `${62 - progress * 12}%` : "50%";
+  const topPos = isLg ? `${46 + progress * 4}%` : "45%";
 
   return (
     <div
       style={{
-        transform: `translate3d(-50%, -50%, 0) scale(${scale}) rotateX(${-rotateX}deg) rotateY(${rotateY}deg)`,
+        transform: `translate(-50%, -50%) scale(${scale}) rotate(${scrollRotate}deg)`,
         opacity: opacity,
         zIndex: zIndex,
         left: leftPos,
-        top: "50%",
-        transformStyle: "preserve-3d",
-        perspective: 1200,
-        transition: "transform 0.15s cubic-bezier(0.25, 0.46, 0.45, 0.94), left 0.15s ease-out",
+        top: topPos,
+        transition: "transform 0.15s cubic-bezier(0.25, 0.46, 0.45, 0.94), left 0.15s ease-out, top 0.15s ease-out",
       }}
-      className="absolute w-[320px] h-[320px] md:w-[480px] md:h-[480px] flex items-center justify-center pointer-events-none will-change-transform"
+      className="absolute w-[280px] h-[280px] sm:w-[450px] sm:h-[450px] md:w-[600px] md:h-[600px] lg:w-[720px] lg:h-[720px] aspect-square flex items-center justify-center pointer-events-none will-change-transform"
     >
-      <div className="absolute inset-0 rounded-full bg-gradient-to-br from-blue-500/20 via-purple-600/25 to-pink-500/20 blur-3xl animate-pulse" />
-
-      {/* Rotating Ring 1 */}
-      <div
-        style={{ opacity: ringOpacity }}
-        className="absolute w-[85%] h-[85%] rounded-full border border-cyan-300/20 shadow-[0_0_60px_rgba(34,211,238,0.25)] animate-[spin_30s_linear_infinite]"
-      />
-
-      {/* Orbiting Satellite 1 (Cyan) */}
-      {ringOpacity > 0.1 && (
-        <div
-          style={{ opacity: ringOpacity }}
-          className="absolute w-[85%] h-[85%] animate-[spin_10s_linear_infinite] pointer-events-none"
-        >
-          <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 w-3.5 h-3.5 rounded-full bg-cyan-400 shadow-[0_0_15px_#22d3ee] animate-pulse" />
-        </div>
-      )}
-
-      {/* Rotating Ring 2 (Reversed) */}
-      <div
-        style={{ opacity: ringOpacity }}
-        className="absolute w-[72%] h-[72%] rounded-full border-[10px] border-transparent bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 opacity-60 blur-[1px] animate-[spin_40s_linear_infinite_reverse]"
-      />
-
-      {/* Orbiting Satellite 2 (Purple) */}
-      {ringOpacity > 0.1 && (
-        <div
-          style={{ opacity: ringOpacity }}
-          className="absolute w-[72%] h-[72%] animate-[spin_14s_linear_infinite_reverse] pointer-events-none"
-        >
-          <div className="absolute bottom-0 left-1/2 -translate-x-1/2 translate-y-1/2 w-3 h-3 rounded-full bg-purple-500 shadow-[0_0_12px_#a855f7]" />
-        </div>
-      )}
-
-      <div
-        style={{ opacity: ringOpacity }}
-        className="absolute w-[78%] h-[78%] rounded-full border border-[#E2E8F0] rotate-45"
-      />
-
-      <div
-        style={{ opacity: ringOpacity }}
-        className="absolute w-[60%] h-[60%] rounded-full border border-purple-300/20 -rotate-12 animate-[spin_50s_linear_infinite]"
-      />
-
-      {/* Orbiting Satellite 3 (Pink) */}
-      {ringOpacity > 0.1 && (
-        <div
-          style={{ opacity: ringOpacity }}
-          className="absolute w-[60%] h-[60%] animate-[spin_7s_linear_infinite] pointer-events-none"
-        >
-          <div className="absolute right-0 top-1/2 translate-x-1/2 -translate-y-1/2 w-2.5 h-2.5 rounded-full bg-pink-500 shadow-[0_0_10px_#ec4899]" />
-        </div>
-      )}
-
-      {/* Central Core */}
+      
+      {/* Central Core: /icon.webp Image (Guaranteed 1:1 Circular Aspect) */}
       <div
         style={{ opacity: centerOpacity }}
-        className="absolute w-24 h-24 md:w-32 md:h-32 rounded-full bg-gradient-to-br from-white/70 via-blue-300/35 to-purple-500/30 blur-sm shadow-[0_0_80px_rgba(255,255,255,0.3)]"
-      />
+        className="relative z-10 w-52 h-52 sm:w-80 sm:h-80 md:w-[440px] md:h-[440px] lg:w-[540px] lg:h-[540px] aspect-square flex items-center justify-center pointer-events-none animate-[floatIcon_5s_ease-in-out_infinite]"
+      >
+        {/* /icon.webp Image with 360° Continuous Spin */}
+        <img
+          src="/icon.webp"
+          alt="KP Global Icon"
+          style={{ aspectRatio: "1 / 1", objectFit: "contain" }}
+          className="relative z-10 w-full h-full aspect-square object-contain filter drop-shadow-[0_0_70px_rgba(108,59,255,0.9)] animate-[spin_24s_linear_infinite]"
+        />
+      </div>
 
-      <div
-        style={{ opacity: centerOpacity }}
-        className="absolute w-5 h-5 rounded-full bg-white shadow-[0_0_30px_rgba(255,255,255,0.9)] animate-pulse"
-      />
-
-      <Sparkles className="absolute top-[22%] right-[25%] w-5 h-5 text-[#064B63] opacity-80" />
-      <Sparkles className="absolute bottom-[25%] left-[25%] w-4 h-4 text-purple-200 opacity-70" />
     </div>
   );
 }
@@ -156,7 +103,7 @@ function Hero() {
       draw() {
         ctx.beginPath();
         ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
-        ctx.fillStyle = "rgba(147, 197, 253, 0.55)";
+        ctx.fillStyle = "rgba(108, 59, 255, 0.4)"; // Primary Purple
         ctx.fill();
       }
     }
@@ -185,7 +132,7 @@ function Hero() {
             ctx.beginPath();
             ctx.moveTo(particles[i].x, particles[i].y);
             ctx.lineTo(particles[j].x, particles[j].y);
-            ctx.strokeStyle = `rgba(139, 92, 246, ${0.28 * (1 - dist / 115)})`;
+            ctx.strokeStyle = `rgba(139, 92, 246, ${0.28 * (1 - dist / 115)})`; // Accent Purple
             ctx.lineWidth = 0.7;
             ctx.stroke();
           }
@@ -201,7 +148,7 @@ function Hero() {
             ctx.beginPath();
             ctx.moveTo(particles[i].x, particles[i].y);
             ctx.lineTo(mouse.x, mouse.y);
-            ctx.strokeStyle = `rgba(34, 211, 238, ${0.50 * (1 - dist / 180)})`;
+            ctx.strokeStyle = `rgba(108, 59, 255, ${0.50 * (1 - dist / 180)})`; // Primary Purple
             ctx.lineWidth = 1.0;
             ctx.stroke();
           }
@@ -272,22 +219,23 @@ function Hero() {
     };
   }, []);
 
-  // Compute scroll-triggered transformations using standard linear math
-  const maxScroll = 500;
+  // Compute scroll-triggered transformations for cinematic zoom & transition
+  const maxScroll = 700;
   const progress = Math.min(1, scrollY / maxScroll);
 
-  const portalScale = 1 + progress * 8; // scale from 1 to 9
-  const portalOpacity = Math.max(0, 1 - progress);
-  const portalZIndex = progress >= 0.5 ? 20 : 0;
+  // Keep icon 100% visible throughout the Hero scroll, fading only when transition to next section is taking place (progress > 0.85)
+  const portalScale = 1 + Math.pow(progress, 1.2) * 3.8; 
+  const portalOpacity = progress < 0.82 ? 1 : Math.max(0, 1 - (progress - 0.82) / 0.18); 
+  const portalZIndex = progress >= 0.82 ? 5 : 2;
 
-  const centerOpacity = Math.max(0, 1 - progress * 1.5);
-  const ringOpacity = Math.max(0, 0.9 - progress * 0.9);
+  const centerOpacity = progress < 0.85 ? 1 : Math.max(0, 1 - (progress - 0.85) / 0.15);
+  const ringOpacity = progress < 0.85 ? 0.9 : Math.max(0, 0.9 - (progress - 0.85) * 6);
 
   const bgScale = 1 + progress * 0.15;
   const bgOpacity = Math.max(0, 0.35 - progress * 0.35);
 
-  const contentOpacity = Math.max(0, 1 - progress * 1.5);
-  const contentScale = Math.max(0.95, 1 - progress * 0.05);
+  const contentOpacity = progress < 0.78 ? 1 : Math.max(0, 1 - (progress - 0.78) / 0.22);
+  const contentScale = Math.max(0.92, 1 - progress * 0.08);
   const contentY = -progress * 60;
 
   // 3D tilt styles for widgets
@@ -302,202 +250,117 @@ function Hero() {
   };
 
   return (
-    <div className={`relative h-[150vh] transition-colors duration-300 ${"bg-white"}`}>
-      <div className="sticky top-0 h-screen w-full flex flex-col items-center justify-center overflow-hidden py-8 md:py-12">
-        <div className={`absolute inset-0 z-0 transition-colors duration-300 ${"bg-white"}`} />
+    <div className={`relative min-h-screen w-full flex flex-col items-center justify-center overflow-hidden py-8 md:py-12 transition-colors duration-300 bg-bg-dark`}>
+      <div className={`absolute inset-0 z-0 transition-colors duration-300 bg-bg-dark`} />
 
-        <canvas
-          ref={canvasRef}
-          className="absolute inset-0 w-full h-full pointer-events-none z-[1] opacity-90"
-        />
+      <canvas
+        ref={canvasRef}
+        className="absolute inset-0 w-full h-full pointer-events-none z-[1] opacity-90"
+      />
 
-        <style>{`
+      <style>{`
           @keyframes refill {
             0%, 100% { width: 25%; }
             50% { width: 88%; }
           }
+          @keyframes floatIcon {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-12px) rotate(2deg); }
+          }
         `}</style>
 
-        <div
-          style={{
-            transform: `scale(${bgScale})`,
-            opacity: bgOpacity
-          }}
-          className="absolute inset-0 z-0 origin-center transition-all duration-300 ease-out will-change-transform"
-        >
-          <img
-            src="/hero_bg.webp"
-            alt="Hero Background"
-            fill
-            priority
-            className={`object-cover`}
-          />
+      <div
+        style={{
+          transform: `scale(${bgScale})`,
+          opacity: bgOpacity
+        }}
+        className="absolute inset-0 z-0 origin-center transition-all duration-300 ease-out will-change-transform"
+      >
+        <img
+          src="/hero_bg.webp"
+          alt="Hero Background"
+          fill
+          priority
+          className={`object-cover w-full h-full opacity-30`}
+        />
+        <div className="absolute inset-0 bg-gradient-to-r from-bg-dark via-bg-dark/80 to-transparent z-10" />
+      </div>
+
+      {mounted && (
+        <GlassOrbitalSphere
+          scale={portalScale}
+          opacity={portalOpacity}
+          zIndex={portalZIndex}
+          centerOpacity={centerOpacity}
+          ringOpacity={ringOpacity}
+          mousePos={mousePos}
+          isLg={isLg}
+          progress={progress}
+        />
+      )}
+
+      <div
+        style={{
+          opacity: contentOpacity,
+          transform: `scale(${contentScale}) translateY(${contentY}px)`,
+        }}
+        className="relative z-10 max-w-7xl mx-auto w-full flex flex-col justify-between px-6 sm:px-8 lg:px-12 py-8 min-h-screen text-left transition-all duration-100 ease-out"
+      >
+        {/* Top Section: Main Heading */}
+        <div className="w-full mt-24 md:mt-28">
+          <ScrollReveal variant="3d-unfold" delay={0.3}>
+            <h1 className="text-2xl sm:text-4xl md:text-6xl lg:text-7xl font-black text-white tracking-tighter leading-[1.02] drop-shadow-[0_10px_35px_rgba(0,0,0,0.9)] max-w-5xl">
+              Empowering <span className="text-primary">Growth</span>.
+            <br />
+              Building Digital <span className="text-primary">Success</span>.
+              <br />
+              Connecting Global <span className="text-primary">Leaders</span>.
+            </h1>
+          </ScrollReveal>
         </div>
 
-        {mounted && (
-          <GlassOrbitalSphere
-            scale={portalScale}
-            opacity={portalOpacity}
-            zIndex={portalZIndex}
-            centerOpacity={centerOpacity}
-            ringOpacity={ringOpacity}
-            mousePos={mousePos}
-            isLg={isLg}
-            progress={progress}
-          />
-        )}
-
-        <div
-          style={{
-            opacity: contentOpacity,
-            transform: `scale(${contentScale}) translateY(${contentY}px)`,
-          }}
-          className="relative z-10 max-w-7xl mx-auto w-full flex flex-col justify-center px-6 sm:px-8 lg:px-12 py-4 h-full text-left transition-all duration-100 ease-out"
-        >
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center w-full">
-
-            {/* Left Column: Heading & CTA */}
-            <div className="lg:col-span-7 flex flex-col items-start pt-10">
-              <ScrollReveal variant="3d-unfold" delay={0.1}>
-                <div className="inline-flex items-center gap-2.5 px-3.5 py-1.5 rounded-full bg-[#F7F9FA] border border-[#E2E8F0] backdrop-blur-md mb-6">
-                  <span className="w-1.5 h-1.5 rounded-full bg-cyan-400 animate-pulse" />
-                  <span className="text-[10px] font-black text-[#064B63] tracking-widest uppercase">
-                    Technology • Branding • Growth
-                  </span>
-                </div>
-              </ScrollReveal>
-
-              <ScrollReveal variant="3d-unfold" delay={0.3}>
-                <h1 className={`text-4xl md:text-6xl lg:text-[4.5rem] font-black tracking-tight leading-[1.05] mb-6 drop-shadow-2xl font-heading transition-colors duration-300 ${"text-[#111827]"
-                  }`}>
-                  <>
-                    BUILD <span className="bg-clip-text text-transparent bg-gradient-to-r from-blue-400 via-indigo-200 to-cyan-300">BETTER</span>.
-                    <br />
-                    GROW <span className="bg-clip-text text-transparent bg-gradient-to-r from-cyan-300 via-purple-300 to-pink-400">FASTER</span>.
-                    <br />
-                    LEAD THE FUTURE.
-                  </>
-                </h1>
-              </ScrollReveal>
-
-              <ScrollReveal variant="3d-unfold" delay={0.5}>
-                <p className={`text-sm md:text-base lg:text-lg mb-8 max-w-xl font-light leading-relaxed ${"text-blue-100/75"
-                  }`}>
-                  {"KP Global Business helps startups, companies, and professionals create a stronger digital presence through modern websites, branding, media networks, automation, and business growth solutions."
-                  }
-                </p>
-              </ScrollReveal>
-
-              <ScrollReveal variant="3d-unfold" delay={0.7}>
-                <div className="flex flex-row items-center gap-4">
-                  {/* Primary CTA */}
-                  <button
-                    onClick={() => {
-                      const contactSection = document.getElementById("contact");
-                      if (contactSection) {
-                        contactSection.scrollIntoView({ behavior: "smooth" });
-                      }
-                    }}
-                    className="inline-flex items-center gap-3 px-8 py-4 bg-[#0F172A] hover:bg-[#064B63] rounded-full text-xs font-bold uppercase tracking-wider text-[#111827] shadow-lg transition-all duration-300 hover:scale-105 active:scale-95 hover:shadow-[0_0_40px_rgba(99,102,241,0.35)] group"
-                  >
-                    Start Growing
-                    <div className="w-5 h-5 rounded-full bg-[#F7F9FA] flex items-center justify-center transition-all duration-300 group-hover:translate-x-1 group-hover:rotate-45">
-                      {/* Arrow colour: white on gradient bg always */}
-                      <ArrowRight className="w-3 h-3 text-[#111827]" />
-                    </div>
-                  </button>
-
-                  {/* Secondary CTA — adapts to theme */}
-                  <button
-                    onClick={() => {
-                      const ecosystemSection = document.getElementById("ecosystem");
-                      if (ecosystemSection) {
-                        ecosystemSection.scrollIntoView({ behavior: "smooth" });
-                      }
-                    }}
-                    className={`px-6 py-4 backdrop-blur-md border rounded-full font-bold shadow-lg transition-all duration-300 hover:scale-105 active:scale-95 flex items-center gap-3 text-xs group ${"bg-[#F7F9FA] hover:bg-[#F7F9FA] border-[#E2E8F0] text-[#111827]"
-                      }`}
-                  >
-                    Explore Services
-                    <div className={`w-5 h-5 rounded-full flex items-center justify-center transition-all duration-300 group-hover:translate-x-1 ${"bg-[#F7F9FA]"
-                      }`}>
-                      <Play className={`w-2.5 h-2.5 ${"text-indigo-400 fill-indigo-400"
-                        }`} />
-                    </div>
-                  </button>
-                </div>
-              </ScrollReveal>
+        {/* Bottom Section: Customer Review (Left) & Description/CTA (Right) */}
+        <div className="w-full flex flex-col lg:flex-row justify-between items-start lg:items-end gap-8 mb-12 lg:mb-16">
+          
+          {/* Left: Customer Review Block */}
+          <ScrollReveal variant="3d-unfold" delay={0.5} className="flex flex-col gap-3">
+            <div className="flex items-center gap-2">
+              <span className="w-1.5 h-1.5 rounded-full bg-white opacity-80 animate-ping"></span>
+              <span className="text-xs md:text-sm font-semibold text-white/90 tracking-wide">Customer Review</span>
             </div>
-
-            {/* Right Column: Interactive 3D Cyber Widgets (Visible on lg screens) */}
-            {isLg && (
-              <div
-                className="lg:col-span-5 relative w-full h-[450px] flex items-center justify-center pointer-events-none"
-                style={{ perspective: 1000 }}
-              >
-                {/* System Status Card with Dynamic Micro-bar visualizer */}
-                <div
-                  style={widgetTiltStyle(40)}
-                  className="absolute top-[15%] left-[-5%] px-5 py-3.5 rounded-2xl bg-[#07070a]/80 border border-[#E2E8F0] backdrop-blur-xl shadow-2xl flex items-center gap-3 w-64 pointer-events-auto hover:border-[#0E7490] transition-colors"
-                >
-                  <div className="w-8 h-8 rounded-xl bg-[#064B63]/10 border border-[#064B63]/20 flex items-center justify-center shrink-0">
-                    <Activity className="w-4 h-4 text-[#064B63] animate-pulse" />
-                  </div>
-                  <div>
-                    <span className="text-[8px] font-black text-[#475569] uppercase tracking-widest block leading-tight">System Status</span>
-                    <span className="text-xs font-bold text-[#111827] uppercase block mt-0.5 tracking-wider">ECOSYSTEM LIVE</span>
-                  </div>
-
-                  {/* Jump micro-bars */}
-                  <div className="flex items-end gap-0.5 h-3 ml-auto shrink-0 opacity-60">
-                    <span className="w-[1.5px] bg-cyan-400 rounded-full animate-[bounce_0.8s_infinite_100ms] h-1.5" />
-                    <span className="w-[1.5px] bg-cyan-400 rounded-full animate-[bounce_1s_infinite_300ms] h-3" />
-                    <span className="w-[1.5px] bg-cyan-400 rounded-full animate-[bounce_0.7s_infinite_0ms] h-2" />
-                  </div>
-                </div>
-
-                {/* Scalability Widget with Dynamic refilling progress line */}
-                <div
-                  style={{ ...widgetTiltStyle(70), transformStyle: "preserve-3d" }}
-                  className="absolute top-[48%] right-[-10%] px-5 py-3.5 rounded-2xl bg-[#07070a]/80 border border-[#E2E8F0] backdrop-blur-xl shadow-2xl flex flex-col gap-2.5 w-60 pointer-events-auto hover:border-[#0E7490] transition-colors"
-                >
-                  <div className="flex items-center gap-3 w-full">
-                    <div className="w-8 h-8 rounded-xl bg-[#064B63]/10 border border-[#064B63]/20 flex items-center justify-center shrink-0">
-                      <Zap className="w-4 h-4 text-[#064B63]" />
-                    </div>
-                    <div>
-                      <span className="text-[8px] font-black text-[#475569] uppercase tracking-widest block leading-tight">Branding Scale</span>
-                      <span className="text-xs font-bold text-[#0F172A] uppercase block mt-0.5 tracking-wider font-extrabold">10x PERFORMANCE</span>
-                    </div>
-                  </div>
-                  {/* Dynamic refill bar */}
-                  <div className="w-full h-1 bg-[#064B63]/10 rounded-full overflow-hidden relative">
-                    <div
-                      className="h-full bg-gradient-to-r from-purple-500 to-pink-500 rounded-full w-0"
-                      style={{ animation: "refill 3.5s ease-in-out infinite" }}
-                    />
-                  </div>
-                </div>
-
-                {/* Automation Tracker with Spinning circular sync ring */}
-                <div
-                  style={widgetTiltStyle(50)}
-                  className="absolute bottom-[12%] left-[10%] px-5 py-3.5 rounded-2xl bg-[#07070a]/80 border border-[#E2E8F0] backdrop-blur-xl shadow-2xl flex items-center gap-3 w-64 pointer-events-auto hover:border-[#0E7490] transition-colors"
-                >
-                  <div className="w-8 h-8 rounded-xl bg-[#064B63]/10 border border-[#064B63]/20 flex items-center justify-center shrink-0">
-                    <Cpu className="w-4 h-4 text-[#064B63]" />
-                  </div>
-                  <div>
-                    <span className="text-[8px] font-black text-[#475569] uppercase tracking-widest block leading-tight">Workflow Optimization</span>
-                    <span className="text-xs font-bold text-[#111827] uppercase block mt-0.5 tracking-wider font-extrabold">99.9% AUTOMATION</span>
-                  </div>
-                  {/* Sync ring */}
-                  <div className="w-4 h-4 rounded-full border border-[#064B63]/20 border-t-blue-400 animate-spin shrink-0 ml-auto" />
-                </div>
+            <div className="flex items-center gap-2.5">
+              <div className="flex -space-x-3 items-center">
+                <img src="/testimonials/avani.webp" alt="Customer" className="w-9 h-9 md:w-10 md:h-10 rounded-full border-2 border-[#06060c] object-cover shadow-md" />
+                <img src="/testimonials/bhavya.webp" alt="Customer" className="w-9 h-9 md:w-10 md:h-10 rounded-full border-2 border-[#06060c] object-cover shadow-md" />
+                <img src="/testimonials/moksh.webp" alt="Customer" className="w-9 h-9 md:w-10 md:h-10 rounded-full border-2 border-[#06060c] object-cover shadow-md" />
               </div>
-            )}
+              <div className="flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-gradient-to-r from-blue-600 via-indigo-600 to-primary text-white font-extrabold text-xs md:text-sm shadow-lg shadow-blue-500/25 border border-blue-400/30">
+                <Star className="w-3.5 h-3.5 fill-yellow-400 text-yellow-400" />
+                <span>4.9</span>
+              </div>
+            </div>
+          </ScrollReveal>
 
-          </div>
+          {/* Right: Description Paragraph & Pill CTA Button */}
+          <ScrollReveal variant="3d-unfold" delay={0.7} className="flex flex-col items-start gap-6 max-w-[450px]">
+            <p className="md:pt-60 text-white font-medium text-[16px] leading-[1.7] max-w-[450px] drop-shadow-md opacity-95">
+              KP Global Business is a growth ecosystem designed to elevate businesses, professionals, and innovators with cutting-edge solutions in technology, media, community, and career opportunities.
+            </p>
+
+            <button 
+              onClick={() => {
+                const contactSection = document.getElementById("contact");
+                if (contactSection) contactSection.scrollIntoView({ behavior: "smooth" });
+              }}
+              className="group inline-flex items-center gap-4 px-7 py-3.5 rounded-full bg-gradient-to-r from-[#6C3BFF] via-[#7E46FF] to-[#A855F7] text-white font-bold text-sm md:text-base tracking-wide shadow-[0_10px_30px_rgba(108,59,255,0.4)] hover:shadow-[0_15px_40px_rgba(108,59,255,0.6)] transition-all duration-300 hover:scale-[1.03] active:scale-[0.98]"
+            >
+              <span>Explore Our Solutions</span>
+              <div className="w-9 h-9 rounded-full bg-[#A855F7] flex items-center justify-center text-white shadow-md group-hover:translate-x-1 transition-transform">
+                <ArrowRight className="w-4 h-4" />
+              </div>
+            </button>
+          </ScrollReveal>
+
         </div>
       </div>
     </div>

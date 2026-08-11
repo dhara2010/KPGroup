@@ -118,17 +118,17 @@ const DEPARTMENTS = ["All", "Tech & Engineering", "Skill Academy", "Media & Mark
 
 const BENEFITS = [
   {
-    icon: <Zap className="w-6 h-6 text-[#064B63]" />,
+    icon: <Zap className="w-6 h-6 text-primary" />,
     title: "High Growth Environment",
     desc: "Accelerate your career in an ecosystem expanding rapidly across multiple industries globally."
   },
   {
-    icon: <Users className="w-6 h-6 text-[#064B63]" />,
+    icon: <Users className="w-6 h-6 text-primary" />,
     title: "Mentorship & Culture",
     desc: "Work with top-tier professionals who value collaborative coaching and flat hierarchies."
   },
   {
-    icon: <Award className="w-6 h-6 text-[#064B63]" />,
+    icon: <Award className="w-6 h-6 text-primary" />,
     title: "Skill Academy Perks",
     desc: "Free access to all our executive educational programs, certifications, and workshops."
   },
@@ -193,36 +193,36 @@ export default function CareersPage() {
   };
 
   return (
-    <div className="min-h-screen bg-[#020202] text-[#111827] pt-0 pb-20 relative overflow-hidden">
+    <div className="min-h-screen bg-bg text-text pt-0 pb-20 relative overflow-hidden">
       <PageHero 
         title="Careers" 
         description="KP Global is an immersive ecosystem of technology, education, and media. We're looking for visionary minds, continuous learners, and bold leaders to scale new horizons." 
       />
 
       {/* Decorative Blur Orbs */}
-      <div className="absolute top-[20%] left-[-10%] w-[50%] h-[50%] bg-blue-900/10 rounded-full blur-[120px] pointer-events-none" />
-      <div className="absolute bottom-[20%] right-[-10%] w-[45%] h-[45%] bg-purple-900/10 rounded-full blur-[120px] pointer-events-none" />
+      <div className="absolute top-[20%] left-[-10%] w-[50%] h-[50%] bg-primary/10 rounded-full blur-[120px] pointer-events-none" />
+      <div className="absolute bottom-[20%] right-[-10%] w-[45%] h-[45%] bg-accent/10 rounded-full blur-[120px] pointer-events-none" />
 
       <div className="max-w-7xl mx-auto px-6 relative z-10 mt-16">
 
         {/* ── Benefits / Why KP Section ── */}
         <div className="mb-20">
-          <h2 className="text-2xl sm:text-3xl font-bold text-center mb-10 text-[#111827]/90">
+          <h2 className="text-2xl sm:text-3xl font-bold text-center mb-10 text-text/90">
             Why Join Our Ecosystem?
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             {BENEFITS.map((item, idx) => (
               <div 
                 key={idx}
-                className="p-6 rounded-2xl bg-white/[0.02] border border-[#E2E8F0]/[0.06] backdrop-blur-md hover:border-[#0E7490] hover:bg-white/[0.04] transition-all duration-300 group hover:translate-y-[-4px]"
+                className="p-6 rounded-2xl bg-bg/[0.02] border border-border/[0.06] backdrop-blur-md hover:border-[#0E7490] hover:bg-bg/[0.04] transition-all duration-300 group hover:translate-y-[-4px]"
               >
-                <div className="w-12 h-12 rounded-xl bg-white/[0.04] flex items-center justify-center mb-5 group-hover:scale-110 transition-transform duration-300">
+                <div className="w-12 h-12 rounded-xl bg-bg/[0.04] flex items-center justify-center mb-5 group-hover:scale-110 transition-transform duration-300">
                   {item.icon}
                 </div>
-                <h3 className="text-lg font-bold text-[#111827] mb-2 group-hover:text-[#064B63] transition-colors">
+                <h3 className="text-lg font-bold text-text mb-2 group-hover:text-primary transition-colors">
                   {item.title}
                 </h3>
-                <p className="text-sm text-[#475569] leading-relaxed">
+                <p className="text-sm text-text-secondary leading-relaxed">
                   {item.desc}
                 </p>
               </div>
@@ -234,19 +234,19 @@ export default function CareersPage() {
         <div className="mt-16">
           <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-10">
             <div>
-              <h2 className="text-2xl sm:text-3xl font-bold text-[#111827] mb-3">Open Opportunities</h2>
-              <p className="text-[#475569] text-sm">Explore our roles to find where you fit best.</p>
+              <h2 className="text-2xl sm:text-3xl font-bold text-text mb-3">Open Opportunities</h2>
+              <p className="text-text-secondary text-sm">Explore our roles to find where you fit best.</p>
             </div>
             
             {/* Search Box */}
             <div className="relative w-full md:max-w-xs">
-              <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-[#475569]" />
+              <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-text-secondary" />
               <input
                 type="text"
                 placeholder="Search jobs..."
                 value={searchQuery}
                 onChange={e => setSearchQuery(e.target.value)}
-                className="w-full pl-11 pr-4 py-3 bg-white/[0.03] border border-[#E2E8F0] rounded-xl text-sm placeholder-gray-500 focus:outline-none focus:border-indigo-500 focus:bg-white/[0.06] transition-all text-[#111827]"
+                className="w-full pl-11 pr-4 py-3 bg-bg/[0.03] border border-border rounded-xl text-sm placeholder-gray-500 focus:outline-none focus:border-indigo-500 focus:bg-bg/[0.06] transition-all text-text"
               />
             </div>
           </div>
@@ -260,35 +260,35 @@ export default function CareersPage() {
                 <div
                   key={job.id}
                   onClick={() => { setSelectedJob(job); setIsApplying(false); }}
-                  className="p-6 rounded-2xl bg-white/[0.02] hover:bg-white/[0.04] border border-[#E2E8F0]/[0.06] hover:border-[#E2E8F0] transition-all duration-300 cursor-pointer flex flex-col justify-between group"
+                  className="p-6 rounded-2xl bg-bg/[0.02] hover:bg-bg/[0.04] border border-border/[0.06] hover:border-border transition-all duration-300 cursor-pointer flex flex-col justify-between group"
                 >
                   <div>
                     <div className="flex items-center justify-between mb-4">
-                      <span className="text-[10px] font-bold uppercase tracking-widest px-2.5 py-1 rounded-md bg-white/[0.05] text-indigo-400 border border-indigo-400/20">
+                      <span className="text-[10px] font-bold uppercase tracking-widest px-2.5 py-1 rounded-md bg-bg/[0.05] text-primary-dark border border-indigo-400/20">
                         {job.department}
                       </span>
-                      <span className="text-xs text-[#475569] flex items-center gap-1 font-medium">
+                      <span className="text-xs text-text-secondary flex items-center gap-1 font-medium">
                         <Clock className="w-3.5 h-3.5" />
                         {job.type}
                       </span>
                     </div>
 
-                    <h3 className="text-xl font-bold text-[#111827] mb-2 group-hover:text-[#064B63] transition-colors">
+                    <h3 className="text-xl font-bold text-text mb-2 group-hover:text-primary transition-colors">
                       {job.title}
                     </h3>
-                    <p className="text-sm text-[#475569] line-clamp-2 mb-6 font-light">
+                    <p className="text-sm text-text-secondary line-clamp-2 mb-6 font-light">
                       {job.description}
                     </p>
                   </div>
 
-                  <div className="flex items-center justify-between pt-4 border-t border-[#E2E8F0]/[0.04] mt-auto">
-                    <div className="flex items-center gap-4 text-xs text-[#475569] font-medium">
+                  <div className="flex items-center justify-between pt-4 border-t border-border/[0.04] mt-auto">
+                    <div className="flex items-center gap-4 text-xs text-text-secondary font-medium">
                       <span className="flex items-center gap-1">
-                        <MapPin className="w-3.5 h-3.5 text-[#475569]" />
+                        <MapPin className="w-3.5 h-3.5 text-text-secondary" />
                         {job.location}
                       </span>
                     </div>
-                    <div className="w-8 h-8 rounded-full bg-white/[0.04] group-hover:bg-blue-600 flex items-center justify-center text-[#111827] transition-all">
+                    <div className="w-8 h-8 rounded-full bg-bg/[0.04] group-hover:bg-primary flex items-center justify-center text-text transition-all">
                       <ChevronRight className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" />
                     </div>
                   </div>
@@ -296,10 +296,10 @@ export default function CareersPage() {
               ))}
             </div>
           ) : (
-            <div className="text-center py-20 bg-white/[0.01] border border-dashed border-[#E2E8F0] rounded-2xl">
-              <Briefcase className="w-12 h-12 text-gray-600 mx-auto mb-4" />
-              <h3 className="text-lg font-bold text-[#111827] mb-1">No vacancies found</h3>
-              <p className="text-sm text-[#475569]">Try adjusting your filters or search query.</p>
+            <div className="text-center py-20 bg-bg/[0.01] border border-dashed border-border rounded-2xl">
+              <Briefcase className="w-12 h-12 text-text-secondary mx-auto mb-4" />
+              <h3 className="text-lg font-bold text-text mb-1">No vacancies found</h3>
+              <p className="text-sm text-text-secondary">Try adjusting your filters or search query.</p>
             </div>
           )}
         </div>
@@ -313,19 +313,19 @@ export default function CareersPage() {
           onClick={() => { setSelectedJob(null); setIsApplying(false); }}
         >
           <div 
-            className="w-full max-w-2xl h-full bg-[#0a0a0a] border-l border-[#E2E8F0] p-8 overflow-y-auto flex flex-col justify-between"
+            className="w-full max-w-2xl h-full bg-bg border-l border-border p-8 overflow-y-auto flex flex-col justify-between"
             onClick={e => e.stopPropagation()}
             style={{ animation: "slideIn 0.35s cubic-bezier(0.16,1,0.3,1) forwards" }}
           >
             {/* Header */}
             <div>
               <div className="flex items-center justify-between mb-6">
-                <span className="text-xs font-semibold px-3 py-1 rounded-full bg-[#064B63]/10 text-[#064B63] border border-[#064B63]/20">
+                <span className="text-xs font-semibold px-3 py-1 rounded-full bg-accent-soft text-primary border border-primary/20">
                   {selectedJob.department}
                 </span>
                 <button 
                   onClick={() => { setSelectedJob(null); setIsApplying(false); }}
-                  className="p-2 text-[#475569] hover:text-[#111827] bg-[#F7F9FA] hover:bg-[#F7F9FA] rounded-full transition-all"
+                  className="p-2 text-text-secondary hover:text-text bg-bg-soft hover:bg-bg-soft rounded-full transition-all"
                 >
                   <X className="w-5 h-5" />
                 </button>
@@ -334,38 +334,38 @@ export default function CareersPage() {
               {!isApplying ? (
                 <>
                   {/* Job Details Screen */}
-                  <h2 className="text-2xl sm:text-3xl font-extrabold mb-3 text-[#111827]">
+                  <h2 className="text-2xl sm:text-3xl font-extrabold mb-3 text-text">
                     {selectedJob.title}
                   </h2>
-                  <div className="flex flex-wrap items-center gap-x-6 gap-y-2 text-sm text-[#475569] mb-8 pb-6 border-b border-[#E2E8F0]/[0.08]">
+                  <div className="flex flex-wrap items-center gap-x-6 gap-y-2 text-sm text-text-secondary mb-8 pb-6 border-b border-border/[0.08]">
                     <span className="flex items-center gap-1.5">
-                      <MapPin className="w-4 h-4 text-[#475569]" />
+                      <MapPin className="w-4 h-4 text-text-secondary" />
                       {selectedJob.location}
                     </span>
                     <span className="flex items-center gap-1.5">
-                      <Clock className="w-4 h-4 text-[#475569]" />
+                      <Clock className="w-4 h-4 text-text-secondary" />
                       {selectedJob.type}
                     </span>
                     <span className="flex items-center gap-1.5">
-                      <Briefcase className="w-4 h-4 text-[#475569]" />
+                      <Briefcase className="w-4 h-4 text-text-secondary" />
                       {selectedJob.experience}
                     </span>
                   </div>
 
                   <div className="space-y-6">
                     <div>
-                      <h4 className="text-[#111827] font-bold text-base mb-2">Role Overview</h4>
-                      <p className="text-[#475569] text-sm leading-relaxed font-light">
+                      <h4 className="text-text font-bold text-base mb-2">Role Overview</h4>
+                      <p className="text-text-secondary text-sm leading-relaxed font-light">
                         {selectedJob.description}
                       </p>
                     </div>
 
                     <div>
-                      <h4 className="text-[#111827] font-bold text-base mb-2">Key Requirements</h4>
+                      <h4 className="text-text font-bold text-base mb-2">Key Requirements</h4>
                       <ul className="space-y-3">
                         {selectedJob.requirements.map((req, index) => (
-                          <li key={index} className="flex items-start gap-2.5 text-[#475569] text-sm font-light">
-                            <span className="w-1.5 h-1.5 rounded-full bg-blue-500 mt-2 flex-shrink-0" />
+                          <li key={index} className="flex items-start gap-2.5 text-text-secondary text-sm font-light">
+                            <span className="w-1.5 h-1.5 rounded-full bg-primary mt-2 flex-shrink-0" />
                             {req}
                           </li>
                         ))}
@@ -376,60 +376,60 @@ export default function CareersPage() {
               ) : (
                 <>
                   {/* Application Form Screen */}
-                  <h3 className="text-xl font-bold mb-1 text-[#111827]">Apply for {selectedJob.title}</h3>
-                  <p className="text-xs text-[#475569] mb-6">Complete the details below to submit your profile.</p>
+                  <h3 className="text-xl font-bold mb-1 text-text">Apply for {selectedJob.title}</h3>
+                  <p className="text-xs text-text-secondary mb-6">Complete the details below to submit your profile.</p>
 
                   {submitSuccess ? (
                     <div className="flex flex-col items-center justify-center py-12 text-center" style={{ animation: "fadeIn 0.3s" }}>
                       <div className="w-16 h-16 rounded-full bg-green-500/20 border border-green-500/40 flex items-center justify-center mb-6">
                         <CheckCircle2 className="w-8 h-8 text-green-400" />
                       </div>
-                      <h4 className="text-xl font-bold text-[#111827] mb-2">Application Received!</h4>
-                      <p className="text-sm text-[#475569] max-w-sm">
+                      <h4 className="text-xl font-bold text-text mb-2">Application Received!</h4>
+                      <p className="text-sm text-text-secondary max-w-sm">
                         Thank you for applying. Our talent acquisition team will review your application and reach out shortly.
                       </p>
                     </div>
                   ) : (
                     <form onSubmit={handleApplySubmit} className="space-y-5">
                       <div>
-                        <label className="block text-xs font-semibold text-[#475569] mb-1.5">Full Name *</label>
+                        <label className="block text-xs font-semibold text-text-secondary mb-1.5">Full Name *</label>
                         <input
                           type="text"
                           required
                           value={formName}
                           onChange={e => setFormName(e.target.value)}
                           placeholder="Your full name"
-                          className="w-full px-4 py-3 bg-white/[0.03] border border-[#E2E8F0] rounded-xl text-sm text-[#111827] focus:outline-none focus:border-blue-500"
+                          className="w-full px-4 py-3 bg-bg/[0.03] border border-border rounded-xl text-sm text-text focus:outline-none focus:border-primary"
                         />
                       </div>
 
                       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                         <div>
-                          <label className="block text-xs font-semibold text-[#475569] mb-1.5">Email Address *</label>
+                          <label className="block text-xs font-semibold text-text-secondary mb-1.5">Email Address *</label>
                           <input
                             type="email"
                             required
                             value={formEmail}
                             onChange={e => setFormEmail(e.target.value)}
                             placeholder="name@example.com"
-                            className="w-full px-4 py-3 bg-white/[0.03] border border-[#E2E8F0] rounded-xl text-sm text-[#111827] focus:outline-none focus:border-blue-500"
+                            className="w-full px-4 py-3 bg-bg/[0.03] border border-border rounded-xl text-sm text-text focus:outline-none focus:border-primary"
                           />
                         </div>
                         <div>
-                          <label className="block text-xs font-semibold text-[#475569] mb-1.5">LinkedIn Profile</label>
+                          <label className="block text-xs font-semibold text-text-secondary mb-1.5">LinkedIn Profile</label>
                           <input
                             type="url"
                             value={formLinkedin}
                             onChange={e => setFormLinkedin(e.target.value)}
                             placeholder="https://linkedin.com/in/username"
-                            className="w-full px-4 py-3 bg-white/[0.03] border border-[#E2E8F0] rounded-xl text-sm text-[#111827] focus:outline-none focus:border-blue-500"
+                            className="w-full px-4 py-3 bg-bg/[0.03] border border-border rounded-xl text-sm text-text focus:outline-none focus:border-primary"
                           />
                         </div>
                       </div>
 
                       <div>
-                        <label className="block text-xs font-semibold text-[#475569] mb-1.5">Resume / CV *</label>
-                        <div className="relative border border-dashed border-[#E2E8F0] hover:border-[#0E7490] rounded-xl bg-white/[0.02] transition-colors p-6 text-center cursor-pointer">
+                        <label className="block text-xs font-semibold text-text-secondary mb-1.5">Resume / CV *</label>
+                        <div className="relative border border-dashed border-border hover:border-[#0E7490] rounded-xl bg-bg/[0.02] transition-colors p-6 text-center cursor-pointer">
                           <input
                             type="file"
                             required
@@ -437,28 +437,28 @@ export default function CareersPage() {
                             accept=".pdf,.doc,.docx"
                             className="absolute inset-0 opacity-0 cursor-pointer"
                           />
-                          <Paperclip className="w-6 h-6 text-[#475569] mx-auto mb-2" />
-                          <span className="block text-xs font-bold text-[#475569]">
+                          <Paperclip className="w-6 h-6 text-text-secondary mx-auto mb-2" />
+                          <span className="block text-xs font-bold text-text-secondary">
                             {selectedFile ? selectedFile.name : "Upload PDF or DOCX file"}
                           </span>
-                          <span className="block text-[10px] text-[#475569] mt-1">Max file size 10MB</span>
+                          <span className="block text-[10px] text-text-secondary mt-1">Max file size 10MB</span>
                         </div>
                       </div>
 
                       <div>
-                        <label className="block text-xs font-semibold text-[#475569] mb-1.5">Cover Note / Message</label>
+                        <label className="block text-xs font-semibold text-text-secondary mb-1.5">Cover Note / Message</label>
                         <textarea
                           rows={3}
                           value={formNote}
                           onChange={e => setFormNote(e.target.value)}
                           placeholder="Tell us a little about yourself..."
-                          className="w-full px-4 py-3 bg-white/[0.03] border border-[#E2E8F0] rounded-xl text-sm text-[#111827] focus:outline-none focus:border-blue-500 resize-none"
+                          className="w-full px-4 py-3 bg-bg/[0.03] border border-border rounded-xl text-sm text-text focus:outline-none focus:border-primary resize-none"
                         />
                       </div>
 
                       <button
                         type="submit"
-                        className="w-full py-4 flex items-center justify-center gap-2 bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 rounded-xl text-xs font-bold uppercase tracking-wider text-[#111827] shadow-lg hover:shadow-[0_0_20px_rgba(99,102,241,0.3)] transition-all"
+                        className="w-full py-4 flex items-center justify-center gap-2 bg-gradient-to-r from-primary via-primary-dark to-accent rounded-xl text-xs font-bold uppercase tracking-wider text-text shadow-lg hover:shadow-[0_0_20px_rgba(99,102,241,0.3)] transition-all"
                       >
                         Submit Application
                         <Send className="w-3.5 h-3.5" />
@@ -471,14 +471,14 @@ export default function CareersPage() {
 
             {/* Footer Apply CTA */}
             {!isApplying && (
-              <div className="mt-8 pt-6 border-t border-[#E2E8F0]/[0.08] flex items-center justify-between gap-4">
+              <div className="mt-8 pt-6 border-t border-border/[0.08] flex items-center justify-between gap-4">
                 <div>
-                  <span className="text-[10px] text-[#475569] block">SALARY</span>
-                  <span className="text-sm font-bold text-[#111827]">{selectedJob.salary}</span>
+                  <span className="text-[10px] text-text-secondary block">SALARY</span>
+                  <span className="text-sm font-bold text-text">{selectedJob.salary}</span>
                 </div>
                 <button
                   onClick={() => setIsApplying(true)}
-                  className="px-6 py-3.5 flex items-center gap-2 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 rounded-xl text-xs font-bold uppercase tracking-wider text-[#111827] shadow-lg transition-all"
+                  className="px-6 py-3.5 flex items-center gap-2 bg-gradient-to-r from-primary to-primary-dark hover:from-primary hover:to-primary-dark rounded-xl text-xs font-bold uppercase tracking-wider text-text shadow-lg transition-all"
                 >
                   Apply For This Role
                   <ArrowIcon />

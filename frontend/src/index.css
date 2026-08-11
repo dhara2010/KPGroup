@@ -1,32 +1,109 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-poppins);
-  --font-heading: var(--font-poppins);
+  --font-sans: "Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-heading: "Manrope", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-display: "Manrope", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+
+  /* Expose the CSS variables to Tailwind v4 */
+  --color-primary: var(--color-primary);
+  --color-primary-dark: var(--color-primary-dark);
+  --color-accent: var(--color-accent);
+  --color-accent-soft: var(--color-accent-soft);
+
+  --color-bg: var(--color-bg);
+  --color-bg-soft: var(--color-bg-soft);
+  --color-bg-muted: var(--color-bg-muted);
+  --color-bg-dark: var(--color-bg-dark);
+
+  --color-text: var(--color-text);
+  --color-text-secondary: var(--color-text-secondary);
+  --color-text-muted: var(--color-text-muted);
+
+  --color-border: var(--color-border);
+  --color-border-dark: var(--color-border-dark);
+
+  --color-success: var(--color-success);
+  --color-warning: var(--color-warning);
+  --color-error: var(--color-error);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #000000;
-    --foreground: #ffffff;
-  }
+:root {
+  /* Font Family Variables */
+  --font-sans: "Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-heading: "Manrope", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-display: "Manrope", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+
+  /* Global Color Palette: PREMIUM PURPLE THEME */
+  --color-primary: #6C3BFF;
+  --color-primary-dark: #4B20C9;
+  --color-accent: #8B5CF6;
+  --color-accent-soft: #F1ECFF;
+
+  --color-bg: #FFFFFF;
+  --color-bg-soft: #F8F6FF;
+  --color-bg-muted: #F7F5FC;
+  --color-bg-dark: #100B1F;
+
+  --color-text: #171321;
+  --color-text-secondary: #625D6B;
+  --color-text-muted: #918B9B;
+
+  --color-border: #E7E1F0;
+  --color-border-dark: #352A49;
+
+  --color-success: #22A06B;
+  --color-warning: #E5A11A;
+  --color-error: #D94A4A;
 }
 
 body {
-  background: #000000;
-  color: #ffffff;
-  font-family: var(--font-poppins), sans-serif;
+  background-color: var(--color-bg);
+  color: var(--color-text);
+  font-family: var(--font-sans);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
-h1, h2, h3, h4, h5, h6 {
-  font-family: var(--font-poppins), sans-serif;
+/* Global Heading Typography Rules (Manrope) */
+h1, h2, h3, h4, h5, h6,
+.font-heading,
+.font-display {
+  font-family: var(--font-heading);
+  letter-spacing: -0.025em;
+}
+
+h1, .h1-display {
+  font-family: var(--font-heading);
+  letter-spacing: -0.035em;
+  line-height: 1.15;
+}
+
+h2, .h2-display {
+  font-family: var(--font-heading);
+  letter-spacing: -0.03em;
+  line-height: 1.2;
+}
+
+h3, .h3-display {
+  font-family: var(--font-heading);
+  letter-spacing: -0.025em;
+  line-height: 1.25;
+}
+
+.font-sans,
+.font-body {
+  font-family: var(--font-sans);
+}
+
+
+/* Base link behavior */
+a {
+  transition: color 0.2s ease-in-out;
+}
+a:hover {
+  color: var(--color-primary);
 }
 
 @layer utilities {
@@ -85,8 +162,8 @@ h1, h2, h3, h4, h5, h6 {
   .bg-grid {
     background-size: 50px 50px;
     background-image: 
-      linear-gradient(to right, rgba(255, 255, 255, 0.05) 1px, transparent 1px),
-      linear-gradient(to bottom, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+      linear-gradient(to right, rgba(108, 59, 255, 0.05) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(108, 59, 255, 0.05) 1px, transparent 1px);
   }
 
   .mask-radial {
@@ -115,440 +192,4 @@ h1, h2, h3, h4, h5, h6 {
   .animate-data-stream {
     animation: data-stream 2s ease-in-out infinite;
   }
-}
-
-/* ══════════════════════════════════════════
-   LIGHT THEME OVERRIDES
-   Applied when <html class="light"> is set
-   ══════════════════════════════════════════ */
-
-/* ── Body & page background ── */
-html.light body {
-  background-color: #fafafb !important;
-  color: #18181b !important;
-}
-
-/* ── Page containers & black section backgrounds ── */
-html.light main,
-html.light section,
-html.light [class*="bg-[#020202]"],
-html.light [class*="bg-[#030303]"],
-html.light [class*="bg-[#040407]"],
-html.light [class*="bg-[#050505]"],
-html.light [class*="bg-[#060606]"],
-html.light [class*="bg-[#080808]"],
-html.light [class*="bg-[#0a0a0a]"],
-html.light [class*="bg-[#0a0a0f]"],
-html.light [class*="bg-[#08080c]"],
-html.light .bg-black {
-  background-color: #fafafb !important;
-  border-color: rgba(0, 0, 0, 0.08) !important;
-}
-
-/* ── Root-level page wrappers with inline bg ── */
-html.light div[class*="bg-[#020202]"],
-html.light div[class*="bg-[#030303]"],
-html.light div[class*="bg-[#0a0a0a]"] {
-  background-color: #fafafb !important;
-}
-
-/* ── Background grid lines ── */
-html.light .bg-grid {
-  background-image: 
-    linear-gradient(to right, rgba(0, 0, 0, 0.04) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(0, 0, 0, 0.04) 1px, transparent 1px) !important;
-}
-html.light .absolute.inset-0.pointer-events-none.opacity-5 {
-  opacity: 0.35 !important;
-}
-html.light [class*="bg-[linear-gradient(rgba(255,255,255,0.015)"] {
-  background-image: linear-gradient(rgba(0,0,0,0.03) 1px,transparent_1px), linear-gradient(90deg,rgba(0,0,0,0.03) 1px,transparent_1px) !important;
-}
-/* Laser grid backgrounds used on about/partners page */
-html.light [class*="bg-[linear-gradient(rgba(255,255,255,0.01)"] {
-  background-image: 
-    linear-gradient(rgba(0,0,0,0.03) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(0,0,0,0.03) 1px, transparent 1px) !important;
-}
-
-/* ── Headings ── */
-html.light h1,
-html.light h2,
-html.light h3,
-html.light h4,
-html.light h5,
-html.light h6 {
-  color: #18181b !important;
-}
-
-/* ── Text color overrides (with exceptions for coloured elements) ── */
-html.light .text-white:not(
-  button, 
-  button *, 
-  a[class*="bg-"], 
-  a[class*="bg-"] *, 
-  [class*="bg-gradient-"], 
-  [class*="bg-gradient-"] *, 
-  [class*="bg-blue-"], 
-  [class*="bg-blue-"] *, 
-  [class*="bg-purple-"], 
-  [class*="bg-purple-"] *, 
-  [class*="bg-indigo-"], 
-  [class*="bg-indigo-"] *, 
-  [class*="bg-cyan-"], 
-  [class*="bg-cyan-"] *, 
-  [class*="bg-pink-"], 
-  [class*="bg-pink-"] *, 
-  [class*="text-transparent"],
-  [class*="bg-clip-text"]
-) {
-  color: #18181b !important;
-}
-
-html.light .text-white\/90,
-html.light [class*="text-white/90"] {
-  color: rgba(24, 24, 27, 0.9) !important;
-}
-
-html.light .text-gray-300:not(
-  button, 
-  button *, 
-  a[class*="bg-"], 
-  a[class*="bg-"] *, 
-  [class*="bg-gradient-"], 
-  [class*="bg-gradient-"] *, 
-  [class*="bg-blue-"], 
-  [class*="bg-blue-"] *, 
-  [class*="bg-purple-"], 
-  [class*="bg-purple-"] *, 
-  [class*="bg-indigo-"], 
-  [class*="bg-indigo-"] *, 
-  [class*="bg-cyan-"], 
-  [class*="bg-cyan-"] *, 
-  [class*="bg-pink-"], 
-  [class*="bg-pink-"] *
-) {
-  color: #374151 !important;
-}
-
-html.light .text-gray-400:not(
-  button, 
-  button *, 
-  a[class*="bg-"], 
-  a[class*="bg-"] *, 
-  [class*="bg-gradient-"], 
-  [class*="bg-gradient-"] *, 
-  [class*="bg-blue-"], 
-  [class*="bg-blue-"] *, 
-  [class*="bg-purple-"], 
-  [class*="bg-purple-"] *, 
-  [class*="bg-indigo-"], 
-  [class*="bg-indigo-"] *, 
-  [class*="bg-cyan-"], 
-  [class*="bg-cyan-"] *, 
-  [class*="bg-pink-"], 
-  [class*="bg-pink-"] *
-) {
-  color: #4b5563 !important;
-}
-
-html.light .text-gray-500:not(
-  button, 
-  button *, 
-  a[class*="bg-"], 
-  a[class*="bg-"] *, 
-  [class*="bg-gradient-"], 
-  [class*="bg-gradient-"] *, 
-  [class*="bg-blue-"], 
-  [class*="bg-blue-"] *, 
-  [class*="bg-purple-"], 
-  [class*="bg-purple-"] *, 
-  [class*="bg-indigo-"], 
-  [class*="bg-indigo-"] *, 
-  [class*="bg-cyan-"], 
-  [class*="bg-cyan-"] *, 
-  [class*="bg-pink-"], 
-  [class*="bg-pink-"] *
-) {
-  color: #6b7280 !important;
-}
-
-html.light .text-gray-600 {
-  color: #4b5563 !important;
-}
-
-/* ── White opacity text — preserve readability ── */
-html.light [class*="text-white/"] {
-  color: rgba(24, 24, 27, 0.25) !important;
-}
-
-/* ── Translucent outline buttons / anchors ── */
-html.light button.bg-white\/5,
-html.light button.bg-white\/10,
-html.light button.bg-transparent,
-html.light button:not([class*="bg-gradient"]):not([class*="bg-blue"]):not([class*="bg-purple"]):not([class*="bg-indigo"]):not([class*="bg-cyan"]):not([class*="bg-pink"]):not([class*="bg-rose"]):not([class*="bg-violet"]):not([class*="bg-emerald"]):not([class*="bg-green"]):not([class*="bg-white text-black"]),
-html.light a.bg-white\/5,
-html.light a.bg-white\/10,
-html.light a.bg-transparent,
-html.light a:not([class*="bg-gradient"]):not([class*="bg-blue"]):not([class*="bg-purple"]):not([class*="bg-indigo"]):not([class*="bg-cyan"]):not([class*="bg-pink"]):not([class*="bg-rose"]):not([class*="bg-violet"]):not([class*="bg-emerald"]):not([class*="bg-green"]) {
-  color: #18181b !important;
-}
-
-html.light button.bg-white\/5 *,
-html.light button.bg-white\/10 *,
-html.light button.bg-transparent *,
-html.light button:not([class*="bg-gradient"]):not([class*="bg-blue"]):not([class*="bg-purple"]):not([class*="bg-indigo"]):not([class*="bg-cyan"]):not([class*="bg-pink"]):not([class*="bg-rose"]):not([class*="bg-violet"]):not([class*="bg-emerald"]):not([class*="bg-green"]):not([class*="bg-white text-black"]) *,
-html.light a.bg-white\/5 *,
-html.light a.bg-white\/10 *,
-html.light a.bg-transparent *,
-html.light a:not([class*="bg-gradient"]):not([class*="bg-blue"]):not([class*="bg-purple"]):not([class*="bg-indigo"]):not([class*="bg-cyan"]):not([class*="bg-pink"]):not([class*="bg-rose"]):not([class*="bg-violet"]):not([class*="bg-emerald"]):not([class*="bg-green"]) * {
-  color: #18181b !important;
-}
-
-/* Partners active filter button (bg-white text-black) stays as-is */
-html.light button[class*="bg-white"][class*="text-black"] {
-  background-color: #18181b !important;
-  color: #ffffff !important;
-}
-
-/* ── Cards, Bento boxes, containers ── */
-html.light .bento-card,
-html.light [class*="bg-[#07070a]"],
-html.light [class*="bg-[#080808]/60"],
-html.light [class*="bg-[#080808]/80"],
-html.light [class*="bg-[#060606]/65"],
-html.light [class*="bg-[#050505]/20"],
-html.light [class*="bg-[#050505]/40"],
-html.light [class*="bg-[#050505]/60"],
-html.light [class*="bg-[#070707]/70"],
-html.light [class*="bg-[#070707]/50"],
-html.light [class*="bg-[#080808]"],
-html.light [class*="bg-[#060606]"],
-html.light [class*="bg-[#050505]"],
-html.light [class*="bg-[#030303]"],
-html.light [class*="bg-white/[0.01]"],
-html.light [class*="bg-white/[0.02]"],
-html.light [class*="bg-white/[0.03]"],
-html.light [class*="bg-white/[0.04]"],
-html.light [class*="bg-white/[0.05]"],
-html.light [class*="bg-white/5"],
-html.light [class*="bg-white/10"] {
-  background-color: #ffffff !important;
-  border-color: rgba(0, 0, 0, 0.08) !important;
-}
-
-/* Careers modal sidebar panel */
-html.light [class*="bg-[#0a0a0a]"] {
-  background-color: #ffffff !important;
-  border-color: rgba(0, 0, 0, 0.1) !important;
-}
-
-/* ── Borders ── */
-html.light .border-white\/5,
-html.light .border-white\/10,
-html.light .border-white\/20,
-html.light .border-white\/25,
-html.light .border-white\/30,
-html.light .border-white\/40,
-html.light [class*="border-white/"] {
-  border-color: rgba(0, 0, 0, 0.08) !important;
-}
-
-html.light [class*="bg-gradient-to-b from-white/[0.03]"] {
-  background: linear-gradient(to bottom, rgba(0, 0, 0, 0.015), transparent) !important;
-}
-
-/* ── Coloured glow / interactive elements ── */
-html.light [class*="bg-cyan-500/10"] {
-  background-color: rgba(6, 182, 212, 0.08) !important;
-}
-html.light [class*="bg-purple-500/10"] {
-  background-color: rgba(168, 85, 247, 0.08) !important;
-}
-html.light [class*="bg-blue-500/10"] {
-  background-color: rgba(59, 130, 246, 0.08) !important;
-}
-
-/* ── Glowing blobs ── */
-html.light [class*="blur-[100px]"],
-html.light [class*="blur-[120px]"],
-html.light [class*="blur-[140px]"],
-html.light [class*="blur-[150px]"],
-html.light [class*="blur-[160px]"] {
-  opacity: 0.1 !important;
-}
-
-/* ── Navigation ── */
-html.light nav span.text-gray-300 {
-  color: #374151 !important;
-}
-html.light nav span.text-gray-300:hover {
-  color: #000000 !important;
-}
-html.light nav div.bg-white\/10 {
-  background-color: rgba(0, 0, 0, 0.05) !important;
-}
-
-/* ── Footer ── */
-html.light footer {
-  background-color: #fafafb !important;
-  border-top: 1px solid rgba(0, 0, 0, 0.08) !important;
-}
-html.light footer a {
-  color: #4b5563 !important;
-}
-html.light footer a:hover {
-  color: #000000 !important;
-}
-html.light footer h3,
-html.light footer h4 {
-  color: #18181b !important;
-}
-
-/* ── Card visual gradients ── */
-html.light [class*="bg-gradient-to-br from-[#07070a]"],
-html.light [class*="from-[#07070a] via-black"],
-html.light [class*="from-[#08080c] to-[#040407]"],
-html.light [class*="from-[#030303] to-[#020202]"] {
-  background-image: linear-gradient(to bottom right, #ffffff, #f9fafb, rgba(219, 234, 254, 0.25)) !important;
-}
-
-html.light [class*="bg-gradient-to-t from-black via-black/50 to-transparent"] {
-  background-image: linear-gradient(to top, rgba(255, 255, 255, 0.95), rgba(255, 255, 255, 0.6), transparent) !important;
-}
-
-html.light [class*="bg-gradient-to-b from-[#08080c] to-[#040407]"],
-html.light [class*="from-[#030303] to-[#020202]"] {
-  background-image: linear-gradient(to bottom, #ffffff, #f9fafb) !important;
-}
-
-html.light [class*="from-cyan-950 to-slate-900"] {
-  background-image: linear-gradient(to bottom right, #ecfeff, #f1f5f9) !important;
-}
-
-/* Partners section gradient background */
-html.light [class*="bg-gradient-to-b from-[#030303] to-[#020202]"] {
-  background-image: linear-gradient(to bottom, #f8f9fa, #fafafb) !important;
-}
-
-/* About page commitment section */
-html.light [class*="bg-gradient-to-r from-black via-black/80 to-blue-950/25"] {
-  background-image: linear-gradient(to right, #f0f4ff, #fafafb, rgba(219, 234, 254, 0.4)) !important;
-}
-
-/* About page vision/mission section */
-html.light [class*="bg-gradient-to-r from-black via-black/80 to-transparent"] {
-  background-image: linear-gradient(to right, rgba(250,250,251,0.97), rgba(250,250,251,0.8), transparent) !important;
-}
-
-/* Video banner overlays — reduce opacity in light mode */
-html.light [class*="bg-black/40"],
-html.light [class*="bg-black/30"] {
-  background-color: rgba(255, 255, 255, 0.2) !important;
-}
-
-/* About page inline-slogan dark card */
-html.light [class*="bg-black/95"] {
-  background-color: rgba(255, 255, 255, 0.97) !important;
-  border-color: rgba(0, 0, 0, 0.12) !important;
-}
-
-/* ── PageHero gradients ── */
-html.light [class*="bg-gradient-to-b from-black/85 via-black/55 to-[#020202]"] {
-  background-image: linear-gradient(to bottom, rgba(250, 250, 251, 0.95), rgba(250, 250, 251, 0.75), #fafafb) !important;
-}
-html.light [class*="bg-gradient-to-r from-blue-900/60 via-purple-900/70 to-cyan-900/60"] {
-  background-image: linear-gradient(to right, rgba(59, 130, 246, 0.06), rgba(168, 85, 247, 0.06), rgba(6, 182, 212, 0.06)) !important;
-}
-
-/* PageHero title text gradient */
-html.light h1[class*="from-white to-gray-400"],
-html.light [class*="from-white to-gray-400"] {
-  background-image: linear-gradient(to bottom, #18181b, #4b5563) !important;
-}
-
-/* ── Form fields ── */
-html.light input,
-html.light select,
-html.light textarea {
-  background-color: rgba(255, 255, 255, 0.95) !important;
-  color: #18181b !important;
-  border-color: rgba(0, 0, 0, 0.15) !important;
-}
-
-html.light input::placeholder,
-html.light textarea::placeholder {
-  color: rgba(0, 0, 0, 0.4) !important;
-}
-
-html.light option {
-  background-color: #ffffff !important;
-  color: #18181b !important;
-}
-
-/* ── Coloured accent text — boost contrast in light mode ── */
-html.light [class*="text-cyan-200"],
-html.light [class*="text-cyan-300"],
-html.light .text-cyan-200,
-html.light .text-cyan-300 {
-  color: #0e7490 !important;
-}
-
-html.light [class*="text-indigo-200"],
-html.light [class*="text-indigo-300"],
-html.light .text-indigo-200,
-html.light .text-indigo-300 {
-  color: #4f46e5 !important;
-}
-
-html.light [class*="text-purple-200"],
-html.light [class*="text-purple-300"],
-html.light .text-purple-200,
-html.light .text-purple-300 {
-  color: #7c3aed !important;
-}
-
-html.light [class*="text-pink-200"],
-html.light [class*="text-pink-300"],
-html.light .text-pink-200,
-html.light .text-pink-300 {
-  color: #db2777 !important;
-}
-
-html.light [class*="text-blue-100"],
-html.light [class*="text-blue-200"],
-html.light [class*="text-blue-300"],
-html.light .text-blue-100,
-html.light .text-blue-200,
-html.light .text-blue-300 {
-  color: #2563eb !important;
-}
-
-html.light [class*="text-yellow-400"],
-html.light .text-yellow-400 {
-  color: #b45309 !important;
-}
-
-/* ── FAQ & badge backgrounds ── */
-html.light [class*="bg-white/10"][class*="border-white/10"] {
-  background-color: rgba(0, 0, 0, 0.04) !important;
-  border-color: rgba(0, 0, 0, 0.1) !important;
-}
-
-/* ── Dashed border for empty states ── */
-html.light [class*="border-dashed"][class*="border-white/10"] {
-  border-color: rgba(0, 0, 0, 0.15) !important;
-}
-
-/* ── Divider lines ── */
-html.light [class*="border-white/[0.04]"],
-html.light [class*="border-white/[0.06]"],
-html.light [class*="border-white/[0.08]"] {
-  border-color: rgba(0, 0, 0, 0.06) !important;
-}
-
-/* ── Transition for smooth toggle effect ── */
-html,
-html * {
-  transition: background-color 0.3s ease, color 0.2s ease, border-color 0.3s ease !important;
 }

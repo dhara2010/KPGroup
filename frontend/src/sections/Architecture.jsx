@@ -14,9 +14,10 @@ const divisions = [
     id: "it",
     title: "IT SOLUTIONS",
     icon: MonitorSmartphone,
-    color: "from-blue-600 to-cyan-400",
+    color: "from-primary to-accent-soft",
     desc: "Cloud Systems & AI",
     details: "Next-gen software, cloud infrastructure, and AI-driven enterprise solutions.",
+    image: "/eco_it_bg.webp",
     subservices: [
       "Custom Software Development",
       "Cloud Infrastructure & DevOps",
@@ -28,9 +29,10 @@ const divisions = [
     id: "media",
     title: "MEDIA NETWORK",
     icon: Radio,
-    color: "from-purple-600 to-violet-500",
+    color: "from-primary via-accent-soft to-transparent",
     desc: "Digital Broadcasting",
     details: "Global reach broadcasting and digital marketing network connecting brands to millions.",
+    image: "/eco_media_bg.webp",
     subservices: [
       "Digital Broadcasting & PR",
       "Strategic Viral Marketing",
@@ -42,9 +44,10 @@ const divisions = [
     id: "academy",
     title: "SKILL ACADEMY",
     icon: GraduationCap,
-    color: "from-pink-500 to-rose-400",
+    color: "from-accent-soft to-primary",
     desc: "Tech Mastery Training",
     details: "Empowering the workforce of tomorrow with advanced technical training and leadership skills.",
+    image: "/eco_academy_bg.webp",
     subservices: [
       "Advanced Tech Training",
       "Corporate Bootcamps",
@@ -56,9 +59,10 @@ const divisions = [
     id: "careers",
     title: "CAREERS",
     icon: Briefcase,
-    color: "from-emerald-500 to-teal-400",
+    color: "from-primary to-accent",
     desc: "Global Talent Recruitment",
     details: "Join a global team of innovators and shape the future of international business.",
+    image: "/eco_careers_bg.webp",
     subservices: [
       "Global Talent Placement",
       "Executive Search & Hiring",
@@ -70,9 +74,10 @@ const divisions = [
     id: "community",
     title: "COMMUNITY",
     icon: Network,
-    color: "from-orange-500 to-amber-400",
+    color: "from-primary to-accent-soft",
     desc: "Business Synergy Ecosystem",
     details: "A thriving ecosystem of partners, investors, and enterprise leaders shaping global markets.",
+    image: "/eco_community_bg.webp",
     subservices: [
       "B2B Partnership Corridors",
       "Investor Network Relations",
@@ -89,8 +94,20 @@ export default function Architecture() {
   const [videoError, setVideoError] = useState(false);
 
   const [isLocked, setIsLocked] = useState(false);
-  const isLockedRef = useRef(false);
-  const ignoreLockRef = useRef(false);
+  const lockStateRef = useRef("before");
+  const lenisLockedRef = useRef(false);
+
+  const lockLenis = () => {
+    if (lenisLockedRef.current) return;
+    lenisLockedRef.current = true;
+    if (window.lenis) window.lenis.stop();
+  };
+
+  const unlockLenis = () => {
+    if (!lenisLockedRef.current) return;
+    lenisLockedRef.current = false;
+    if (window.lenis) window.lenis.start();
+  };
 
   const [stage, setStage] = useState("zoom");
   const stageRef = useRef("zoom");
@@ -155,81 +172,78 @@ export default function Architecture() {
   useEffect(() => {
     const handleScroll = () => {
       if (!sectionRef.current) return;
-      if (isLockedRef.current || ignoreLockRef.current) return;
+      if (isLocked) return;
 
       const rect = sectionRef.current.getBoundingClientRect();
       const top = rect.top;
 
       if (prevTop.current === null) {
         prevTop.current = top;
+        if (top > 0) lockStateRef.current = "before";
+        else if (top < 0) lockStateRef.current = "after";
         return;
       }
 
       const crossedZeroDown = prevTop.current > 0 && top <= 0;
       const crossedZeroUp = prevTop.current < 0 && top >= 0;
-      const isClose = Math.abs(top) < 20;
 
-      if (crossedZeroDown || crossedZeroUp || isClose) {
-        isLockedRef.current = true;
+      if (lockStateRef.current === "before" && crossedZeroDown) {
+        lockStateRef.current = "locked";
         setIsLocked(true);
+        lockLenis();
 
-        const isScrollingDown = prevTop.current > top;
+        stageRef.current = "zoom";
+        targetZoomRef.current = 0;
+        currentZoomRef.current = 0;
+        indexRef.current = 0;
 
-        if (isScrollingDown || crossedZeroDown) {
-          stageRef.current = "zoom";
-          targetZoomRef.current = 0;
-          currentZoomRef.current = 0;
-          indexRef.current = 0;
-
-          setStage("zoom");
-          setZoomProgress(0);
-          setInnerActiveIndex(0);
-          setContentPhase("in");
-        } else {
-          stageRef.current = "services";
-          targetZoomRef.current = 1;
-          currentZoomRef.current = 1;
-          indexRef.current = divisions.length - 1;
-
-          setStage("services");
-          setZoomProgress(1);
-          setInnerActiveIndex(divisions.length - 1);
-          setContentPhase("in");
-        }
+        setStage("zoom");
+        setZoomProgress(0);
+        setInnerActiveIndex(0);
+        setContentPhase("in");
 
         const targetY = window.scrollY + top;
         window.scrollTo(0, targetY);
-
         if (window.lenis) {
-          window.lenis.stop();
           window.lenis.scrollTo(targetY, { immediate: true });
         }
       }
+      else if (lockStateRef.current === "after" && crossedZeroUp) {
+        lockStateRef.current = "locked";
+        setIsLocked(true);
+        lockLenis();
+
+        stageRef.current = "services";
+        targetZoomRef.current = 1;
+        currentZoomRef.current = 1;
+        indexRef.current = divisions.length - 1;
+
+        setStage("services");
+        setZoomProgress(1);
+        setInnerActiveIndex(divisions.length - 1);
+        setContentPhase("in");
+
+        const targetY = window.scrollY + top;
+        window.scrollTo(0, targetY);
+        if (window.lenis) {
+          window.lenis.scrollTo(targetY, { immediate: true });
+        }
+      }
+
+      if (top > 50) lockStateRef.current = "before";
+      else if (top < -50) lockStateRef.current = "after";
 
       prevTop.current = top;
     };
 
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+  }, [isLocked]);
 
-  const unlock = () => {
-    isLockedRef.current = false;
+  const unlock = (direction) => {
     setIsLocked(false);
-    ignoreLockRef.current = true;
-
-    if (window.lenis) window.lenis.start();
-
-    const checkExit = () => {
-      if (!sectionRef.current) return;
-      const r = sectionRef.current.getBoundingClientRect();
-      if (Math.abs(r.top) > 50) {
-        ignoreLockRef.current = false;
-        window.removeEventListener("scroll", checkExit);
-      }
-    };
-
-    window.addEventListener("scroll", checkExit);
+    lockStateRef.current = direction === "down" ? "after" : "before";
+    unlockLenis();
   };
 
   const handleInternalWheel = (deltaY) => {
@@ -255,7 +269,7 @@ export default function Architecture() {
         targetZoomRef.current = 0;
 
         if (!isDown && currentZoomRef.current < 0.05 && now - lastTransitionTime.current > 150) {
-          unlock();
+          unlock("up");
         }
       } else {
         targetZoomRef.current = nextTarget;
@@ -270,7 +284,7 @@ export default function Architecture() {
           switchService(indexRef.current + 1);
           lastTransitionTime.current = now;
         } else {
-          unlock();
+          unlock("down");
         }
       } else {
         if (indexRef.current > 0) {
@@ -335,7 +349,7 @@ export default function Architecture() {
   }, [isLocked]);
 
   useEffect(() => {
-    if (videoRef.current) videoRef.current.play().catch(() => {});
+    if (videoRef.current) videoRef.current.play().catch(() => { });
     return () => {
       if (contentTimerRef.current) clearTimeout(contentTimerRef.current);
     };
@@ -377,12 +391,12 @@ export default function Architecture() {
   const activeOverlay = overlayColors[showServices ? innerActiveIndex + 1 : 0];
 
   return (
-    <section ref={sectionRef} className="relative h-screen w-full bg-[#020617] text-[#111827]">
-      <div className="absolute inset-0 overflow-hidden bg-white">
-        <div className="absolute top-[10%] left-[10%] h-[600px] w-[600px] rounded-full bg-cyan-900/30 blur-[150px] pointer-events-none z-0 animate-glow" />
-        <div className="absolute bottom-[10%] right-[10%] h-[700px] w-[700px] rounded-full bg-purple-900/20 blur-[150px] pointer-events-none z-0 animate-glow-delayed" />
+    <section ref={sectionRef} className="relative w-full bg-[#020617] text-text">
+      <div className="sticky top-0 h-screen w-full overflow-hidden bg-bg">
+        <div className="absolute top-[10%] left-[10%] h-[600px] w-[600px] rounded-full bg-primary/30 blur-[150px] pointer-events-none z-0 animate-glow" />
+        <div className="absolute bottom-[10%] right-[10%] h-[700px] w-[700px] rounded-full bg-accent/20 blur-[150px] pointer-events-none z-0 animate-glow-delayed" />
 
-        <div className="absolute overflow-hidden bg-white" style={tunnelStyle}>
+        <div className="absolute overflow-hidden bg-bg" style={tunnelStyle}>
           <div
             className="absolute inset-0 z-0"
             style={{
@@ -393,7 +407,7 @@ export default function Architecture() {
               backfaceVisibility: "hidden",
             }}
           >
-            <div className="absolute inset-0 z-0 bg-white" />
+            <div className="absolute inset-0 z-0 bg-bg" />
 
             {videoError ? (
               <div className="tunnel z-10">
@@ -445,33 +459,33 @@ export default function Architecture() {
               <div className="hidden lg:block lg:col-span-6" />
 
               <div className="lg:col-span-6 relative flex flex-col justify-center">
-                <div className="absolute inset-0 -z-10 bg-white/30 blur-3xl rounded-full" />
+                <div className="absolute inset-0 -z-10 bg-bg/30 blur-3xl rounded-full" />
 
                 <div className="inline-flex items-center gap-3 mb-6">
-                  <span className="block h-[1px] w-8 bg-cyan-400"></span>
-                  <p className="text-[10px] font-black uppercase tracking-[0.4em] text-[#064B63] font-mono">
+                  <span className="block h-[1px] w-8 bg-primary"></span>
+                  <p className="text-[10px] font-black uppercase tracking-[0.4em] text-primary font-mono">
                     Core Infrastructure
                   </p>
                 </div>
 
-                <h2 className="text-4xl font-light uppercase leading-[1.15] tracking-[0.12em] text-[#111827] md:text-[3.25rem]">
+                <h2 className="text-4xl font-light uppercase leading-[1.15] tracking-[0.12em] text-text md:text-[3.25rem]">
                   Step into a <br className="hidden md:block" />
-                  <span className="font-medium text-gray-200">new world</span>
-                  <span className="mt-4 block bg-gradient-to-r from-blue-400 via-purple-300 to-cyan-300 bg-clip-text font-black text-transparent">
+                  <span className="font-black text-transparent bg-clip-text bg-gradient-to-r from-text to-text-secondary">new world</span>
+                  <span className="mt-4 block bg-gradient-to-r from-primary via-accent to-primary bg-clip-text font-black text-transparent">
                     and let your ecosystem run wild
                   </span>
                 </h2>
 
-                <p className="mt-8 max-w-md text-sm leading-relaxed text-[#475569] font-light tracking-wide border-l border-[#E2E8F0] pl-5">
+                <p className="mt-8 max-w-md text-[15px] leading-relaxed text-text-secondary font-light tracking-wide border-l-2 border-primary/30 pl-6 py-2 bg-gradient-to-r from-bg-soft to-transparent rounded-r-xl">
                   KP Global integrates all business verticals into one premium,
                   high-speed ecosystem. Access the global network architecture below.
                 </p>
 
-                <div className="mt-14 flex items-center gap-4 opacity-70">
-                  <div className="flex h-10 w-6 items-start justify-center rounded-full border border-[#E2E8F0] p-1">
-                    <div className="h-2 w-1.5 animate-bounce rounded-full bg-white shadow-[0_0_8px_white]" />
+                <div className="mt-12 flex items-center gap-4 opacity-70">
+                  <div className="flex h-10 w-6 items-start justify-center rounded-full border border-border p-1 bg-bg-soft">
+                    <div className="h-2 w-1.5 animate-bounce rounded-full bg-primary shadow-[0_0_8px_rgba(108,59,255,0.5)]" />
                   </div>
-                  <span className="text-[10px] font-semibold uppercase tracking-[0.3em] text-[#111827]">
+                  <span className="text-[10px] font-semibold uppercase tracking-[0.3em] text-text">
                     Initialize Routing
                   </span>
                 </div>
@@ -480,34 +494,48 @@ export default function Architecture() {
           </div>
         </div>
 
+        <div className="absolute inset-0 z-10 pointer-events-none">
+          {showServices && (
+            <div className={`absolute inset-0 z-0 transition-opacity duration-500 ${contentPhase === "out" ? "opacity-0" : "opacity-100"}`}>
+              <img
+                src={activeService.image}
+                alt={activeService.title}
+                className="h-full w-full object-cover opacity-60 transition-all duration-1000"
+                style={{ transform: contentPhase === "in" ? "scale(1)" : "scale(1.05)" }}
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-[#020617] via-[#020617]/80 to-transparent" />
+              <div className="absolute inset-0 bg-gradient-to-r from-[#020617] via-[#020617]/70 to-transparent" />
+            </div>
+          )}
+        </div>
+
         <div className="absolute inset-0 z-30 pointer-events-none" style={{ paddingTop: "110px" }}>
           {showServices && (
             <div
-              className={`flex h-full w-full items-center justify-center px-6 pointer-events-auto ${
-                contentPhase === "out" ? "service-content-out" : "service-content-in"
-              }`}
+              className={`flex h-full w-full items-center justify-center px-6 pointer-events-auto ${contentPhase === "out" ? "service-content-out" : "service-content-in"
+                }`}
             >
-              <div className="grid w-full max-w-7xl grid-cols-1 items-center gap-8 lg:grid-cols-12 lg:gap-14 pt-10">
+              <div className="grid w-full max-w-7xl grid-cols-1 items-center gap-8 lg:grid-cols-12 lg:gap-14 pt-10 relative z-10">
                 <div className="space-y-5 lg:col-span-5">
-                  <div className={`flex h-16 w-16 items-center justify-center rounded-3xl bg-gradient-to-br ${activeService.color} shadow-lg shadow-black/60 lg:h-20 lg:w-20`}>
-                    <Icon className="h-8 w-8 text-[#111827] lg:h-10 lg:w-10" />
+                  <div className={`flex h-16 w-16 items-center justify-center rounded-3xl bg-gradient-to-br ${activeService.color} shadow-[0_0_30px_rgba(108,59,255,0.4)] lg:h-20 lg:w-20`}>
+                    <Icon className="h-8 w-8 text-white lg:h-10 lg:w-10" />
                   </div>
 
                   <div>
-                    <p className="text-[10px] font-black uppercase tracking-[0.35em] text-[#111827]/40 font-mono lg:text-xs">
+                    <p className="text-[10px] font-black uppercase tracking-[0.35em] text-white/50 font-mono lg:text-xs">
                       ROUTING CORE // {activeService.id.toUpperCase()}_SVC
                     </p>
 
-                    <h3 className="mt-3 text-4xl font-black uppercase leading-none tracking-tight text-[#111827] md:text-5xl lg:text-7xl">
+                    <h3 className="mt-3 text-4xl font-black uppercase leading-none tracking-tight text-transparent bg-clip-text bg-gradient-to-br from-white to-white/70 drop-shadow-md md:text-5xl lg:text-7xl">
                       {activeService.title}
                     </h3>
                   </div>
 
-                  <p className="text-sm font-bold uppercase tracking-widest text-[#064B63] lg:text-lg">
+                  <p className="text-sm font-bold uppercase tracking-widest text-primary drop-shadow-[0_0_10px_rgba(108,59,255,0.5)] lg:text-lg">
                     {activeService.desc}
                   </p>
 
-                  <p className="max-w-lg text-sm leading-relaxed text-[#475569] font-light">
+                  <p className="max-w-lg text-[15px] leading-relaxed text-white/80 font-light">
                     {activeService.details}
                   </p>
                 </div>
@@ -516,13 +544,15 @@ export default function Architecture() {
                   {activeService.subservices.map((sub, sIdx) => (
                     <div
                       key={`${activeService.id}-${sIdx}`}
-                      className="service-card rounded-2xl border border-[#E2E8F0] bg-white/60 p-5 backdrop-blur-2xl transition-all duration-300 hover:scale-[1.02] hover:border-[#E2E8F0] hover:bg-white/80 lg:p-6"
+                      className="service-card group rounded-2xl border border-white/10 bg-black/30 p-5 backdrop-blur-md transition-all duration-500 hover:scale-[1.03] hover:border-primary/50 hover:bg-black/50 hover:shadow-[0_0_30px_rgba(108,59,255,0.15)] lg:p-6"
                       style={{ animationDelay: `${sIdx * 90}ms` }}
                     >
-                      <span className={`mb-4 block h-2 w-2 rounded-full bg-gradient-to-r ${activeService.color} shadow-[0_0_10px_currentColor]`} />
-                      <h4 className="text-xs font-black uppercase tracking-wider text-[#111827] lg:text-sm">
-                        {sub}
-                      </h4>
+                      <div className="flex space-x-3 text-center">
+                        <span className={`mb-4 block h-2 w-2 rounded-full bg-gradient-to-r ${activeService.color} shadow-[0_0_12px_currentColor] group-hover:scale-150 transition-transform duration-500`} />
+                        <h4 className="text-[11px] font-black uppercase tracking-widest text-white/90 group-hover:text-white transition-colors lg:text-xs">
+                          {sub}
+                        </h4>
+                      </div>
                     </div>
                   ))}
                 </div>

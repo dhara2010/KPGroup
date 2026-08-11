@@ -5,6 +5,8 @@ import { MonitorSmartphone, Radio, GraduationCap, Briefcase, Network, ArrowUpRig
 
 import { Link } from "react-router-dom";
 import { ScrollReveal, TextReveal, ThreeDTilt } from "@/components/Animations";
+import { Section } from "@/components/ui/Section";
+import { Heading, Text, Eyebrow } from "@/components/ui/Typography";
 
 export default function Ecosystem() {
   const cards = [
@@ -13,8 +15,8 @@ export default function Ecosystem() {
       desc: "Next-gen software, cloud infrastructure, and AI-driven enterprise solutions.",
       icon: MonitorSmartphone,
       className: "md:col-span-2 md:row-span-2",
-      gradient: "from-blue-500/50 via-purple-500/20 to-transparent",
-      iconColor: "text-[#064B63]",
+      gradient: "from-primary via-accent-soft to-transparent",
+      iconColor: "text-white",
       image: "/eco_it_bg.webp",
       href: "https://kpgbit.kpglobalbusiness.com/"
     },
@@ -23,8 +25,8 @@ export default function Ecosystem() {
       desc: "Global reach broadcasting and digital marketing.",
       icon: Radio,
       className: "md:col-span-1",
-      gradient: "from-purple-500/50 to-transparent",
-      iconColor: "text-[#064B63]",
+      gradient: "from-primary/50 to-transparent",
+      iconColor: "text-white",
       image: "/eco_media_bg.webp",
       href: "https://entrepreneurjouryny.com/"
     },
@@ -33,8 +35,8 @@ export default function Ecosystem() {
       desc: "Empowering the workforce of tomorrow with advanced technical training.",
       icon: GraduationCap,
       className: "md:col-span-1",
-      gradient: "from-pink-500/50 to-transparent",
-      iconColor: "text-[#0E7490]",
+      gradient: "from-accent/50 to-transparent",
+      iconColor: "text-white",
       image: "/eco_academy_bg.webp",
       href: "https://academy.kpglobalbusiness.com/"
     },
@@ -43,8 +45,8 @@ export default function Ecosystem() {
       desc: "Join a global team of innovators.",
       icon: Briefcase,
       className: "md:col-span-1",
-      gradient: "from-emerald-500/50 to-transparent",
-      iconColor: "text-[#0E7490]",
+      gradient: "from-primary/50 to-transparent",
+      iconColor: "text-white",
       image: "/eco_careers_bg.webp",
       href: "/careers"
     },
@@ -53,33 +55,33 @@ export default function Ecosystem() {
       desc: "A thriving ecosystem of partners, investors, and enterprise leaders shaping the future.",
       icon: Network,
       className: "md:col-span-2",
-      gradient: "from-orange-500/50 to-transparent",
-      iconColor: "text-orange-400",
+      gradient: "from-accent-soft to-transparent",
+      iconColor: "text-white",
       image: "/eco_community_bg.webp",
       href: "https://kpgbc.kpglobalbusiness.com/"
     }
   ];
 
   return (
-    <section id="ecosystem" className="relative py-24 px-4 sm:px-6 lg:px-8 bg-white overflow-hidden">
+    <Section id="ecosystem" variant="default" className="relative overflow-hidden">
       <div className="max-w-7xl mx-auto relative z-10">
         
         <div className="mb-16 md:mb-24 flex flex-col text-center items-center">
           <ScrollReveal variant="3d-unfold">
-            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-[#F7F9FA] border border-[#E2E8F0] mb-6">
-              <span className="w-2 h-2 rounded-full bg-purple-400 animate-pulse"></span>
-              <span className="text-xs font-medium text-purple-200 tracking-wider uppercase">Our Ecosystem</span>
+            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-bg-soft border border-border mb-6">
+              <span className="w-2 h-2 rounded-full bg-accent animate-pulse"></span>
+              <Eyebrow>Our Ecosystem</Eyebrow>
             </div>
           </ScrollReveal>
 
-          <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-[#111827] tracking-tight mb-6">
+          <Heading level={2} className="mb-6">
             <TextReveal text="Everything you need. All in one network." delay={0.2} />
-          </h2>
+          </Heading>
 
           <ScrollReveal variant="3d-unfold" delay={0.4}>
-            <p className="text-lg text-[#475569] max-w-2xl font-light mx-auto">
+            <Text variant="large" className="max-w-2xl mx-auto">
               Discover a fully integrated platform designed to scale your operations, empower your team, and connect you with the world's most innovative business community.
-            </p>
+            </Text>
           </ScrollReveal>
         </div>
 
@@ -105,12 +107,12 @@ export default function Ecosystem() {
                   className="h-full cursor-pointer"
                 >
                   <div 
-                    className="group relative p-[1px] rounded-[2rem] overflow-hidden transition-all duration-500 h-full border border-[#E2E8F0]"
+                    className="group relative p-[1px] rounded-[2rem] overflow-hidden transition-all duration-500 h-full border border-border"
                     style={{ transformStyle: "preserve-3d" }}
                   >
                     {/* Card Content Wrapper */}
                     <div 
-                      className="relative h-full bg-white rounded-[calc(2rem-1px)] p-8 flex flex-col justify-between overflow-hidden"
+                      className="relative h-full bg-bg-dark rounded-[calc(2rem-1px)] p-8 flex flex-col justify-between overflow-hidden"
                       style={{ transformStyle: "preserve-3d" }}
                     >
                       
@@ -122,23 +124,23 @@ export default function Ecosystem() {
                           fill
                           sizes="(max-width: 768px) 100vw, (max-width: 1200px) 66vw, 33vw"
                           priority={idx === 0}
-                          className="object-cover opacity-50 group-hover:opacity-70 group-hover:scale-110 transition-all duration-700 ease-out"
+                          className="object-cover opacity-60 group-hover:opacity-80 group-hover:scale-110 transition-all duration-700 ease-out"
                         />
                         {/* Overlay to keep text readable */}
-                        <div className="absolute inset-0 bg-gradient-to-t from-black via-white/50 to-black/10"></div>
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent"></div>
                       </div>
 
                       {/* Inner Hover Glow */}
-                      <div className={`absolute -right-20 -top-20 w-40 h-40 bg-gradient-to-br ${card.gradient} blur-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-700 z-0`}></div>
+                      <div className={`absolute -right-20 -top-20 w-40 h-40 bg-gradient-to-br ${card.gradient} blur-3xl opacity-0 group-hover:opacity-60 transition-opacity duration-700 z-0`}></div>
 
                       <div 
                         className="relative z-10 flex justify-between items-start"
                         style={{ transform: "translateZ(30px)" }}
                       >
-                        <div className={`w-14 h-14 rounded-2xl bg-[#F7F9FA] border border-[#E2E8F0] flex items-center justify-center ${card.iconColor} group-hover:scale-110 group-hover:rotate-3 transition-transform duration-500`}>
+                        <div className={`w-14 h-14 rounded-2xl bg-white/10 backdrop-blur-md border border-white/20 flex items-center justify-center ${card.iconColor} group-hover:scale-110 group-hover:rotate-3 group-hover:bg-primary transition-all duration-500`}>
                           <card.icon className="w-7 h-7" strokeWidth={1.5} />
                         </div>
-                        <div className="w-10 h-10 rounded-full border border-[#E2E8F0] flex items-center justify-center text-[#111827]/30 group-hover:bg-white group-hover:text-black group-hover:border-transparent transition-all duration-300 transform group-hover:rotate-45">
+                        <div className="w-10 h-10 rounded-full border border-white/20 flex items-center justify-center text-white/50 group-hover:bg-primary group-hover:text-white group-hover:border-transparent transition-all duration-300 transform group-hover:rotate-45">
                           <ArrowUpRight className="w-5 h-5" />
                         </div>
                       </div>
@@ -147,10 +149,10 @@ export default function Ecosystem() {
                         className="relative z-10 mt-auto pt-8"
                         style={{ transform: "translateZ(20px)" }}
                       >
-                        <h3 className="text-2xl font-bold text-[#111827] mb-2    group-hover:from-white  transition-all duration-300">
+                        <h3 className="text-2xl font-bold text-white mb-2 transition-all duration-300">
                           {card.title}
                         </h3>
-                        <p className="text-[#475569] leading-relaxed font-light line-clamp-3">
+                        <p className="text-white/70 leading-relaxed font-light line-clamp-3">
                           {card.desc}
                         </p>
                       </div>
@@ -162,7 +164,7 @@ export default function Ecosystem() {
           ))}
         </div>
       </div>
-    </section>
+    </Section>
   );
 }
 

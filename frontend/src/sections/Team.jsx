@@ -27,28 +27,31 @@ export default function Team() {
   }, []);
 
   return (
-    <section className="relative py-32 bg-[#020202] overflow-hidden font-sans border-t border-[#E2E8F0]">
-      <div className="absolute inset-0 z-0 pointer-events-none opacity-20">
-        <div className="absolute top-0 right-0 w-[50vw] h-[50vw] bg-[#064B63]/10 rounded-full blur-[150px]"></div>
+    <section className="relative py-32 bg-gradient-to-b from-bg via-primary/[0.02] to-bg overflow-hidden font-sans border-t border-border">
+      
+      {/* Background Ambience */}
+      <div className="absolute inset-0 z-0 pointer-events-none opacity-40 mix-blend-screen dark:mix-blend-normal">
+        <div className="absolute top-1/4 left-[-10%] w-[50vw] h-[50vw] bg-primary/20 rounded-full blur-[150px] animate-[pulse_8s_ease-in-out_infinite]"></div>
+        <div className="absolute bottom-[-10%] right-[-10%] w-[60vw] h-[60vw] bg-accent/20 rounded-full blur-[150px] animate-[pulse_12s_ease-in-out_infinite_reverse]"></div>
       </div>
 
       <div className="max-w-7xl mx-auto px-6 relative z-10">
         <div className="mb-20 flex flex-col text-center items-center">
           <ScrollReveal variant="3d-unfold">
-            <div className="inline-flex items-center gap-3 px-4 py-1.5 rounded-full bg-[#F7F9FA] border border-[#E2E8F0] mb-6">
-              <Users className="w-4 h-4 text-[#064B63]" />
-              <span className="text-xs font-medium text-[#064B63] tracking-wider uppercase">
+            <div className="inline-flex items-center gap-3 px-4 py-1.5 rounded-full bg-bg-soft border border-border mb-6">
+              <Users className="w-4 h-4 text-primary" />
+              <span className="text-xs font-medium text-primary tracking-wider uppercase">
                 Leadership
               </span>
             </div>
           </ScrollReveal>
 
-          <h2 className="text-4xl md:text-7xl font-black text-[#111827] mb-6 uppercase tracking-tighter font-heading">
+          <h2 className="text-4xl md:text-7xl font-black text-text mb-6 uppercase tracking-tighter font-heading">
             <TextReveal text="CORE ARCHITECTS." delay={0.2} />
           </h2>
 
           <ScrollReveal variant="3d-unfold" delay={0.4}>
-            <p className="text-[#475569] max-w-2xl mx-auto font-light leading-relaxed text-sm md:text-base">
+            <p className="text-text-secondary max-w-2xl mx-auto font-light leading-relaxed text-sm md:text-base">
               The visionary minds engineering the next evolution of global enterprise, technology, and media infrastructure.
             </p>
           </ScrollReveal>
@@ -68,34 +71,32 @@ export default function Team() {
                 glareOpacity={0.08}
                 className="h-full cursor-pointer rounded-[2rem]"
               >
-                <div className="group relative rounded-[2rem] overflow-hidden bg-[#080808] border border-[#E2E8F0] transition-all duration-700 h-full hover:border-[#E2E8F0]">
+                <div className="group relative rounded-[2rem] overflow-hidden bg-[#080808] border border-border hover:border-primary/50 hover:shadow-[0_15px_40px_rgba(108,59,255,0.2)] transition-all duration-700 h-full">
                   <div className="relative w-full aspect-[4/5] overflow-hidden bg-[#111]">
                     {member.image ? (
                       <img
                         src={member.image}
                         alt={member.name}
-                        fill
-                        sizes="(max-width: 768px) 100vw, 25vw"
-                        className="object-cover object-top transition-all duration-700 group-hover:scale-110"
+                        className="w-full h-full object-cover object-top transition-all duration-700 group-hover:scale-110 group-hover:rotate-1"
                       />
                     ) : (
                       <div className="w-full h-full bg-[#1c1c1c]" />
                     )}
-                    <div className="absolute inset-0 bg-gradient-to-t from-black via-black/30 to-transparent z-10" />
+                    {/* Dark gradient overlay to ensure white text is always readable */}
+                    <div className="absolute inset-0 bg-gradient-to-t from-black via-black/60 to-transparent z-10 transition-opacity duration-700 group-hover:opacity-80" />
                   </div>
 
-                  <div className="absolute bottom-0 left-0 w-full p-6 z-10">
-                    <h3 className="text-xl font-black text-[#111827] uppercase tracking-tight mb-1    group-hover:from-white ">
+                  <div className="absolute bottom-0 left-0 w-full p-6 lg:p-8 z-20 flex flex-col justify-end">
+                    <h3 className="text-xl md:text-2xl font-black text-white uppercase tracking-tight mb-1 drop-shadow-md">
                       {member.name}
                     </h3>
 
-                    <p className="text-xs font-bold text-[#475569] uppercase tracking-widest">
+                    <p className="text-[10px] md:text-xs font-bold text-white/70 uppercase tracking-widest drop-shadow-md">
                       {member.role}
                     </p>
 
                     <div
-                      className={`w-0 h-[2px] mt-4 bg-gradient-to-r ${member.color || "from-blue-600 to-cyan-400"
-                        } group-hover:w-full transition-all duration-700 ease-out`}
+                      className={`w-0 h-[3px] mt-5 bg-gradient-to-r from-primary to-accent group-hover:w-full transition-all duration-700 ease-out rounded-full`}
                     ></div>
                   </div>
                 </div>

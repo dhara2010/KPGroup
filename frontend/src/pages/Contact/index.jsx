@@ -1,7 +1,6 @@
 
 
 import React, { useState } from "react";
-
 import { Link } from "react-router-dom";
 import { 
   Mail, Phone, MapPin, Check, ChevronDown, 
@@ -25,35 +24,35 @@ export default function ContactPage() {
   const [isSubmitted, setIsSubmitted] = useState(false);
 
   const handleSubmit = async (e) => {
-  e.preventDefault();
+    e.preventDefault();
 
-  if (!formData.consent) return;
+    if (!formData.consent) return;
 
-  try {
-    setIsSubmitting(true);
+    try {
+      setIsSubmitting(true);
 
-    const response = await fetch("http://localhost:5000/api/forms", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(formData),
-    });
+      const response = await fetch("http://localhost:5000/api/forms", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
 
-    const data = await response.json();
+      const data = await response.json();
 
-    if (data.success) {
-      setIsSubmitted(true);
-    } else {
-      alert(data.message);
+      if (data.success) {
+        setIsSubmitted(true);
+      } else {
+        alert(data.message || "Submission error");
+      }
+    } catch (error) {
+      console.error(error);
+      alert("Something went wrong");
+    } finally {
+      setIsSubmitting(false);
     }
-  } catch (error) {
-    console.error(error);
-    alert("Something went wrong");
-  } finally {
-    setIsSubmitting(false);
-  }
-};
+  };
 
   const servicesList = [
     "KP Global IT Solution",
@@ -64,32 +63,13 @@ export default function ContactPage() {
   ];
 
   return (
-    <div className="relative bg-[#020202] text-[#111827] min-h-screen overflow-hidden font-sans pt-0 pb-20">
+    <div className="relative bg-white text-slate-900 min-h-screen overflow-hidden font-sans pt-0 pb-20">
       
-      {/* CSS Animation Injector */}
-      <style dangerouslySetInnerHTML={{__html: `
-        @keyframes scanline {
-          0% { left: -150%; }
-          100% { left: 150%; }
-        }
-        .animate-scanline {
-          position: absolute;
-          top: 0;
-          bottom: 0;
-          width: 8rem;
-          background: linear-gradient(to right, transparent, rgba(34, 211, 238, 0.15), transparent);
-          transform: skewX(-12deg);
-          animation: scanline 3s infinite linear;
-          pointer-events: none;
-          z-index: 0;
-        }
-      `}} />
-
-      {/* Laser Grid Background */}
-      <div className="absolute inset-0 pointer-events-none opacity-10 z-0">
-        <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.01)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.01)_1px,transparent_1px)] bg-[size:40px_40px]"></div>
-        <div className="absolute top-0 right-1/4 w-[60vw] h-[60vw] bg-[#064B63]/10 rounded-full blur-[140px]"></div>
-        <div className="absolute top-1/3 left-1/4 w-[60vw] h-[60vw] bg-[#064B63]/10 rounded-full blur-[140px]"></div>
+      {/* Light Laser Grid Background & Ambient Glow */}
+      <div className="absolute inset-0 pointer-events-none opacity-60 z-0">
+        <div className="absolute inset-0 bg-[linear-gradient(rgba(108,59,255,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(108,59,255,0.03)_1px,transparent_1px)] bg-[size:40px_40px]"></div>
+        <div className="absolute top-0 right-1/4 w-[50vw] h-[50vw] bg-primary/10 rounded-full blur-[140px]"></div>
+        <div className="absolute top-1/3 left-1/4 w-[50vw] h-[50vw] bg-accent/10 rounded-full blur-[140px]"></div>
       </div>
 
       <div className="relative z-10">
@@ -101,39 +81,39 @@ export default function ContactPage() {
         />
 
         {/* Section 2: Contact Info Grid */}
-        <div className="max-w-7xl mx-auto px-6 mb-20 relative z-10">
+        <div className="mt-10 max-w-7xl mx-auto px-6 mb-16 md:mb-20 relative z-10">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             
             {/* Card 1: Email */}
-            <div className="h-full bg-[#080808]/60 border border-[#E2E8F0] rounded-3xl p-8 backdrop-blur-md flex flex-col items-center text-center hover:border-[#0E7490] transition-all duration-500 relative overflow-hidden group hover:scale-[1.02]">
-              <div className="absolute top-0 right-0 w-24 h-24 bg-[#064B63]/10 rounded-full blur-2xl pointer-events-none group-hover:bg-[#064B63]/10 transition-colors" />
-              <div className="w-14 h-14 rounded-2xl bg-[#064B63]/10 border border-[#064B63]/20 flex items-center justify-center text-[#064B63] mb-6 shadow-[0_0_15px_rgba(6,182,212,0.15)] group-hover:scale-110 transition-transform duration-500">
+            <div className="h-full bg-white border border-slate-200/80 rounded-3xl p-8 shadow-xl shadow-purple-500/5 hover:shadow-2xl hover:shadow-primary/10 hover:border-primary/60 transition-all duration-500 flex flex-col items-center text-center relative overflow-hidden group hover:-translate-y-2">
+              <div className="absolute top-0 inset-x-0 h-[3px] bg-gradient-to-r from-primary via-purple-400 to-accent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+              <div className="w-14 h-14 rounded-2xl bg-primary/10 border border-primary/20 flex items-center justify-center text-primary mb-6 shadow-md shadow-purple-500/10 group-hover:scale-110 transition-transform duration-500">
                 <Mail className="w-6 h-6" />
               </div>
-              <h3 className="text-xs uppercase font-bold text-[#475569] tracking-[0.2em] mb-3">Email Address</h3>
-              <p className="text-sm text-[#064B63]/90 font-light hover:text-[#064B63] transition-colors select-all">info.kpglobalbusiness@gmail.com</p>
-              <p className="text-sm text-[#064B63]/90 font-light hover:text-[#064B63] transition-colors mt-1 select-all">info@kpglobalbusiness.com</p>
+              <h3 className="text-xs uppercase font-extrabold text-slate-400 tracking-[0.2em] mb-2">Email Address</h3>
+              <p className="text-sm font-extrabold text-slate-900 hover:text-primary transition-colors select-all">info.kpglobalbusiness@gmail.com</p>
+              <p className="text-sm font-bold text-slate-600 hover:text-primary transition-colors mt-1 select-all">info@kpglobalbusiness.com</p>
             </div>
 
             {/* Card 2: Phone */}
-            <div className="h-full bg-[#080808]/60 border border-[#E2E8F0] rounded-3xl p-8 backdrop-blur-md flex flex-col items-center text-center hover:border-[#0E7490] transition-all duration-500 relative overflow-hidden group hover:scale-[1.02]">
-              <div className="absolute top-0 right-0 w-24 h-24 bg-indigo-500/5 rounded-full blur-2xl pointer-events-none group-hover:bg-indigo-500/10 transition-colors" />
-              <div className="w-14 h-14 rounded-2xl bg-indigo-500/10 border border-indigo-500/20 flex items-center justify-center text-indigo-400 mb-6 shadow-[0_0_15px_rgba(99,102,241,0.15)] group-hover:scale-110 transition-transform duration-500">
+            <div className="h-full bg-white border border-slate-200/80 rounded-3xl p-8 shadow-xl shadow-purple-500/5 hover:shadow-2xl hover:shadow-primary/10 hover:border-primary/60 transition-all duration-500 flex flex-col items-center text-center relative overflow-hidden group hover:-translate-y-2">
+              <div className="absolute top-0 inset-x-0 h-[3px] bg-gradient-to-r from-primary via-purple-400 to-accent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+              <div className="w-14 h-14 rounded-2xl bg-primary/10 border border-primary/20 flex items-center justify-center text-primary mb-6 shadow-md shadow-purple-500/10 group-hover:scale-110 transition-transform duration-500">
                 <Phone className="w-6 h-6" />
               </div>
-              <h3 className="text-xs uppercase font-bold text-[#475569] tracking-[0.2em] mb-3">Phone Number</h3>
-              <p className="text-sm text-indigo-200/90 font-light hover:text-indigo-300 transition-colors select-all">+91 97128 97111</p>
-              <span className="text-[10px] text-gray-600 font-mono tracking-widest mt-3">MON - SAT | 10AM - 7PM</span>
+              <h3 className="text-xs uppercase font-extrabold text-slate-400 tracking-[0.2em] mb-2">Phone Number</h3>
+              <p className="text-base font-black text-slate-900 hover:text-primary transition-colors select-all">+91 97128 97111</p>
+              <span className="text-[10px] text-slate-500 font-mono font-bold tracking-widest mt-2">MON - SAT | 10AM - 7PM</span>
             </div>
 
             {/* Card 3: Location */}
-            <div className="h-full bg-[#080808]/60 border border-[#E2E8F0] rounded-3xl p-8 backdrop-blur-md flex flex-col items-center text-center hover:border-[#0E7490] transition-all duration-500 relative overflow-hidden group hover:scale-[1.02]">
-              <div className="absolute top-0 right-0 w-24 h-24 bg-[#064B63]/10 rounded-full blur-2xl pointer-events-none group-hover:bg-[#064B63]/10 transition-colors" />
-              <div className="w-14 h-14 rounded-2xl bg-[#064B63]/10 border border-[#064B63]/20 flex items-center justify-center text-[#064B63] mb-6 shadow-[0_0_15px_rgba(168,85,247,0.15)] group-hover:scale-110 transition-transform duration-500">
+            <div className="h-full bg-white border border-slate-200/80 rounded-3xl p-8 shadow-xl shadow-purple-500/5 hover:shadow-2xl hover:shadow-primary/10 hover:border-primary/60 transition-all duration-500 flex flex-col items-center text-center relative overflow-hidden group hover:-translate-y-2">
+              <div className="absolute top-0 inset-x-0 h-[3px] bg-gradient-to-r from-primary via-purple-400 to-accent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+              <div className="w-14 h-14 rounded-2xl bg-primary/10 border border-primary/20 flex items-center justify-center text-primary mb-6 shadow-md shadow-purple-500/10 group-hover:scale-110 transition-transform duration-500">
                 <MapPin className="w-6 h-6" />
               </div>
-              <h3 className="text-xs uppercase font-bold text-[#475569] tracking-[0.2em] mb-3">Location</h3>
-              <p className="text-sm text-purple-200/90 font-light leading-relaxed select-all">
+              <h3 className="text-xs uppercase font-extrabold text-slate-400 tracking-[0.2em] mb-2">Location</h3>
+              <p className="text-sm font-extrabold text-slate-900 leading-relaxed select-all">
                 Kiran Pearl, Kosad,<br />Surat, Gujarat.
               </p>
             </div>
@@ -147,16 +127,15 @@ export default function ContactPage() {
             
             {/* Left Column: Form */}
             <div className="lg:col-span-7 flex flex-col justify-between">
-              <div className="bg-[#060606]/65 border border-[#E2E8F0] rounded-[2.5rem] p-8 md:p-12 backdrop-blur-xl relative overflow-hidden shadow-2xl">
-                <div className="absolute top-0 right-0 w-80 h-80 bg-indigo-500/5 rounded-full blur-3xl pointer-events-none" />
+              <div className="bg-white border border-slate-200/80 rounded-[2.5rem] p-8 md:p-12 shadow-2xl shadow-purple-500/5 relative overflow-hidden">
                 
                 <div className="space-y-4 mb-8">
-                  <div className="inline-flex items-center gap-1.5">
-                    <Sparkles className="w-4 h-4 text-[#064B63] animate-pulse" />
-                    <span className="text-[10px] font-bold text-[#064B63] tracking-[0.2em] uppercase">Let's Start Creating Together</span>
+                  <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-primary/10 border border-primary/20 text-xs font-bold text-primary uppercase tracking-widest shadow-sm">
+                    <Sparkles className="w-3.5 h-3.5 animate-pulse" />
+                    Let's Start Creating Together
                   </div>
-                  <h2 className="text-3xl md:text-4xl font-extrabold text-[#111827] tracking-tight uppercase">
-                    Contact us
+                  <h2 className="text-3xl md:text-4xl font-black text-slate-900 tracking-tight uppercase">
+                    Contact Us
                   </h2>
                 </div>
                 
@@ -165,30 +144,30 @@ export default function ContactPage() {
                   {/* Name fields */}
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div className="space-y-2">
-                      <label className="text-[10px] font-bold tracking-wider text-[#475569] uppercase">First Name <span className="text-[#064B63]">*</span></label>
-                      <div className="relative">
-                        <User className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-600" />
+                      <label className="text-[11px] font-extrabold tracking-wider text-slate-700 uppercase">First Name <span className="text-primary">*</span></label>
+                      <div className="relative group/field">
+                        <User className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400 group-focus-within/field:text-primary transition-colors" />
                         <input 
                           type="text" 
                           required
                           value={formData.firstName}
                           onChange={(e) => setFormData({...formData, firstName: e.target.value})}
                           placeholder="John"
-                          className="w-full bg-white/[0.03] border border-[#E2E8F0] rounded-2xl py-3.5 pl-11 pr-4 text-sm text-[#111827] placeholder:text-gray-700 focus:outline-none focus:border-[#064B63]/20 focus:shadow-[0_0_15px_rgba(34,211,238,0.15)] transition-all duration-300"
+                          className="w-full bg-slate-50 border border-slate-200 rounded-2xl py-3.5 pl-11 pr-4 text-sm text-slate-900 font-semibold placeholder:text-slate-400 focus:outline-none focus:border-primary focus:bg-white focus:shadow-[0_0_20px_rgba(108,59,255,0.15)] transition-all duration-300"
                         />
                       </div>
                     </div>
                     
                     <div className="space-y-2">
-                      <label className="text-[10px] font-bold tracking-wider text-[#475569] uppercase">Last Name</label>
-                      <div className="relative">
-                        <User className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-600" />
+                      <label className="text-[11px] font-extrabold tracking-wider text-slate-700 uppercase">Last Name</label>
+                      <div className="relative group/field">
+                        <User className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400 group-focus-within/field:text-primary transition-colors" />
                         <input 
                           type="text" 
                           value={formData.lastName}
                           onChange={(e) => setFormData({...formData, lastName: e.target.value})}
                           placeholder="Doe"
-                          className="w-full bg-white/[0.03] border border-[#E2E8F0] rounded-2xl py-3.5 pl-11 pr-4 text-sm text-[#111827] placeholder:text-gray-700 focus:outline-none focus:border-[#064B63]/20 focus:shadow-[0_0_15px_rgba(34,211,238,0.15)] transition-all duration-300"
+                          className="w-full bg-slate-50 border border-slate-200 rounded-2xl py-3.5 pl-11 pr-4 text-sm text-slate-900 font-semibold placeholder:text-slate-400 focus:outline-none focus:border-primary focus:bg-white focus:shadow-[0_0_20px_rgba(108,59,255,0.15)] transition-all duration-300"
                         />
                       </div>
                     </div>
@@ -197,31 +176,31 @@ export default function ContactPage() {
                   {/* Email & Phone */}
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div className="space-y-2">
-                      <label className="text-[10px] font-bold tracking-wider text-[#475569] uppercase">Email Address <span className="text-[#064B63]">*</span></label>
-                      <div className="relative">
-                        <Mail className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-600" />
+                      <label className="text-[11px] font-extrabold tracking-wider text-slate-700 uppercase">Email Address <span className="text-primary">*</span></label>
+                      <div className="relative group/field">
+                        <Mail className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400 group-focus-within/field:text-primary transition-colors" />
                         <input 
                           type="email" 
                           required
                           value={formData.email}
                           onChange={(e) => setFormData({...formData, email: e.target.value})}
                           placeholder="john@example.com"
-                          className="w-full bg-white/[0.03] border border-[#E2E8F0] rounded-2xl py-3.5 pl-11 pr-4 text-sm text-[#111827] placeholder:text-gray-700 focus:outline-none focus:border-[#064B63]/20 focus:shadow-[0_0_15px_rgba(34,211,238,0.15)] transition-all duration-300"
+                          className="w-full bg-slate-50 border border-slate-200 rounded-2xl py-3.5 pl-11 pr-4 text-sm text-slate-900 font-semibold placeholder:text-slate-400 focus:outline-none focus:border-primary focus:bg-white focus:shadow-[0_0_20px_rgba(108,59,255,0.15)] transition-all duration-300"
                         />
                       </div>
                     </div>
                     
                     <div className="space-y-2">
-                      <label className="text-[10px] font-bold tracking-wider text-[#475569] uppercase">Phone Number <span className="text-[#064B63]">*</span></label>
-                      <div className="relative">
-                        <Phone className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-600" />
+                      <label className="text-[11px] font-extrabold tracking-wider text-slate-700 uppercase">Phone Number <span className="text-primary">*</span></label>
+                      <div className="relative group/field">
+                        <Phone className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400 group-focus-within/field:text-primary transition-colors" />
                         <input 
                           type="tel" 
                           required
                           value={formData.phone}
                           onChange={(e) => setFormData({...formData, phone: e.target.value})}
                           placeholder="+91 XXXXX XXXXX"
-                          className="w-full bg-white/[0.03] border border-[#E2E8F0] rounded-2xl py-3.5 pl-11 pr-4 text-sm text-[#111827] placeholder:text-gray-700 focus:outline-none focus:border-[#064B63]/20 focus:shadow-[0_0_15px_rgba(34,211,238,0.15)] transition-all duration-300"
+                          className="w-full bg-slate-50 border border-slate-200 rounded-2xl py-3.5 pl-11 pr-4 text-sm text-slate-900 font-semibold placeholder:text-slate-400 focus:outline-none focus:border-primary focus:bg-white focus:shadow-[0_0_20px_rgba(108,59,255,0.15)] transition-all duration-300"
                         />
                       </div>
                     </div>
@@ -229,50 +208,50 @@ export default function ContactPage() {
 
                   {/* Service Select */}
                   <div className="space-y-2">
-                    <label className="text-[10px] font-bold tracking-wider text-[#475569] uppercase">Service Interested In</label>
-                    <div className="relative">
-                      <Globe className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-600 pointer-events-none" />
+                    <label className="text-[11px] font-extrabold tracking-wider text-slate-700 uppercase">Service Interested In</label>
+                    <div className="relative group/field">
+                      <Globe className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400 group-focus-within/field:text-primary pointer-events-none transition-colors" />
                       <select 
                         value={formData.service}
                         onChange={(e) => setFormData({...formData, service: e.target.value})}
-                        className="w-full bg-[#080808] border border-[#E2E8F0] rounded-2xl py-3.5 pl-11 pr-10 text-sm text-[#111827] focus:outline-none focus:border-[#064B63]/20 focus:shadow-[0_0_15px_rgba(34,211,238,0.15)] transition-all duration-300 appearance-none cursor-pointer"
+                        className="w-full bg-slate-50 border border-slate-200 rounded-2xl py-3.5 pl-11 pr-10 text-sm text-slate-900 font-semibold focus:outline-none focus:border-primary focus:bg-white focus:shadow-[0_0_20px_rgba(108,59,255,0.15)] transition-all duration-300 appearance-none cursor-pointer"
                       >
                         {servicesList.map((service, index) => (
-                          <option key={index} value={service} className="bg-[#020202] text-[#111827]">
+                          <option key={index} value={service} className="bg-white text-slate-900">
                             {service}
                           </option>
                         ))}
                       </select>
-                      <ChevronDown className="absolute right-4 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-600 pointer-events-none" />
+                      <ChevronDown className="absolute right-4 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400 pointer-events-none" />
                     </div>
                   </div>
 
                   {/* Company Name */}
                   <div className="space-y-2">
-                    <label className="text-[10px] font-bold tracking-wider text-[#475569] uppercase">Company Name</label>
-                    <div className="relative">
-                      <Building className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-600" />
+                    <label className="text-[11px] font-extrabold tracking-wider text-slate-700 uppercase">Company Name</label>
+                    <div className="relative group/field">
+                      <Building className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400 group-focus-within/field:text-primary transition-colors" />
                       <input 
                         type="text" 
                         value={formData.company}
                         onChange={(e) => setFormData({...formData, company: e.target.value})}
                         placeholder="Your Company Ltd"
-                        className="w-full bg-white/[0.03] border border-[#E2E8F0] rounded-2xl py-3.5 pl-11 pr-4 text-sm text-[#111827] placeholder:text-gray-700 focus:outline-none focus:border-[#064B63]/20 focus:shadow-[0_0_15px_rgba(34,211,238,0.15)] transition-all duration-300"
+                        className="w-full bg-slate-50 border border-slate-200 rounded-2xl py-3.5 pl-11 pr-4 text-sm text-slate-900 font-semibold placeholder:text-slate-400 focus:outline-none focus:border-primary focus:bg-white focus:shadow-[0_0_20px_rgba(108,59,255,0.15)] transition-all duration-300"
                       />
                     </div>
                   </div>
 
                   {/* Message */}
                   <div className="space-y-2">
-                    <label className="text-[10px] font-bold tracking-wider text-[#475569] uppercase">Message</label>
-                    <div className="relative">
-                      <MessageSquare className="absolute left-4 top-5 w-4 h-4 text-gray-600" />
+                    <label className="text-[11px] font-extrabold tracking-wider text-slate-700 uppercase">Message</label>
+                    <div className="relative group/field">
+                      <MessageSquare className="absolute left-4 top-5 w-4 h-4 text-slate-400 group-focus-within/field:text-primary transition-colors" />
                       <textarea 
                         value={formData.message}
                         onChange={(e) => setFormData({...formData, message: e.target.value})}
                         placeholder="Tell us about your project scope or objectives..."
                         rows="4"
-                        className="w-full bg-white/[0.03] border border-[#E2E8F0] rounded-2xl py-4 pl-11 pr-4 text-sm text-[#111827] placeholder:text-gray-700 focus:outline-none focus:border-[#064B63]/20 focus:shadow-[0_0_15px_rgba(34,211,238,0.15)] transition-all duration-300 resize-none font-sans"
+                        className="w-full bg-slate-50 border border-slate-200 rounded-2xl py-4 pl-11 pr-4 text-sm text-slate-900 font-semibold placeholder:text-slate-400 focus:outline-none focus:border-primary focus:bg-white focus:shadow-[0_0_20px_rgba(108,59,255,0.15)] transition-all duration-300 resize-none font-sans"
                       />
                     </div>
                   </div>
@@ -286,52 +265,36 @@ export default function ContactPage() {
                         required
                         checked={formData.consent}
                         onChange={(e) => setFormData({...formData, consent: e.target.checked})}
-                        className="peer h-4 w-4 shrink-0 rounded border border-[#E2E8F0] bg-white/[0.03] text-[#064B63] checked:bg-cyan-500 checked:border-cyan-500 focus:outline-none transition-colors cursor-pointer appearance-none"
+                        className="peer h-4 w-4 shrink-0 rounded border border-slate-300 bg-slate-50 text-primary checked:bg-primary checked:border-primary focus:outline-none transition-colors cursor-pointer appearance-none"
                       />
-                      <Check className="absolute left-0.5 top-1 w-3 h-3 text-black pointer-events-none scale-0 peer-checked:scale-100 transition-transform duration-200" />
+                      <Check className="absolute left-0.5 top-1 w-3 h-3 text-white pointer-events-none scale-0 peer-checked:scale-100 transition-transform duration-200" />
                     </div>
-                    <label htmlFor="consent" className="text-xs text-[#475569] leading-relaxed select-none cursor-pointer hover:text-[#475569] transition-colors">
+                    <label htmlFor="consent" className="text-xs text-slate-600 leading-relaxed select-none cursor-pointer hover:text-slate-900 transition-colors font-semibold">
                       I consent to KP Global Business collecting my information to respond to my request
                     </label>
                   </div>
 
-                  {/* Simple Glowing Cyber Submit button */}
+                  {/* Submit Button */}
                   <button
                     type="submit"
                     disabled={isSubmitting || isSubmitted || !formData.consent}
-                    className="group relative w-full py-[18px] rounded-full font-bold text-[#111827] shadow-[0_0_20px_rgba(99,102,241,0.15)] hover:shadow-[0_0_40px_rgba(99,102,241,0.3)] disabled:opacity-40 disabled:cursor-not-allowed transition-all duration-300 overflow-hidden text-xs uppercase tracking-[0.25em] flex items-center justify-center gap-3 active:scale-[0.985] hover:scale-[1.015]"
+                    className="w-full py-4 rounded-full font-black text-white bg-gradient-to-r from-primary via-purple-600 to-accent hover:shadow-xl hover:shadow-purple-500/25 disabled:opacity-40 disabled:cursor-not-allowed transition-all duration-300 text-xs uppercase tracking-[0.25em] flex items-center justify-center gap-3 active:scale-[0.985] hover:scale-[1.015] shadow-md"
                   >
-                    {/* Glowing outer boundary */}
-                    <div className="absolute inset-0 bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 p-[1px] rounded-full pointer-events-none z-0">
-                      {/* Inner background cut-out for double glow border aesthetic */}
-                      <div className="w-full h-full bg-[#030303] rounded-full transition-colors duration-500 group-hover:bg-transparent group-disabled:bg-[#030303]" />
-                    </div>
-
-                    {/* Gradient solid backdrop overlay that appears on hover */}
-                    <div className="absolute inset-0 bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 opacity-0 group-hover:opacity-100 group-disabled:opacity-0 transition-opacity duration-500 z-0" />
-
-                    {/* Background Neon Aura Glow */}
-                    <div className="absolute -inset-2 bg-gradient-to-r from-blue-600 via-indigo-500 to-purple-600 rounded-full blur-lg opacity-10 group-hover:opacity-50 group-disabled:opacity-0 transition-all duration-500 z-0 pointer-events-none" />
-
-                    {/* Laser Scanline Sweep Effect */}
-                    <div className="animate-scanline" />
-
-                    {/* Button content */}
                     {isSubmitting ? (
-                      <span className="relative z-10 flex items-center justify-center gap-3 tracking-[0.3em] font-mono text-[#064B63]">
-                        <span className="w-4 h-4 border-2 border-cyan-400 border-t-transparent rounded-full animate-spin" />
-                        TRANSMITTING PROTOCOL
+                      <span className="flex items-center justify-center gap-3 font-mono">
+                        <span className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
+                        TRANSMITTING...
                       </span>
                     ) : isSubmitted ? (
-                      <span className="relative z-10 flex items-center justify-center gap-2 text-[#0E7490] font-mono tracking-[0.3em]">
+                      <span className="flex items-center justify-center gap-2 font-mono">
                         <Check className="w-4 h-4 animate-bounce" />
                         TRANSMISSION COMPLETE
                       </span>
                     ) : (
-                      <span className="relative z-10 flex items-center justify-center gap-3 group-hover:text-[#111827] transition-colors duration-300">
-                        Transmit Parameters
-                        <div className="relative w-5 h-5 rounded-full bg-[#F7F9FA] group-hover:bg-[#F7F9FA] border border-[#E2E8F0] group-hover:border-[#0E7490] flex items-center justify-center transition-all duration-300 group-hover:translate-x-1 group-hover:-translate-y-1">
-                          <Send className="w-3 h-3 text-[#111827]" />
+                      <span className="flex items-center justify-center gap-3">
+                        Submit Message
+                        <div className="w-5 h-5 rounded-full bg-white/20 flex items-center justify-center">
+                          <Send className="w-3 h-3 text-white" />
                         </div>
                       </span>
                     )}
@@ -342,12 +305,12 @@ export default function ContactPage() {
                 {/* Success Notification overlay */}
                 {isSubmitted && (
                   <div className="absolute inset-0 bg-white/95 backdrop-blur-lg z-20 flex flex-col items-center justify-center text-center p-8">
-                    <div className="w-16 h-16 rounded-full bg-[#064B63]/10 border border-[#064B63]/20 flex items-center justify-center text-[#064B63] mb-6 shadow-[0_0_20px_rgba(34,211,238,0.2)]">
+                    <div className="w-16 h-16 rounded-full bg-primary/10 border border-primary/20 flex items-center justify-center text-primary mb-6 shadow-lg shadow-purple-500/10">
                       <Check className="w-8 h-8" />
                     </div>
-                    <h3 className="text-xl font-bold uppercase tracking-[0.15em] mb-4">Transmission Completed</h3>
-                    <p className="text-sm text-[#475569] font-light leading-relaxed max-w-sm mb-8">
-                      Your parameters have been logged and routed to our enterprise architects. We will initiate direct secure comms within 24 hours.
+                    <h3 className="text-xl font-black text-slate-900 uppercase tracking-[0.15em] mb-4">Transmission Completed</h3>
+                    <p className="text-sm text-slate-600 font-medium leading-relaxed max-w-sm mb-8">
+                      Your parameters have been logged and routed to our enterprise architects. We will initiate direct comms within 24 hours.
                     </p>
                     <button 
                       onClick={() => {
@@ -363,9 +326,9 @@ export default function ContactPage() {
                           consent: false,
                         });
                       }}
-                      className="px-6 py-2.5 rounded-full border border-[#E2E8F0] bg-[#F7F9FA] hover:bg-[#F7F9FA] text-xs font-semibold uppercase tracking-wider transition-colors duration-300"
+                      className="px-6 py-2.5 rounded-full border border-slate-200 bg-white text-xs font-bold uppercase tracking-wider text-slate-800 hover:bg-slate-50 transition-colors shadow-sm"
                     >
-                      Reset Intake Funnel
+                      Reset Form
                     </button>
                   </div>
                 )}
@@ -375,42 +338,30 @@ export default function ContactPage() {
             
             {/* Right Column: Corporate Portrait */}
             <div className="lg:col-span-5 relative flex items-center justify-center min-h-[500px] lg:min-h-0">
-              <div className="absolute -inset-4 bg-gradient-to-r from-blue-500/10 to-purple-500/10 rounded-[2.5rem] blur-xl opacity-75 pointer-events-none" />
-              
-              <div className="relative w-full h-full min-h-[500px] lg:min-h-0 rounded-[2.5rem] overflow-hidden border border-[#E2E8F0] bg-[#080808]/60 p-3 flex flex-col justify-between group shadow-2xl">
-                
-                {/* Corner Cyber Accents */}
-                <div className="absolute top-3 left-3 w-8 h-8 border-t-2 border-l-2 border-[#064B63]/20 pointer-events-none z-10" />
-                <div className="absolute top-3 right-3 w-8 h-8 border-t-2 border-r-2 border-indigo-400/60 pointer-events-none z-10" />
-                <div className="absolute bottom-3 left-3 w-8 h-8 border-b-2 border-l-2 border-indigo-400/60 pointer-events-none z-10" />
-                <div className="absolute bottom-3 right-3 w-8 h-8 border-b-2 border-r-2 border-[#064B63]/20 pointer-events-none z-10" />
+              <div className="relative w-full h-full min-h-[500px] lg:min-h-0 rounded-[2.5rem] overflow-hidden border border-slate-200/80 bg-white p-3 flex flex-col justify-between group shadow-2xl shadow-purple-500/5">
                 
                 {/* Image Box */}
                 <div className="relative flex-1 w-full h-full min-h-[420px] lg:min-h-0 rounded-[1.8rem] overflow-hidden">
                   <img
                     src="/contact_executive.webp"
                     alt="KP Global Executive Liaison"
-                    fill
-                    sizes="(max-width: 1024px) 100vw, 40vw"
-                    className="object-cover transition-transform duration-700 group-hover:scale-105"
-                    priority
+                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-white/80 via-black/20 to-transparent" />
                   
-                  {/* Tech Radar Overlay */}
-                  <div className="absolute top-6 left-6 flex items-center gap-2 bg-white/60 backdrop-blur-md px-3 py-1.5 rounded-full border border-[#E2E8F0] text-[9px] font-mono text-[#064B63]">
-                    <span className="w-1.5 h-1.5 rounded-full bg-cyan-400 animate-ping" />
+                  {/* Tech Overlay */}
+                  <div className="absolute top-6 left-6 flex items-center gap-2 bg-slate-900/90 text-white backdrop-blur-md px-3.5 py-1.5 rounded-full border border-slate-700 text-[10px] font-mono">
+                    <span className="w-1.5 h-1.5 rounded-full bg-primary animate-ping" />
                     LIAISON CONNECTED // SECURE_LINE
                   </div>
                 </div>
 
                 {/* Bottom text inside the panel */}
-                <div className="mt-4 px-4 py-2 border-t border-[#E2E8F0] flex items-center justify-between">
+                <div className="mt-4 px-4 py-2 border-t border-slate-100 flex items-center justify-between">
                   <div>
-                    <h4 className="text-xs font-bold uppercase tracking-wider text-[#111827]">Liaison Officer</h4>
-                    <p className="text-[10px] font-mono text-[#475569] uppercase tracking-widest mt-0.5">Corporate Communications</p>
+                    <h4 className="text-xs font-black uppercase tracking-wider text-slate-900">Liaison Officer</h4>
+                    <p className="text-[10px] font-mono text-slate-500 font-bold uppercase tracking-widest mt-0.5">Corporate Communications</p>
                   </div>
-                  <div className="flex items-center gap-1 text-[#064B63]/70 text-[9px] font-mono">
+                  <div className="flex items-center gap-1.5 text-primary text-[10px] font-mono font-bold">
                     <Shield className="w-3.5 h-3.5" /> SECURE CORRIDOR
                   </div>
                 </div>
@@ -425,3 +376,4 @@ export default function ContactPage() {
     </div>
   );
 }
+

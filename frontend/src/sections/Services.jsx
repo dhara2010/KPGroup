@@ -24,25 +24,27 @@ const CAPABILITIES = [
 
 function Services() {
   return (
-    <section className="relative bg-[#020202] text-[#111827] overflow-hidden font-sans py-24">
+    <section className="relative bg-white text-slate-900 overflow-hidden font-sans py-20 md:py-28 border-y border-slate-100">
 
-      {/* Ambient glow blobs */}
-      <div className="absolute inset-0 pointer-events-none z-0">
-        <div className="absolute top-1/2 left-[-10%] w-[50%] h-[50%] bg-blue-900/10 rounded-full blur-[120px]" />
-        <div className="absolute bottom-0 right-[-5%] w-[45%] h-[45%] bg-purple-900/10 rounded-full blur-[120px]" />
+      {/* Subtle light mesh grid & ambient purple glow */}
+      <div className="absolute inset-0 pointer-events-none z-0 opacity-60">
+        <div className="absolute inset-0 bg-[linear-gradient(rgba(108,59,255,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(108,59,255,0.03)_1px,transparent_1px)] bg-[size:40px_40px]"></div>
+        <div className="absolute top-1/2 left-[-10%] w-[50%] h-[50%] bg-primary/10 rounded-full blur-[140px] animate-pulse" />
+        <div className="absolute bottom-0 right-[-5%] w-[45%] h-[45%] bg-accent/10 rounded-full blur-[140px]" />
       </div>
 
       <div className="relative z-10 max-w-7xl mx-auto px-6">
 
-        {/* ── Centred section header ── */}
+        {/* Centred section header */}
         <ScrollReveal variant="fade-up" className="text-center mb-16 flex flex-col items-center space-y-4">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#064B63]/10 border border-[#064B63]/20 text-xs font-semibold text-[#064B63] uppercase tracking-widest">
-            Capabilities
+          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-primary/10 border border-primary/20 text-xs font-bold text-primary uppercase tracking-widest shadow-sm">
+            <Sparkles className="w-3.5 h-3.5" />
+            Capabilities & Strengths
           </div>
-          <h2 className="text-4xl md:text-5xl font-black uppercase tracking-tight text-[#111827] leading-none">
+          <h2 className="text-4xl md:text-5xl lg:text-6xl font-black uppercase tracking-tight text-slate-900 leading-none">
             Why Choose Us
           </h2>
-          <p className="text-[#475569] font-light text-sm md:text-base leading-relaxed max-w-2xl">
+          <p className="text-slate-600 font-normal text-sm md:text-base leading-relaxed max-w-2xl">
             We bridge technical architectures, educational networks, B2B synergy and worldwide employment
             marketplaces directly to deliver unrivaled value to your company.
           </p>
@@ -50,45 +52,39 @@ function Services() {
 
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
 
-          {/* ── Left Column: Image ── */}
+          {/* Left Column: Image */}
           <ScrollReveal variant="fade-right" className="lg:col-span-5 relative group">
-            <div className="absolute -inset-4 bg-gradient-to-r from-blue-500/20 to-purple-500/20 rounded-[2.5rem] blur-xl opacity-70 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none" />
-            <div className="relative rounded-[2rem] overflow-hidden border border-[#E2E8F0] bg-[#0a0a0a] shadow-2xl aspect-[4/3] w-full">
+            <div className="absolute -inset-4 bg-gradient-to-r from-primary/15 to-accent/15 rounded-[2.5rem] blur-xl opacity-70 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none" />
+            <div className="relative rounded-[2rem] overflow-hidden border border-slate-200/80 bg-white shadow-2xl aspect-[4/3] w-full">
               <img
                 src="/about_boardroom_bg.webp"
                 alt="Our Services"
-                fill
-                sizes="(max-width: 1024px) 100vw, 40vw"
-                className="object-cover transition-transform duration-700 group-hover:scale-105"
+                className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
               />
             </div>
           </ScrollReveal>
 
-          {/* ── Right Column: Capabilities cards ── */}
-          <div className="lg:col-span-7 space-y-8">
-
-            {/* Capability cards */}
-            <div className="space-y-4">
-              {CAPABILITIES.map((item, idx) => (
-                <ScrollReveal key={idx} variant="fade-left" delay={0.15 * idx}>
-                  <div className="flex gap-4 p-5 border border-[#E2E8F0] rounded-2xl bg-white/[0.01] hover:bg-white/[0.03] hover:border-[#E2E8F0] transition-all duration-300 group">
-                    <div className="w-10 h-10 rounded-xl bg-[#064B63]/10 border border-[#064B63]/20 flex items-center justify-center text-[#064B63] shrink-0 group-hover:scale-110 transition-transform duration-300">
-                      <item.icon className="w-5 h-5" />
-                    </div>
-                    <div>
-                      <h4 className="text-sm font-bold text-[#111827] uppercase tracking-tight mb-1">
-                        {item.title}
-                      </h4>
-                      <p className="text-xs text-[#475569] leading-relaxed font-light">
-                        {item.desc}
-                      </p>
-                    </div>
+          {/* Right Column: Capabilities cards */}
+          <div className="lg:col-span-7 space-y-4">
+            {CAPABILITIES.map((item, idx) => (
+              <ScrollReveal key={idx} variant="fade-left" delay={0.15 * idx}>
+                <div className="flex gap-5 p-6 border border-slate-200/80 rounded-2xl bg-white hover:border-primary/50 transition-all duration-300 group hover:shadow-xl hover:shadow-primary/10">
+                  <div className="w-12 h-12 rounded-xl bg-primary/10 border border-primary/20 flex items-center justify-center text-primary shrink-0 group-hover:scale-110 transition-transform duration-300 shadow-sm">
+                    <item.icon className="w-6 h-6 text-primary" />
                   </div>
-                </ScrollReveal>
-              ))}
-            </div>
-
+                  <div>
+                    <h4 className="text-base font-extrabold text-slate-900 uppercase tracking-tight mb-1.5">
+                      {item.title}
+                    </h4>
+                    <p className="text-xs md:text-sm text-slate-600 leading-relaxed font-normal">
+                      {item.desc}
+                    </p>
+                  </div>
+                </div>
+              </ScrollReveal>
+            ))}
           </div>
+
         </div>
       </div>
     </section>

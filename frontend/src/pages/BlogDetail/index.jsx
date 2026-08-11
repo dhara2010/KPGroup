@@ -1,12 +1,13 @@
 
 
-import React, { useState, use } from "react";
+import React, { useState } from "react";
 import { INITIAL_POSTS } from "@/utils/blogData";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
+import PageHero from "@/components/PageHero";
 
 import { 
   User, MessageSquare, Calendar, ArrowLeft, Link2, Check, Share2, 
-  Tag, Terminal, Key, Activity, ChevronRight, Send, Heart
+  Tag, Terminal, Key, Activity, ChevronRight, Send, Heart, Sparkles, Shield
 } from "lucide-react";
 
 // Formats long date (e.g. "December 19, 2024" to "Dec 19, 2024")
@@ -21,38 +22,29 @@ const formatShortDate = (dateStr) => {
   return dateStr;
 };
 
-// High-fidelity custom comment avatar matching the main cyber theme
-const CustomCommentAvatar = () => (
-  <div className="w-10 h-10 rounded-full bg-[#fcd34d] flex items-center justify-center border border-amber-200 shadow-sm overflow-hidden shrink-0">
-    <svg className="w-8 h-8" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
-      {/* Eyes with glasses */}
-      <rect x="6" y="11" width="8" height="6" rx="3" fill="#1e293b" />
-      <rect x="18" y="11" width="8" height="6" rx="3" fill="#1e293b" />
-      <path d="M14 14H18" stroke="#1e293b" strokeWidth="2" />
-      {/* Smiling Mouth */}
-      <path d="M10 20C10 20 12 23 16 23C20 23 22 20 22 20" stroke="#1e293b" strokeWidth="2.5" strokeLinecap="round" />
-      {/* Blue Headphones */}
-      <path d="M6 15C6 11 9 8 16 8C23 8 26 11 26 15" stroke="#3b82f6" strokeWidth="3" strokeLinecap="round" fill="none" />
-      <rect x="4" y="14" width="3" height="6" rx="1.5" fill="#3b82f6" />
-      <rect x="25" y="14" width="3" height="6" rx="1.5" fill="#3b82f6" />
-    </svg>
-  </div>
-);
-
 export default function SinglePostPage({ params }) {
-  const resolvedParams = use(params);
-  const { slug } = resolvedParams;
+  const routerParams = useParams();
+  const slug = routerParams.slug || params?.slug;
   
   // Find the post by slug
-  const post = INITIAL_POSTS.find((p) => p.slug === slug);
+  const post = INITIAL_POSTS.find((p) => p.slug === slug || p.slug.replace(/-a-/g, "-") === slug);
   
-  // If no post is found, we can return a 404 message or redirect
+  // If no post is found, return 404 block
   if (!post) {
     return (
-      <div className="min-h-screen bg-white flex items-center justify-center text-[#111827]">
-        <div className="text-center space-y-4">
-          <h1 className="text-6xl font-black text-[#0F172A] font-mono">404</h1>
-          <p className="text-[#475569] uppercase tracking-widest text-xs font-bold">Post Not Found</p>
+      <div className="min-h-screen bg-white text-slate-900 flex items-center justify-center pt-24 pb-20">
+        <div className="text-center space-y-4 max-w-md px-6">
+          <div className="w-16 h-16 rounded-full bg-primary/10 border border-primary/20 flex items-center justify-center text-primary mx-auto mb-4">
+            <Terminal className="w-8 h-8" />
+          </div>
+          <h1 className="text-6xl font-black text-slate-900 font-heading">404</h1>
+          <p className="text-slate-500 uppercase tracking-widest text-xs font-extrabold">Article Not Found</p>
+          <Link 
+            to="/blog" 
+            className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-primary text-white text-xs font-bold uppercase tracking-wider hover:bg-primary-dark transition-colors shadow-md mt-4"
+          >
+            <ArrowLeft className="w-4 h-4" /> Back to Insights
+          </Link>
         </div>
       </div>
     );
@@ -100,81 +92,55 @@ export default function SinglePostPage({ params }) {
   };
 
   return (
-    <div className="relative min-h-screen overflow-hidden font-sans pt-24 pb-20 bg-[#020202] text-[#111827]">
-      {styleTag}
-
-      {/* Moving background grid & neon ambient lights */}
-      <div className="absolute inset-0 pointer-events-none z-0">
-        <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.008)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.008)_1px,transparent_1px)] bg-[size:50px_50px] opacity-40 animate-grid-move"></div>
-        <div className="absolute top-[-10%] left-[-10%] w-[60vw] h-[60vw] bg-[#064B63]/10 rounded-full blur-[140px] animate-pulse duration-[8000ms]" />
-        <div className="absolute bottom-[-10%] right-[-10%] w-[60vw] h-[60vw] bg-[#064B63]/10 rounded-full blur-[140px] animate-pulse duration-[12000ms]" />
+    <div className="relative bg-white text-slate-900 min-h-screen overflow-hidden font-sans pt-0 pb-20">
+      
+      {/* Light Laser Grid Background & Ambient Glow */}
+      <div className="absolute inset-0 pointer-events-none opacity-60 z-0">
+        <div className="absolute inset-0 bg-[linear-gradient(rgba(108,59,255,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(108,59,255,0.03)_1px,transparent_1px)] bg-[size:40px_40px]"></div>
+        <div className="absolute top-0 right-1/4 w-[50vw] h-[50vw] bg-primary/10 rounded-full blur-[140px]"></div>
+        <div className="absolute top-1/3 left-1/4 w-[50vw] h-[50vw] bg-accent/10 rounded-full blur-[140px]"></div>
       </div>
 
       <div className="relative z-10">
         
-        {/* 1. Immersive Cyber Header Section */}
-        <div className="relative w-full py-16 flex flex-col items-center justify-center overflow-hidden mb-12 border-b border-[#E2E8F0]">
-          <div className="absolute inset-0 bg-gradient-to-b from-white/80 via-white/50 to-[#020202]"></div>
-          
-          <div className="max-w-6xl w-full mx-auto px-6 relative text-center z-10 space-y-6 flex flex-col items-center">
-            
-            {/* Top Category Badge */}
-            <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-[#F7F9FA] border border-[#E2E8F0] backdrop-blur-md">
-              <span className="w-1.5 h-1.5 rounded-full bg-cyan-400 animate-pulse"></span>
-              <span className="text-[9px] font-bold text-[#064B63] tracking-[0.2em] uppercase">
-                {post.category || "INSIGHTS"} // RECORD_00{post.id}
-              </span>
-            </div>
-            
-            {/* Main Page Title */}
-            <h1 className="text-4xl md:text-6xl font-black uppercase tracking-tight text-[#111827] leading-tight max-w-4xl text-center">
-              {post.title}
-            </h1>
-            
-            {/* Horizontal Breadcrumbs */}
-            <div className="flex items-center justify-center gap-2 text-[10px] font-bold text-[#475569] uppercase tracking-[0.2em]">
-              <Link to="/" className="hover:text-[#064B63] transition-colors">Home</Link>
-              <span className="text-gray-700">•</span>
-              <Link to="/blog" className="hover:text-[#064B63] transition-colors">Insights</Link>
-              <span className="text-gray-700">•</span>
-              <span className="text-[#064B63]">{post.title}</span>
-            </div>
-          </div>
-        </div>
+        {/* 1. Standard PageHero Banner (Matching rest of website) */}
+        <PageHero 
+          title={post.title} 
+          description={post.excerpt || `Published on ${formatShortDate(post.date)} by ${post.author}`}
+          parentPage="Insights"
+          parentHref="/blog"
+        />
 
-        {/* 2. Split Column Grid Section */}
-        <div className="max-w-6xl mx-auto px-6 relative z-10">
+        {/* 2. Main Content Grid Section */}
+        <div className="max-w-6xl mx-auto px-6 mt-12 md:mt-16 relative z-10">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-start">
             
             {/* LEFT COLUMN: Main Post Content (8 cols) */}
             <div className="lg:col-span-8 space-y-8">
               
-              {/* Big Featured Image */}
-              <div className="relative rounded-3xl overflow-hidden aspect-[16/9] w-full border border-[#E2E8F0] bg-white/40 shadow-[0_0_50px_rgba(0,0,0,0.8)] group/cover">
-                <img 
-                  src={post.image || "/blog_3d_fluid.webp"} 
-                  alt={post.title} 
-                  fill
-                  priority
-                  sizes="(max-width: 768px) 100vw, 80vw"
-                  className="object-cover transition-transform duration-[1200ms] group-hover/cover:scale-103" 
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-white/80 via-transparent to-transparent pointer-events-none z-10" />
-                <div className="absolute top-4 left-4 w-2.5 h-2.5 border-t-2 border-l-2 border-[#E2E8F0]" />
-                <div className="absolute top-4 right-4 w-2.5 h-2.5 border-t-2 border-r-2 border-[#E2E8F0]" />
-                <div className="absolute bottom-4 left-4 w-2.5 h-2.5 border-b-2 border-l-2 border-[#E2E8F0]" />
-                <div className="absolute bottom-4 right-4 w-2.5 h-2.5 border-b-2 border-r-2 border-[#E2E8F0]" />
+              {/* Big Featured Image Frame */}
+              <div className="relative rounded-3xl overflow-hidden aspect-[16/9] w-full border border-slate-200/80 bg-white p-2 shadow-2xl shadow-purple-500/5 group/cover">
+                <div className="relative w-full h-full rounded-2xl overflow-hidden">
+                  <img 
+                    src={post.image || "/blog_3d_fluid.webp"} 
+                    alt={post.title} 
+                    className="w-full h-full object-cover transition-transform duration-700 group-hover/cover:scale-105" 
+                  />
+                  <div className="absolute top-4 left-4 bg-slate-900/90 text-white backdrop-blur-md px-3.5 py-1 rounded-full text-xs font-mono font-bold tracking-widest uppercase">
+                    {post.category || "INSIGHTS"}
+                  </div>
+                </div>
               </div>
 
               {/* Main Body Content Sections */}
-              <article className="prose prose-invert max-w-none text-[#475569] leading-relaxed font-sans space-y-6 text-sm md:text-base">
+              <article className="prose prose-slate max-w-none text-slate-700 leading-relaxed font-sans space-y-6 text-sm md:text-base">
                 {post.contentSections ? (
                   post.contentSections.map((sec, i) => {
                     if (sec.type === "paragraph") {
                       return (
                         <p 
                           key={i} 
-                          className={i === 0 ? "text-base md:text-lg font-medium text-[#111827] leading-relaxed first-letter:text-5xl first-letter:font-black first-letter:text-[#064B63] first-letter:mr-3 first-letter:float-left first-letter:leading-[0.8]" : "font-light"}
+                          className={i === 0 ? "text-base md:text-lg font-medium text-slate-900 leading-relaxed first-letter:text-5xl first-letter:font-black first-letter:text-primary first-letter:mr-3 first-letter:float-left first-letter:leading-[0.8]" : "font-normal text-slate-700"}
                         >
                           {sec.text}
                         </p>
@@ -184,7 +150,7 @@ export default function SinglePostPage({ params }) {
                       return (
                         <h2 
                           key={i} 
-                          className="text-xl md:text-2xl font-black text-[#111827] uppercase tracking-tight mt-10 mb-4 flex items-center gap-3 border-l-4 border-cyan-400 pl-4 font-sans"
+                          className="text-xl md:text-2xl font-black text-slate-900 uppercase tracking-tight mt-10 mb-4 flex items-center gap-3 border-l-4 border-primary pl-4 font-heading"
                         >
                           {sec.text}
                         </h2>
@@ -192,11 +158,13 @@ export default function SinglePostPage({ params }) {
                     }
                     if (sec.type === "list") {
                       return (
-                        <ul key={i} className="space-y-4 pl-1 my-6 list-none">
+                        <ul key={i} className="space-y-3.5 pl-1 my-6 list-none">
                           {sec.items.map((item, idx) => (
-                            <li key={idx} className="flex items-start gap-3 text-[#475569] group/list transition-transform duration-300 hover:translate-x-1">
-                              <Key className="w-4 h-4 text-[#064B63] shrink-0 mt-1 transition-transform group-hover/list:rotate-45" />
-                              <span className="font-light">{item}</span>
+                            <li key={idx} className="flex items-start gap-3 text-slate-700 group/list transition-transform duration-300 hover:translate-x-1">
+                              <div className="w-5 h-5 rounded-full bg-primary/10 border border-primary/20 flex items-center justify-center text-primary shrink-0 mt-0.5">
+                                <Check className="w-3 h-3" />
+                              </div>
+                              <span className="font-semibold text-slate-800">{item}</span>
                             </li>
                           ))}
                         </ul>
@@ -206,16 +174,16 @@ export default function SinglePostPage({ params }) {
                       return (
                         <div 
                           key={i} 
-                          className="border-l-4 border-l-orange-500 border border-[#E2E8F0] bg-orange-950/15 p-8 rounded-2xl my-8 relative overflow-hidden group/quote backdrop-blur-md shadow-[0_0_30px_rgba(249,115,22,0.03)]"
+                          className="border-l-4 border-primary border border-purple-100 bg-purple-50/60 p-8 rounded-2xl my-8 relative overflow-hidden group/quote shadow-lg shadow-purple-500/5"
                         >
-                          <div className="absolute top-0 right-0 w-24 h-24 bg-orange-500/5 rounded-full blur-2xl pointer-events-none" />
-                          <span className="text-orange-500/20 text-7xl font-serif font-black leading-none select-none absolute top-2 left-4">“</span>
-                          <p className="text-[#111827] font-bold relative z-10 uppercase tracking-wider text-xs md:text-sm leading-relaxed pl-4">
+                          <div className="absolute top-0 right-0 w-24 h-24 bg-primary/5 rounded-full blur-2xl pointer-events-none" />
+                          <span className="text-primary/20 text-7xl font-serif font-black leading-none select-none absolute top-2 left-4">“</span>
+                          <p className="text-slate-900 font-extrabold relative z-10 uppercase tracking-wider text-xs md:text-sm leading-relaxed pl-4">
                             {sec.text}
                           </p>
                           {sec.author && (
-                            <p className="text-[#475569] font-bold text-[10px] mt-4 uppercase tracking-widest pl-4">
-                              // {sec.author}
+                            <p className="text-primary font-bold text-[10px] mt-4 uppercase tracking-widest pl-4">
+                              — {sec.author}
                             </p>
                           )}
                         </div>
@@ -225,15 +193,14 @@ export default function SinglePostPage({ params }) {
                       return (
                         <div key={i} className="grid grid-cols-1 md:grid-cols-2 gap-6 my-8">
                           {sec.images.map((imgSrc, idx) => (
-                            <div key={idx} className="relative rounded-2xl overflow-hidden aspect-[16/10] border border-[#E2E8F0] bg-white/40 shadow-lg group/gal">
-                              <img 
-                                src={imgSrc} 
-                                alt={`gallery-img-${idx}`} 
-                                fill
-                                sizes="(max-width: 768px) 100vw, 40vw"
-                                className="object-cover transition-transform duration-700 group-hover/gal:scale-103" 
-                              />
-                              <div className="absolute inset-0 bg-gradient-to-t from-white/80 to-transparent opacity-0 group-hover/gal:opacity-100 transition-opacity duration-300 z-10" />
+                            <div key={idx} className="relative rounded-2xl overflow-hidden aspect-[16/10] border border-slate-200/80 bg-white p-1.5 shadow-md group/gal">
+                              <div className="w-full h-full rounded-xl overflow-hidden">
+                                <img 
+                                  src={imgSrc} 
+                                  alt={`gallery-img-${idx}`} 
+                                  className="w-full h-full object-cover transition-transform duration-700 group-hover/gal:scale-105" 
+                                />
+                              </div>
                             </div>
                           ))}
                         </div>
@@ -242,124 +209,122 @@ export default function SinglePostPage({ params }) {
                     return null;
                   })
                 ) : (
-                  <p className="text-[#475569] font-light leading-relaxed whitespace-pre-line">
+                  <p className="text-slate-700 font-normal leading-relaxed whitespace-pre-line">
                     {post.content}
                   </p>
                 )}
               </article>
 
               {/* Article Footer Stats Panel */}
-              <div className="flex items-center gap-6 border-y border-[#E2E8F0] py-4 my-8">
+              <div className="flex items-center gap-6 border-y border-slate-200/80 py-4 my-8">
                 <button 
                   onClick={toggleLike}
-                  className={`flex items-center gap-2 text-xs font-bold uppercase tracking-wider transition-all duration-300 ${
-                    isLiked ? "text-[#0E7490] scale-105" : "text-[#475569] hover:text-[#0E7490]"
+                  className={`flex items-center gap-2 text-xs font-extrabold uppercase tracking-wider transition-all duration-300 ${
+                    isLiked ? "text-primary scale-105" : "text-slate-600 hover:text-primary"
                   }`}
                 >
-                  <Heart className={`w-4 h-4 ${isLiked ? "fill-current" : ""}`} />
+                  <Heart className={`w-4 h-4 ${isLiked ? "fill-current text-primary" : ""}`} />
                   Like ({likes})
                 </button>
-                <span className="text-gray-700">|</span>
-                <span className="flex items-center gap-2 text-xs font-bold text-[#475569] uppercase tracking-wider">
-                  <MessageSquare className="w-4 h-4 text-[#064B63]" />
+                <span className="text-slate-300">•</span>
+                <span className="flex items-center gap-2 text-xs font-extrabold text-slate-600 uppercase tracking-wider">
+                  <MessageSquare className="w-4 h-4 text-primary" />
                   Comments ({comments.length})
                 </span>
               </div>
 
-              {/* Dynamic Comments Section */}
-              <div className="space-y-6 pt-6">
-                <h3 className="text-xs font-black tracking-[0.2em] text-[#111827] uppercase border-b border-[#E2E8F0] pb-3 flex items-center gap-2 font-mono">
-                  <Terminal className="w-4 h-4 text-[#0E7490]" />
-                  ACCESS_LOG // {comments.length} RECORDS_FOUND
+              {/* Comments Display List */}
+              <div className="space-y-6 pt-4">
+                <h3 className="text-xs font-black tracking-[0.2em] text-slate-900 uppercase border-b border-slate-200/80 pb-3 flex items-center gap-2 font-mono">
+                  <Terminal className="w-4 h-4 text-primary" />
+                  FEEDBACK_LOG // {comments.length} RECORDS_FOUND
                 </h3>
 
                 {comments.length > 0 ? (
-                  <div className="space-y-6">
+                  <div className="space-y-4">
                     {comments.map((comment) => (
                       <div 
                         key={comment.id} 
-                        className="p-5 bg-white/50 border border-[#E2E8F0] rounded-2xl font-mono text-xs text-[#475569] relative overflow-hidden group hover:border-[#0E7490] hover:shadow-[0_0_20px_rgba(6,182,212,0.05)] transition-all duration-300"
+                        className="p-6 bg-white border border-slate-200/80 rounded-2xl text-xs text-slate-700 relative overflow-hidden shadow-xl shadow-purple-500/5 hover:border-primary/50 transition-all duration-300"
                       >
-                        <div className="flex items-center justify-between border-b border-[#E2E8F0] pb-3 mb-3">
+                        <div className="flex items-center justify-between border-b border-slate-100 pb-3 mb-3">
                           <div className="flex items-center gap-2">
-                            <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
-                            <span className="text-[#0E7490] font-black uppercase tracking-wider text-[10px]">
-                              stdout // {comment.author.toLowerCase().replace(/\s+/g, "_")}
+                            <span className="w-2 h-2 rounded-full bg-primary animate-pulse" />
+                            <span className="text-slate-900 font-extrabold uppercase tracking-wider text-xs">
+                              {comment.author}
                             </span>
                           </div>
-                          <span className="text-[9px] text-[#475569]">[{comment.date}]</span>
+                          <span className="text-[10px] text-slate-400 font-mono">[{comment.date}]</span>
                         </div>
-                        <div className="space-y-1.5">
-                          <div className="text-[#475569] flex gap-2">
-                            <span className="text-[#064B63] font-bold">$</span>
-                            <span className="text-[#475569]">cat feedback_payload.json</span>
-                          </div>
-                          <div className="pl-4 border-l border-[#E2E8F0] py-1 text-[#475569] font-sans text-xs md:text-sm whitespace-pre-line leading-relaxed">
-                            {comment.content}
-                          </div>
+                        <div className="pl-4 border-l-2 border-primary/30 py-1 text-slate-700 font-sans text-xs md:text-sm whitespace-pre-line leading-relaxed font-medium">
+                          {comment.content}
                         </div>
                       </div>
                     ))}
                   </div>
                 ) : (
-                  <div className="p-8 text-center bg-white/[0.01] border border-[#E2E8F0] rounded-2xl">
-                    <p className="text-xs text-[#475569] font-mono">NO STAKEHOLDER FEEDBACK REGISTERED ON THIS NODE</p>
+                  <div className="p-8 text-center bg-white border border-slate-200/80 rounded-2xl shadow-sm">
+                    <p className="text-xs text-slate-500 font-semibold uppercase tracking-wider">No comments yet. Be the first to share your thoughts!</p>
                   </div>
                 )}
               </div>
 
               {/* Comment Submission Form Console */}
-              <div className="bg-[#F7F9FA] border border-[#E2E8F0] rounded-3xl p-6 md:p-8 shadow-2xl backdrop-blur-xl relative">
-                <h3 className="text-sm font-black text-[#111827] uppercase tracking-wider border-b border-[#E2E8F0] pb-3 mb-6 flex items-center gap-2">
-                  <span className="w-1.5 h-1.5 rounded-full bg-cyan-400 animate-pulse"></span>
-                  REGISTER FEEDBACK
-                </h3>
+              <div className="bg-white border border-slate-200/80 rounded-3xl p-6 md:p-8 shadow-2xl shadow-purple-500/5 relative overflow-hidden">
+                <div className="space-y-2 mb-6">
+                  <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 text-xs font-bold text-primary uppercase tracking-widest">
+                    <Sparkles className="w-3.5 h-3.5 animate-pulse" /> Join the Discussion
+                  </div>
+                  <h3 className="text-xl font-black text-slate-900 uppercase tracking-tight font-heading">
+                    Register Feedback
+                  </h3>
+                </div>
                 
-                <form onSubmit={handleCommentSubmit} className="space-y-6">
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <form onSubmit={handleCommentSubmit} className="space-y-5">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
                     <div className="space-y-2">
-                      <label className="text-[9px] font-black text-[#475569] uppercase tracking-widest font-mono block">FIRST_NAME</label>
+                      <label className="text-[11px] font-extrabold text-slate-700 uppercase tracking-wider">Full Name <span className="text-primary">*</span></label>
                       <input
                         type="text"
                         required
                         placeholder="e.g. Oliver Roston"
                         value={form.name}
                         onChange={(e) => setForm({ ...form, name: e.target.value })}
-                        className="w-full bg-[#F7F9FA] border border-[#E2E8F0] rounded-xl px-4 py-3 text-xs text-[#111827] placeholder-gray-600 focus:outline-none focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500 transition-all duration-300"
+                        className="w-full bg-slate-50 border border-slate-200 rounded-2xl px-4 py-3 text-sm text-slate-900 font-semibold placeholder:text-slate-400 focus:outline-none focus:border-primary focus:bg-white focus:shadow-[0_0_20px_rgba(108,59,255,0.15)] transition-all duration-300"
                       />
                     </div>
 
                     <div className="space-y-2">
-                      <label className="text-[9px] font-black text-[#475569] uppercase tracking-widest font-mono block">EMAIL_ADDRESS</label>
+                      <label className="text-[11px] font-extrabold text-slate-700 uppercase tracking-wider">Email Address <span className="text-primary">*</span></label>
                       <input
                         type="email"
                         required
-                        placeholder="info@kpglobalbusiness.co.uk"
+                        placeholder="john@example.com"
                         value={form.email}
                         onChange={(e) => setForm({ ...form, email: e.target.value })}
-                        className="w-full bg-[#F7F9FA] border border-[#E2E8F0] rounded-xl px-4 py-3 text-xs text-[#111827] placeholder-gray-600 focus:outline-none focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500 transition-all duration-300"
+                        className="w-full bg-slate-50 border border-slate-200 rounded-2xl px-4 py-3 text-sm text-slate-900 font-semibold placeholder:text-slate-400 focus:outline-none focus:border-primary focus:bg-white focus:shadow-[0_0_20px_rgba(108,59,255,0.15)] transition-all duration-300"
                       />
                     </div>
                   </div>
 
                   <div className="space-y-2">
-                    <label className="text-[9px] font-black text-[#475569] uppercase tracking-widest font-mono block">MESSAGE_BODY</label>
+                    <label className="text-[11px] font-extrabold text-slate-700 uppercase tracking-wider">Comment Message <span className="text-primary">*</span></label>
                     <textarea
                       required
-                      rows={5}
-                      placeholder="Comment content..."
+                      rows={4}
+                      placeholder="Share your thoughts or questions..."
                       value={form.message}
                       onChange={(e) => setForm({ ...form, message: e.target.value })}
-                      className="w-full bg-[#F7F9FA] border border-[#E2E8F0] rounded-xl px-4 py-3 text-xs text-[#111827] placeholder-gray-600 focus:outline-none focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500 transition-all resize-none duration-300"
+                      className="w-full bg-slate-50 border border-slate-200 rounded-2xl px-4 py-3.5 text-sm text-slate-900 font-semibold placeholder:text-slate-400 focus:outline-none focus:border-primary focus:bg-white focus:shadow-[0_0_20px_rgba(108,59,255,0.15)] transition-all resize-none duration-300 font-sans"
                     />
                   </div>
 
                   <button
                     type="submit"
-                    className="inline-flex items-center gap-2 px-6 py-3.5 bg-[#0F172A] hover:bg-[#064B63] text-[#111827] rounded-full text-xs font-black uppercase tracking-wider shadow-lg shadow-blue-500/25 transition-all hover:scale-105 active:scale-95 cursor-pointer group"
+                    className="w-full py-4 rounded-full font-black text-white bg-gradient-to-r from-primary via-purple-600 to-accent hover:shadow-xl hover:shadow-purple-500/25 transition-all duration-300 text-xs uppercase tracking-[0.25em] flex items-center justify-center gap-3 active:scale-[0.985] hover:scale-[1.01] shadow-md cursor-pointer group"
                   >
-                    Transmit Feedback
-                    <Send className="w-3.5 h-3.5 text-[#111827] transition-transform group-hover:translate-x-1 group-hover:-translate-y-0.5" />
+                    Submit Feedback
+                    <Send className="w-3.5 h-3.5 text-white transition-transform group-hover:translate-x-1 group-hover:-translate-y-0.5" />
                   </button>
                 </form>
               </div>
@@ -370,28 +335,28 @@ export default function SinglePostPage({ params }) {
             <div className="lg:col-span-4 space-y-6 lg:sticky lg:top-28">
               
               {/* Back to Blog Action Widget */}
-              <div className="bg-[#F7F9FA] border border-[#E2E8F0] rounded-3xl p-5 backdrop-blur-2xl">
+              <div className="bg-white border border-slate-200/80 rounded-2xl p-5 shadow-xl shadow-purple-500/5">
                 <Link
                   to="/blog"
-                  className="inline-flex items-center gap-2.5 text-xs font-black text-[#475569] hover:text-[#064B63] transition-all duration-300 uppercase tracking-wider group"
+                  className="inline-flex items-center gap-2.5 text-xs font-black text-slate-700 hover:text-primary transition-all duration-300 uppercase tracking-wider group"
                 >
-                  <div className="w-7 h-7 rounded-full bg-[#F7F9FA] border border-[#E2E8F0] flex items-center justify-center transition-all duration-300 group-hover:bg-[#064B63]/10 group-hover:border-[#0E7490] group-hover:-translate-x-1">
-                    <ArrowLeft className="w-3.5 h-3.5" />
+                  <div className="w-8 h-8 rounded-xl bg-primary/10 border border-primary/20 flex items-center justify-center text-primary transition-all duration-300 group-hover:bg-primary group-hover:text-white group-hover:-translate-x-1">
+                    <ArrowLeft className="w-4 h-4" />
                   </div>
                   Back to Insights
                 </Link>
               </div>
 
               {/* Author Bio Widget */}
-              <div className="bg-[#F7F9FA] border border-[#E2E8F0] rounded-3xl p-6 backdrop-blur-2xl relative overflow-hidden group/author">
-                <div className="absolute top-0 right-0 w-20 h-20 bg-[#064B63]/10 rounded-full blur-xl pointer-events-none" />
-                <h3 className="text-[10px] font-black uppercase tracking-wider text-[#111827] border-b border-[#E2E8F0] pb-3 mb-5 flex items-center gap-2">
-                  <span className="w-1.5 h-1.5 rounded-full bg-blue-500 animate-pulse" />
+              <div className="bg-white border border-slate-200/80 rounded-3xl p-6 shadow-xl shadow-purple-500/5 relative overflow-hidden group/author">
+                <div className="absolute top-0 right-0 w-20 h-20 bg-primary/5 rounded-full blur-xl pointer-events-none" />
+                <h3 className="text-[10px] font-black uppercase tracking-wider text-slate-400 border-b border-slate-100 pb-3 mb-5 flex items-center gap-2">
+                  <span className="w-2 h-2 rounded-full bg-primary animate-pulse" />
                   AUTHOR PROFILE
                 </h3>
                 
                 <div className="flex items-center gap-4 mb-4">
-                  <div className="w-14 h-14 rounded-2xl overflow-hidden border border-[#E2E8F0] bg-[#F7F9FA] shrink-0 shadow-md">
+                  <div className="w-14 h-14 rounded-2xl overflow-hidden border border-slate-200/80 bg-slate-50 shrink-0 shadow-md">
                     <img 
                       src="/team/Parth-Kanjariya-Founder-CEO.webp" 
                       alt="Parth Kanjariya" 
@@ -399,52 +364,52 @@ export default function SinglePostPage({ params }) {
                     />
                   </div>
                   <div>
-                    <h4 className="text-sm font-black text-[#111827] uppercase tracking-tight leading-none mb-1">
+                    <h4 className="text-sm font-black text-slate-900 uppercase tracking-tight leading-none mb-1 font-heading">
                       {post.author}
                     </h4>
-                    <span className="text-[9px] font-mono text-[#064B63] uppercase font-black">CEO & FOUNDER</span>
+                    <span className="text-[10px] font-mono text-primary uppercase font-extrabold">CEO & FOUNDER</span>
                   </div>
                 </div>
                 
-                <p className="text-[#475569] font-light text-xs leading-relaxed">
+                <p className="text-slate-600 font-medium text-xs leading-relaxed">
                   Leading next-gen technical architecture, SEO expansion, and corporate software ecosystems at KP Global Group.
                 </p>
               </div>
 
               {/* Share & Actions Widget */}
-              <div className="bg-[#F7F9FA] border border-[#E2E8F0] rounded-3xl p-6 backdrop-blur-2xl relative">
-                <h3 className="text-[10px] font-black uppercase tracking-wider text-[#111827] border-b border-[#E2E8F0] pb-3 mb-5 flex items-center gap-2">
-                  <span className="w-1.5 h-1.5 rounded-full bg-purple-500 animate-pulse" />
-                  TRANSMISSION HUB
+              <div className="bg-white border border-slate-200/80 rounded-3xl p-6 shadow-xl shadow-purple-500/5 relative">
+                <h3 className="text-[10px] font-black uppercase tracking-wider text-slate-400 border-b border-slate-100 pb-3 mb-5 flex items-center gap-2">
+                  <span className="w-2 h-2 rounded-full bg-primary animate-pulse" />
+                  SHARE ARTICLE
                 </h3>
                 
                 <div className="space-y-4">
                   {/* Clipboard Copier */}
                   <button 
                     onClick={handleCopyLink}
-                    className="w-full flex items-center justify-between p-3.5 bg-[#F7F9FA] hover:bg-[#F7F9FA] border border-[#E2E8F0] rounded-2xl text-xs font-bold text-[#475569] hover:text-[#111827] transition-all cursor-pointer group"
+                    className="w-full flex items-center justify-between p-3.5 bg-slate-50 hover:bg-slate-100/80 border border-slate-200 rounded-2xl text-xs font-bold text-slate-700 hover:text-slate-900 transition-all cursor-pointer group"
                   >
                     <span className="flex items-center gap-2">
-                      <Link2 className="w-4 h-4 text-[#064B63]" />
+                      <Link2 className="w-4 h-4 text-primary" />
                       Copy Share Link
                     </span>
                     {copied ? (
-                      <span className="inline-flex items-center gap-1 text-[10px] font-mono text-[#0E7490] font-black">
-                        <Check className="w-3 h-3" />
+                      <span className="inline-flex items-center gap-1 text-[10px] font-mono text-primary font-black">
+                        <Check className="w-3.5 h-3.5" />
                         COPIED
                       </span>
                     ) : (
-                      <ChevronRight className="w-3.5 h-3.5 text-[#475569] group-hover:translate-x-0.5 transition-transform" />
+                      <ChevronRight className="w-3.5 h-3.5 text-slate-400 group-hover:translate-x-0.5 transition-transform" />
                     )}
                   </button>
 
-                  {/* Visual Social Share Links */}
+                  {/* Social Buttons */}
                   <div className="grid grid-cols-3 gap-3">
                     <a 
-                      to="https://facebook.com" 
+                      href="https://facebook.com" 
                       target="_blank" 
                       rel="noopener noreferrer" 
-                      className="flex flex-col items-center justify-center p-3 bg-[#F7F9FA] hover:bg-[#064B63]/10 border border-[#E2E8F0] hover:border-[#0E7490] rounded-2xl text-[9px] font-black text-[#475569] hover:text-[#064B63] uppercase tracking-wider transition-all duration-300 gap-1.5"
+                      className="flex flex-col items-center justify-center p-3 bg-slate-50 hover:bg-primary/10 border border-slate-200 hover:border-primary/40 rounded-2xl text-[9px] font-black text-slate-700 hover:text-primary uppercase tracking-wider transition-all duration-300 gap-1.5"
                     >
                       <svg className="w-4 h-4 fill-current" viewBox="0 0 24 24">
                         <path d="M22 12c0-5.52-4.48-10-10-10S2 6.48 2 12c0 4.84 3.44 8.87 8 9.8V15H8v-3h2V9.5C10 7.57 11.57 6 13.5 6H16v3h-2c-.55 0-1 .45-1 1v2h3v3h-3v6.95c4.56-.93 8-4.96 8-9.75z" />
@@ -452,10 +417,10 @@ export default function SinglePostPage({ params }) {
                       Facebook
                     </a>
                     <a 
-                      to="https://twitter.com" 
+                      href="https://twitter.com" 
                       target="_blank" 
                       rel="noopener noreferrer" 
-                      className="flex flex-col items-center justify-center p-3 bg-[#F7F9FA] hover:bg-[#F7F9FA] border border-[#E2E8F0] hover:border-[#E2E8F0] rounded-2xl text-[9px] font-black text-[#475569] hover:text-[#111827] uppercase tracking-wider transition-all duration-300 gap-1.5"
+                      className="flex flex-col items-center justify-center p-3 bg-slate-50 hover:bg-slate-900 hover:text-white border border-slate-200 rounded-2xl text-[9px] font-black text-slate-700 uppercase tracking-wider transition-all duration-300 gap-1.5"
                     >
                       <svg className="w-4 h-4 fill-current" viewBox="0 0 24 24">
                         <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
@@ -463,10 +428,10 @@ export default function SinglePostPage({ params }) {
                       X / Twitter
                     </a>
                     <a 
-                      to="https://instagram.com" 
+                      href="https://instagram.com" 
                       target="_blank" 
                       rel="noopener noreferrer" 
-                      className="flex flex-col items-center justify-center p-3 bg-[#F7F9FA] hover:bg-[#064B63]/10 border border-[#E2E8F0] hover:border-[#0E7490] rounded-2xl text-[9px] font-black text-[#475569] hover:text-[#0E7490] uppercase tracking-wider transition-all duration-300 gap-1.5"
+                      className="flex flex-col items-center justify-center p-3 bg-slate-50 hover:bg-primary/10 border border-slate-200 hover:border-primary/40 rounded-2xl text-[9px] font-black text-slate-700 hover:text-primary uppercase tracking-wider transition-all duration-300 gap-1.5"
                     >
                       <svg className="w-4 h-4 fill-none stroke-current" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24">
                         <rect x="2" y="2" width="20" height="20" rx="5" ry="5" />
@@ -480,28 +445,28 @@ export default function SinglePostPage({ params }) {
               </div>
 
               {/* Taxonomy metadata list */}
-              <div className="bg-[#F7F9FA] border border-[#E2E8F0] rounded-3xl p-6 backdrop-blur-2xl">
-                <h3 className="text-[10px] font-black uppercase tracking-wider text-[#111827] border-b border-[#E2E8F0] pb-3 mb-5 flex items-center gap-2">
-                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
+              <div className="bg-white border border-slate-200/80 rounded-3xl p-6 shadow-xl shadow-purple-500/5">
+                <h3 className="text-[10px] font-black uppercase tracking-wider text-slate-400 border-b border-slate-100 pb-3 mb-5 flex items-center gap-2">
+                  <span className="w-2 h-2 rounded-full bg-primary animate-pulse" />
                   METADATA INDEX
                 </h3>
                 
-                <div className="space-y-4 font-mono text-[10px] text-[#475569]">
-                  <div className="flex items-center justify-between border-b border-[#E2E8F0]/[0.02] pb-2">
-                    <span className="flex items-center gap-1.5 uppercase"><Tag className="w-3.5 h-3.5 text-[#064B63]" /> Category</span>
-                    <span className="text-[#111827] font-bold">{post.category || "Uncategorized"}</span>
+                <div className="space-y-4 font-mono text-[11px] text-slate-600">
+                  <div className="flex items-center justify-between border-b border-slate-100 pb-2.5">
+                    <span className="flex items-center gap-1.5 uppercase font-bold text-slate-400"><Tag className="w-3.5 h-3.5 text-primary" /> Category</span>
+                    <span className="text-slate-900 font-extrabold">{post.category || "Uncategorized"}</span>
                   </div>
-                  <div className="flex items-center justify-between border-b border-[#E2E8F0]/[0.02] pb-2">
-                    <span className="flex items-center gap-1.5 uppercase"><Calendar className="w-3.5 h-3.5 text-[#064B63]" /> Published</span>
-                    <span className="text-[#111827] font-bold">{formatShortDate(post.date)}</span>
+                  <div className="flex items-center justify-between border-b border-slate-100 pb-2.5">
+                    <span className="flex items-center gap-1.5 uppercase font-bold text-slate-400"><Calendar className="w-3.5 h-3.5 text-primary" /> Published</span>
+                    <span className="text-slate-900 font-extrabold">{formatShortDate(post.date)}</span>
                   </div>
-                  <div className="flex items-center justify-between border-b border-[#E2E8F0]/[0.02] pb-2">
-                    <span className="flex items-center gap-1.5 uppercase"><User className="w-3.5 h-3.5 text-[#064B63]" /> Access Node</span>
-                    <span className="text-[#111827] font-bold">{post.author}</span>
+                  <div className="flex items-center justify-between border-b border-slate-100 pb-2.5">
+                    <span className="flex items-center gap-1.5 uppercase font-bold text-slate-400"><User className="w-3.5 h-3.5 text-primary" /> Author</span>
+                    <span className="text-slate-900 font-extrabold">{post.author}</span>
                   </div>
                   <div className="flex items-center justify-between">
-                    <span className="flex items-center gap-1.5 uppercase"><Activity className="w-3.5 h-3.5 text-[#0E7490]" /> Status</span>
-                    <span className="text-[#0E7490] font-bold">ONLINE // INDEXED</span>
+                    <span className="flex items-center gap-1.5 uppercase font-bold text-slate-400"><Activity className="w-3.5 h-3.5 text-primary" /> Status</span>
+                    <span className="text-primary font-extrabold">PUBLISHED</span>
                   </div>
                 </div>
               </div>
@@ -515,6 +480,7 @@ export default function SinglePostPage({ params }) {
     </div>
   );
 }
+
 
 // Inline CSS for tech animations matching main layout styles
 const styleTag = (
