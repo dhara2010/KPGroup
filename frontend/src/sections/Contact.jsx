@@ -99,7 +99,6 @@ export default function Contact() {
       <div className="absolute inset-0 z-0 pointer-events-none opacity-30">
         <div className="absolute bottom-0 right-0 w-[50vw] h-[50vw] bg-accent-soft rounded-full blur-[150px]"></div>
         <div className="absolute top-0 left-0 w-[50vw] h-[50vw] bg-accent-soft rounded-full blur-[150px]"></div>
-        <div className="absolute inset-0 bg-[linear-gradient(rgba(7, 7, 7, 0.02)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.02)_1px,transparent_1px)] bg-[size:60px_60px] [mask-image:radial-gradient(ellipse_at_center,black,transparent_80%)]"></div>
       </div>
 
       <div className="max-w-4xl mx-auto px-6 relative z-10 w-full">
@@ -112,8 +111,8 @@ export default function Contact() {
               <span className="text-xs font-medium text-primary tracking-wider uppercase">Initialize Protocol</span>
             </div>
           </ScrollReveal>
-          <h2 className="text-4xl md:text-6xl font-black text-text mb-6 uppercase tracking-tighter font-heading">
-            <TextReveal text="BEGIN YOUR EXPANSION." delay={0.2} />
+          <h2 className="text-3xl md:text-5xl lg:text-6xl font-black text-text mb-6 uppercase tracking-tighter font-heading">
+            <TextReveal text="LET’S CONNECT. COLLABORATE. SCALE." delay={0.2} />
           </h2>
           <ScrollReveal variant="3d-unfold" delay={0.4}>
             <p className="text-text-secondary font-light leading-relaxed text-sm md:text-base max-w-xl mx-auto">

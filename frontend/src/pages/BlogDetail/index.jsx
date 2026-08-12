@@ -96,7 +96,6 @@ export default function SinglePostPage({ params }) {
       
       {/* Light Laser Grid Background & Ambient Glow */}
       <div className="absolute inset-0 pointer-events-none opacity-60 z-0">
-        <div className="absolute inset-0 bg-[linear-gradient(rgba(108,59,255,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(108,59,255,0.03)_1px,transparent_1px)] bg-[size:40px_40px]"></div>
         <div className="absolute top-0 right-1/4 w-[50vw] h-[50vw] bg-primary/10 rounded-full blur-[140px]"></div>
         <div className="absolute top-1/3 left-1/4 w-[50vw] h-[50vw] bg-accent/10 rounded-full blur-[140px]"></div>
       </div>

@@ -13,7 +13,6 @@ export default function Footer() {
       
       {/* Tech Grid Background & Ambient Glowing Orbs */}
       <div className="absolute inset-0 pointer-events-none opacity-30 z-0">
-        <div className="absolute inset-0 bg-[linear-gradient(rgba(108,59,255,0.05)_1px,transparent_1px),linear-gradient(90deg,rgba(108,59,255,0.05)_1px,transparent_1px)] bg-[size:40px_40px]"></div>
         <div className="absolute top-0 right-1/4 w-[45vw] h-[45vw] bg-primary/15 rounded-full blur-[140px] animate-[pulse_10s_ease-in-out_infinite]"></div>
         <div className="absolute bottom-0 left-1/4 w-[45vw] h-[45vw] bg-accent/15 rounded-full blur-[140px] animate-[pulse_12s_ease-in-out_infinite_reverse]"></div>
       </div>
@@ -179,11 +178,11 @@ export default function Footer() {
             </h4>
             <ul className="space-y-3.5 text-sm">
               {[
-                { name: "KP Global IT Solution", href: "https://kpgbit.kpglobalbusiness.com/" },
-                { name: "KP Global Skill Academy", href: "https://academy.kpglobalbusiness.com/" },
-                { name: "KP Global Media Network", href: "https://entrepreneurjouryny.com/" },
-                { name: "KP Global Business Community", href: "https://kpgbc.kpglobalbusiness.com/" },
-                { name: "KP Global Jobs", href: "https://jobs.kpglobalbusiness.com/" }
+                { name: "KP Global IT Solutions", href: "https://kpgbit.kpglobalbusiness.com/" },
+                { name: "KP Global Media – Entrepreneur Journey", href: "https://entrepreneurjouryny.com/" },
+                { name: "KP Global Jobs", href: "https://jobs.kpglobalbusiness.com/" },
+                { name: "KP Global Academy of Skills", href: "https://academy.kpglobalbusiness.com/" },
+                { name: "KP Global Business Community", href: "https://kpgbc.kpglobalbusiness.com/" }
               ].map((link, idx) => (
                 <li key={idx}>
                   <a 

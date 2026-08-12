@@ -366,7 +366,6 @@ export default function TestimonialsPage() {
   return (
     <main className="min-h-screen bg-white text-slate-900 font-sans relative overflow-hidden">
       <div className="fixed inset-0 pointer-events-none z-0 opacity-60">
-        <div className="absolute inset-0 bg-[linear-gradient(rgba(108,59,255,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(108,59,255,0.03)_1px,transparent_1px)] bg-[size:40px_40px]"></div>
         <div className="absolute top-1/3 right-[-10%] w-[50vw] h-[50vw] bg-primary/10 rounded-full blur-[140px] animate-pulse" />
         <div className="absolute bottom-10 left-[-10%] w-[45vw] h-[45vw] bg-accent/10 rounded-full blur-[140px]" />
       </div>

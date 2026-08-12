@@ -31,7 +31,6 @@ export default function Supporters() {
       
       {/* Colorful Background Ambience & Network Pattern */}
       <div className="absolute inset-0 z-0 pointer-events-none opacity-40 mix-blend-screen dark:mix-blend-normal">
-        <div className="absolute inset-0 bg-[linear-gradient(rgba(108,59,255,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(108,59,255,0.03)_1px,transparent_1px)] bg-[size:40px_40px] [mask-image:radial-gradient(ellipse_at_center,black,transparent_80%)]"></div>
         <div className="absolute top-0 left-[-10%] w-[50vw] h-[50vw] bg-primary/20 rounded-full blur-[150px] animate-[pulse_8s_ease-in-out_infinite]"></div>
         <div className="absolute bottom-[-10%] right-[-10%] w-[60vw] h-[60vw] bg-accent/20 rounded-full blur-[150px] animate-[pulse_12s_ease-in-out_infinite_reverse]"></div>
       </div>

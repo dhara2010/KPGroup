@@ -4,6 +4,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { Play, Sparkles, ArrowRight, Activity, Cpu, Zap, Star } from "lucide-react";
 
 import { ScrollReveal } from "@/components/Animations";
+import { SectionWave } from "@/components/Animations/SectionWave";
 import { Button } from "@/components/ui/Button";
 import { Heading, Text, Eyebrow } from "@/components/ui/Typography";
 function GlassOrbitalSphere({ scale, opacity, zIndex, centerOpacity, ringOpacity, mousePos, isLg, progress }) {
@@ -258,6 +259,8 @@ function Hero() {
         className="absolute inset-0 w-full h-full pointer-events-none z-[1] opacity-90"
       />
 
+      <SectionWave position="right" direction="up" intensity="high" />
+
       <style>{`
           @keyframes refill {
             0%, 100% { width: 25%; }
@@ -309,12 +312,18 @@ function Hero() {
         {/* Top Section: Main Heading */}
         <div className="w-full mt-24 md:mt-28">
           <ScrollReveal variant="3d-unfold" delay={0.3}>
-            <h1 className="text-2xl sm:text-4xl md:text-6xl lg:text-7xl font-black text-white tracking-tighter leading-[1.02] drop-shadow-[0_10px_35px_rgba(0,0,0,0.9)] max-w-5xl">
-              Empowering <span className="text-primary">Growth</span>.
-            <br />
-              Building Digital <span className="text-primary">Success</span>.
+            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-primary/20 border border-primary/40 backdrop-blur-md mb-6 shadow-lg">
+              <Sparkles className="w-3.5 h-3.5 text-primary" />
+              <span className="text-xs md:text-sm font-bold text-white uppercase tracking-widest">
+                Technology • Network • Media • Talent • Skills
+              </span>
+            </div>
+            <h1 className="text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-black text-white tracking-tighter leading-[1.05] drop-shadow-[0_10px_35px_rgba(0,0,0,0.9)] max-w-5xl">
+              KP GLOBAL BUSINESS
               <br />
-              Connecting Global <span className="text-primary">Leaders</span>.
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary via-purple-300 to-accent">
+                Build. Connect. Grow.
+              </span>
             </h1>
           </ScrollReveal>
         </div>
@@ -341,24 +350,36 @@ function Hero() {
             </div>
           </ScrollReveal>
 
-          {/* Right: Description Paragraph & Pill CTA Button */}
-          <ScrollReveal variant="3d-unfold" delay={0.7} className="flex flex-col items-start gap-6 max-w-[450px]">
-            <p className="md:pt-60 text-white font-medium text-[16px] leading-[1.7] max-w-[450px] drop-shadow-md opacity-95">
-              KP Global Business is a growth ecosystem designed to elevate businesses, professionals, and innovators with cutting-edge solutions in technology, media, community, and career opportunities.
+          {/* Right: Description Paragraph & Two CTAs */}
+          <ScrollReveal variant="3d-unfold" delay={0.7} className="flex flex-col items-start gap-6 max-w-[480px]">
+            <p className="md:pt-36 text-white font-medium text-[15px] sm:text-[16px] leading-[1.7] max-w-[480px] drop-shadow-md opacity-95">
+              One integrated ecosystem helping businesses, entrepreneurs and professionals grow through technology, trusted connections, visibility, talent and skills.
             </p>
 
-            <button 
-              onClick={() => {
-                const contactSection = document.getElementById("contact");
-                if (contactSection) contactSection.scrollIntoView({ behavior: "smooth" });
-              }}
-              className="group inline-flex items-center gap-4 px-7 py-3.5 rounded-full bg-gradient-to-r from-[#6C3BFF] via-[#7E46FF] to-[#A855F7] text-white font-bold text-sm md:text-base tracking-wide shadow-[0_10px_30px_rgba(108,59,255,0.4)] hover:shadow-[0_15px_40px_rgba(108,59,255,0.6)] transition-all duration-300 hover:scale-[1.03] active:scale-[0.98]"
-            >
-              <span>Explore Our Solutions</span>
-              <div className="w-9 h-9 rounded-full bg-[#A855F7] flex items-center justify-center text-white shadow-md group-hover:translate-x-1 transition-transform">
-                <ArrowRight className="w-4 h-4" />
-              </div>
-            </button>
+            <div className="flex flex-wrap items-center gap-4">
+              <button 
+                onClick={() => {
+                  const ecoSection = document.getElementById("ecosystem");
+                  if (ecoSection) ecoSection.scrollIntoView({ behavior: "smooth" });
+                }}
+                className="group inline-flex items-center gap-3 px-7 py-3.5 rounded-full bg-gradient-to-r from-[#6C3BFF] via-[#7E46FF] to-[#A855F7] text-white font-bold text-sm tracking-wide shadow-[0_10px_30px_rgba(108,59,255,0.4)] hover:shadow-[0_15px_40px_rgba(108,59,255,0.6)] transition-all duration-300 hover:scale-[1.03] active:scale-[0.98]"
+              >
+                <span>Explore Ecosystem</span>
+                <div className="w-8 h-8 rounded-full bg-[#A855F7] flex items-center justify-center text-white shadow-md group-hover:translate-x-1 transition-transform">
+                  <ArrowRight className="w-4 h-4" />
+                </div>
+              </button>
+
+              <button 
+                onClick={() => {
+                  const contactSection = document.getElementById("contact");
+                  if (contactSection) contactSection.scrollIntoView({ behavior: "smooth" });
+                }}
+                className="inline-flex items-center px-6 py-3.5 rounded-full bg-white/10 hover:bg-white/20 border border-white/20 text-white font-bold text-sm tracking-wide transition-all duration-300 hover:scale-[1.03] active:scale-[0.98] backdrop-blur-md"
+              >
+                Let's Connect
+              </button>
+            </div>
           </ScrollReveal>
 
         </div>

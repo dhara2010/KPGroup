@@ -5,14 +5,18 @@ import { MonitorSmartphone, Radio, GraduationCap, Briefcase, Network, ArrowUpRig
 
 import { Link } from "react-router-dom";
 import { ScrollReveal, TextReveal, ThreeDTilt } from "@/components/Animations";
+import { SectionWave } from "@/components/Animations/SectionWave";
 import { Section } from "@/components/ui/Section";
 import { Heading, Text, Eyebrow } from "@/components/ui/Typography";
 
 export default function Ecosystem() {
   const cards = [
     {
-      title: "IT Solutions",
-      desc: "Next-gen software, cloud infrastructure, and AI-driven enterprise solutions.",
+      num: "01",
+      title: "KP GLOBAL IT SOLUTIONS",
+      sub: "Digital Foundation for Scalable Businesses",
+      desc: "Custom websites, applications & digital platforms with automated system operations.",
+      bullets: ["Custom websites & apps", "Digital platforms", "Business automation", "Scalable IT infrastructure"],
       icon: MonitorSmartphone,
       className: "md:col-span-2 md:row-span-2",
       gradient: "from-primary via-accent-soft to-transparent",
@@ -21,8 +25,11 @@ export default function Ecosystem() {
       href: "https://kpgbit.kpglobalbusiness.com/"
     },
     {
-      title: "Media Network",
-      desc: "Global reach broadcasting and digital marketing.",
+      num: "02",
+      title: "KP GLOBAL MEDIA",
+      sub: "Visibility That Builds Authority",
+      desc: "Entrepreneur stories, interviews, success features & personal founder branding.",
+      bullets: ["Entrepreneur stories", "Founder interviews", "Success features", "Personal branding"],
       icon: Radio,
       className: "md:col-span-1",
       gradient: "from-primary/50 to-transparent",
@@ -31,8 +38,24 @@ export default function Ecosystem() {
       href: "https://entrepreneurjouryny.com/"
     },
     {
-      title: "Skill Academy",
-      desc: "Empowering the workforce of tomorrow with advanced technical training.",
+      num: "03",
+      title: "KP GLOBAL JOBS",
+      sub: "Talent That Powers Growth",
+      desc: "Structured talent platform connecting verified talent with growth businesses.",
+      bullets: ["Structured job platform", "Verified hiring", "Corporate recruitment"],
+      icon: Briefcase,
+      className: "md:col-span-1",
+      gradient: "from-primary/50 to-transparent",
+      iconColor: "text-white",
+      image: "/eco_careers_bg.webp",
+      href: "https://jobs.kpglobalbusiness.com/"
+    },
+    {
+      num: "04",
+      title: "KP GLOBAL ACADEMY",
+      sub: "Future-Ready Skills",
+      desc: "Practical industry skill programs & market-aligned certifications.",
+      bullets: ["Industry skill programs", "Market certifications", "Upskilling professionals"],
       icon: GraduationCap,
       className: "md:col-span-1",
       gradient: "from-accent/50 to-transparent",
@@ -41,18 +64,11 @@ export default function Ecosystem() {
       href: "https://academy.kpglobalbusiness.com/"
     },
     {
-      title: "Careers",
-      desc: "Join a global team of innovators.",
-      icon: Briefcase,
-      className: "md:col-span-1",
-      gradient: "from-primary/50 to-transparent",
-      iconColor: "text-white",
-      image: "/eco_careers_bg.webp",
-      href: "/careers"
-    },
-    {
-      title: "Business Community",
-      desc: "A thriving ecosystem of partners, investors, and enterprise leaders shaping the future.",
+      num: "05",
+      title: "KP GLOBAL BUSINESS COMMUNITY",
+      sub: "Trust-Based Business Networking",
+      desc: "Pan-India entrepreneur network, referral collaborations, Investor Connect & AI Network.",
+      bullets: ["Pan-India network", "Referral collaborations", "Investor Connect", "AI Network"],
       icon: Network,
       className: "md:col-span-2",
       gradient: "from-accent-soft to-transparent",
@@ -64,29 +80,30 @@ export default function Ecosystem() {
 
   return (
     <Section id="ecosystem" variant="default" className="relative overflow-hidden">
+      <SectionWave position="right" direction="up" intensity="high" />
       <div className="max-w-7xl mx-auto relative z-10">
         
-        <div className="mb-16 md:mb-24 flex flex-col text-center items-center">
+        <div className="mb-16 md:mb-20 flex flex-col text-center items-center">
           <ScrollReveal variant="3d-unfold">
-            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-bg-soft border border-border mb-6">
-              <span className="w-2 h-2 rounded-full bg-accent animate-pulse"></span>
-              <Eyebrow>Our Ecosystem</Eyebrow>
+            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-primary/10 border border-primary/20 mb-6 shadow-sm">
+              <span className="w-2 h-2 rounded-full bg-primary animate-pulse"></span>
+              <Eyebrow>Group Structure</Eyebrow>
             </div>
           </ScrollReveal>
 
-          <Heading level={2} className="mb-6">
-            <TextReveal text="Everything you need. All in one network." delay={0.2} />
+          <Heading level={2} className="mb-6 uppercase">
+            <TextReveal text="OUR BUSINESSES & DIVISIONS" delay={0.2} />
           </Heading>
 
           <ScrollReveal variant="3d-unfold" delay={0.4}>
             <Text variant="large" className="max-w-2xl mx-auto">
-              Discover a fully integrated platform designed to scale your operations, empower your team, and connect you with the world's most innovative business community.
+              Explore the five major divisions powering KP Global Group's unified corporate ecosystem. Click any area to learn more.
             </Text>
           </ScrollReveal>
         </div>
 
         {/* Bento Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6 auto-rows-[250px]">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6 auto-rows-[270px]">
           {cards.map((card, idx) => (
             <ScrollReveal 
               key={idx} 
@@ -112,7 +129,7 @@ export default function Ecosystem() {
                   >
                     {/* Card Content Wrapper */}
                     <div 
-                      className="relative h-full bg-bg-dark rounded-[calc(2rem-1px)] p-8 flex flex-col justify-between overflow-hidden"
+                      className="relative h-full bg-bg-dark rounded-[calc(2rem-1px)] p-6 sm:p-8 flex flex-col justify-between overflow-hidden"
                       style={{ transformStyle: "preserve-3d" }}
                     >
                       
@@ -124,10 +141,10 @@ export default function Ecosystem() {
                           fill
                           sizes="(max-width: 768px) 100vw, (max-width: 1200px) 66vw, 33vw"
                           priority={idx === 0}
-                          className="object-cover opacity-60 group-hover:opacity-80 group-hover:scale-110 transition-all duration-700 ease-out"
+                          className="object-cover opacity-50 group-hover:opacity-75 group-hover:scale-110 transition-all duration-700 ease-out"
                         />
-                        {/* Overlay to keep text readable */}
-                        <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent"></div>
+                        {/* Dark gradient overlay */}
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/95 via-black/60 to-transparent"></div>
                       </div>
 
                       {/* Inner Hover Glow */}
@@ -137,24 +154,42 @@ export default function Ecosystem() {
                         className="relative z-10 flex justify-between items-start"
                         style={{ transform: "translateZ(30px)" }}
                       >
-                        <div className={`w-14 h-14 rounded-2xl bg-white/10 backdrop-blur-md border border-white/20 flex items-center justify-center ${card.iconColor} group-hover:scale-110 group-hover:rotate-3 group-hover:bg-primary transition-all duration-500`}>
-                          <card.icon className="w-7 h-7" strokeWidth={1.5} />
+                        <div className="flex items-center gap-3">
+                          <span className="text-2xl font-black text-white/40 group-hover:text-primary transition-colors font-mono">
+                            {card.num}
+                          </span>
+                          <div className={`w-11 h-11 rounded-2xl bg-white/10 backdrop-blur-md border border-white/20 flex items-center justify-center ${card.iconColor} group-hover:scale-110 group-hover:rotate-3 group-hover:bg-primary transition-all duration-500`}>
+                            <card.icon className="w-5 h-5" strokeWidth={1.5} />
+                          </div>
                         </div>
-                        <div className="w-10 h-10 rounded-full border border-white/20 flex items-center justify-center text-white/50 group-hover:bg-primary group-hover:text-white group-hover:border-transparent transition-all duration-300 transform group-hover:rotate-45">
-                          <ArrowUpRight className="w-5 h-5" />
+
+                        <div className="w-9 h-9 rounded-full border border-white/20 flex items-center justify-center text-white/50 group-hover:bg-primary group-hover:text-white group-hover:border-transparent transition-all duration-300 transform group-hover:rotate-45">
+                          <ArrowUpRight className="w-4 h-4" />
                         </div>
                       </div>
 
                       <div 
-                        className="relative z-10 mt-auto pt-8"
+                        className="relative z-10 mt-auto pt-6"
                         style={{ transform: "translateZ(20px)" }}
                       >
-                        <h3 className="text-2xl font-bold text-white mb-2 transition-all duration-300">
+                        <span className="text-[10px] font-bold text-primary uppercase tracking-[0.2em] block mb-1">
+                          {card.sub}
+                        </span>
+                        <h3 className="text-xl sm:text-2xl font-bold text-white mb-2 transition-all duration-300">
                           {card.title}
                         </h3>
-                        <p className="text-white/70 leading-relaxed font-light line-clamp-3">
+                        <p className="text-white/70 text-xs sm:text-sm leading-relaxed font-light line-clamp-2 mb-3">
                           {card.desc}
                         </p>
+
+                        {/* Progressive Disclosure Bullet Chips */}
+                        <div className="flex flex-wrap gap-1.5 opacity-90 group-hover:opacity-100 transition-opacity">
+                          {card.bullets.map((b, bIdx) => (
+                            <span key={bIdx} className="text-[10px] font-semibold px-2 py-0.5 rounded-full bg-white/10 border border-white/15 text-white/80 backdrop-blur-sm">
+                              {b}
+                            </span>
+                          ))}
+                        </div>
                       </div>
                     </div>
                   </div>

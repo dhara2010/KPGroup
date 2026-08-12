@@ -93,7 +93,6 @@ export default function BlogPage() {
 
       {/* Moving background grid & ambient light blobs */}
       <div className="absolute inset-0 pointer-events-none z-0 opacity-60">
-        <div className="absolute inset-0 bg-[linear-gradient(rgba(108,59,255,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(108,59,255,0.03)_1px,transparent_1px)] bg-[size:50px_50px]"></div>
         <div className="absolute top-[-10%] left-[-10%] w-[60vw] h-[60vw] bg-primary/10 rounded-full blur-[140px]" />
         <div className="absolute bottom-[-10%] right-[-10%] w-[60vw] h-[60vw] bg-accent/10 rounded-full blur-[140px]" />
       </div>

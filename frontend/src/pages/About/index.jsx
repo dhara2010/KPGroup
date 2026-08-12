@@ -69,7 +69,6 @@ export default function AboutPage() {
       
       {/* Laser Grid Background */}
       <div className="absolute inset-0 pointer-events-none opacity-10 z-0">
-        <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.01)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.01)_1px,transparent_1px)] bg-[size:40px_40px]"></div>
         <div className="absolute top-0 right-1/4 w-[60vw] h-[60vw] bg-accent-soft rounded-full blur-[140px]"></div>
         <div className="absolute top-1/3 left-1/4 w-[60vw] h-[60vw] bg-accent-soft rounded-full blur-[140px]"></div>
       </div>
@@ -153,7 +152,6 @@ export default function AboutPage() {
             
             {/* Tech grid mesh background & purple ambient glow */}
             <div className="absolute inset-0 pointer-events-none opacity-40 z-0">
-              <div className="absolute inset-0 bg-[linear-gradient(rgba(108,59,255,0.06)_1px,transparent_1px),linear-gradient(90deg,rgba(108,59,255,0.06)_1px,transparent_1px)] bg-[size:32px_32px]"></div>
               <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[50vw] h-[50vw] bg-primary/20 rounded-full blur-[140px] animate-pulse"></div>
               <div className="absolute bottom-0 right-0 w-[30vw] h-[30vw] bg-accent/20 rounded-full blur-[120px]"></div>
             </div>
@@ -199,10 +197,7 @@ export default function AboutPage() {
 
                     <h3 className="text-2xl md:text-3xl font-black uppercase tracking-tight text-white mb-4">Our Vision</h3>
                     <p className="text-white/80 font-normal text-sm md:text-base leading-relaxed mb-6">
-                      Our Vision is to become the leading provider of high-quality solutions across various industries, 
-                      empowering businesses and individuals through innovation, technology, and genuine care. We aim to 
-                      establish a unified ecosystem that fosters continuous growth and collaboration, connecting international 
-                      opportunities with technical mastery.
+                      To become India’s most trusted business and career growth ecosystem, empowering millions to scale with confidence and credibility.
                     </p>
                   </div>
 
@@ -229,10 +224,7 @@ export default function AboutPage() {
 
                     <h3 className="text-2xl md:text-3xl font-black uppercase tracking-tight text-white mb-4">Our Mission</h3>
                     <p className="text-white/80 font-normal text-sm md:text-base leading-relaxed mb-6">
-                      Our Mission is to empower businesses and individuals through high-quality solutions and specialized training. 
-                      By linking our IT systems, training academy, and global job pipelines directly together, we erase the friction 
-                      of modern business growth. We strive to deliver excellence, security, and sustainability in everything we 
-                      architect, ensuring balanced data flow and synchronized synergy.
+                      To simplify growth by delivering integrated, practical, and impact-driven solutions that help businesses and professionals succeed in a digital-first world.
                     </p>
                   </div>
 
@@ -255,7 +247,6 @@ export default function AboutPage() {
             
             {/* Tech Grid Mesh & Ambient Purple Radial Blobs */}
             <div className="absolute inset-0 pointer-events-none opacity-40 z-0">
-              <div className="absolute inset-0 bg-[linear-gradient(rgba(108,59,255,0.06)_1px,transparent_1px),linear-gradient(90deg,rgba(108,59,255,0.06)_1px,transparent_1px)] bg-[size:32px_32px]"></div>
               <div className="absolute top-1/2 left-1/4 -translate-y-1/2 w-96 h-96 bg-primary/25 rounded-full blur-[140px] animate-pulse"></div>
               <div className="absolute bottom-0 right-0 w-80 h-80 bg-accent/25 rounded-full blur-[120px]"></div>
             </div>

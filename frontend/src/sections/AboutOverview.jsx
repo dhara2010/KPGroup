@@ -66,10 +66,11 @@ function AnimatedCounter({ target, duration = 1500 }) {
 
 export default function AboutOverview() {
   const capabilities = [
-    "Smart Business Connections",
-    "Growth Partnerships",
-    "Expert Guidance & Innovation",
-    "Global Recognition & Visibility",
+    "Designed for high-growth & referral-driven businesses",
+    "Strong alignment with business communities",
+    "Credibility, trust & long-term partnerships",
+    "One ecosystem replacing disconnected vendors",
+    "Built for real business outcomes",
   ];
 
   const stats = [
@@ -118,7 +119,8 @@ export default function AboutOverview() {
 
             <ScrollReveal variant="fade-right" delay={0.3}>
               <Text variant="large" className="max-w-xl">
-                A Business Ecosystem Designed for GrowthWe unite technology, media strategy, and global networking to help businesses grow smarter and faster.              </Text>
+                The ecosystem combines Technology, Trusted Networking, Media Visibility, Talent Solutions, and Skill Development into one integrated platform built to simplify growth for businesses and professionals.
+              </Text>
             </ScrollReveal>
 
             {/* Interactive Capability checkmarks */}

@@ -1,52 +1,49 @@
 import Hero from "@/sections/Hero";
 import { Scroll3DSection } from "@/components/Animations";
+import WhoWeArePreview from "@/sections/WhoWeArePreview";
 import Ecosystem from "@/sections/Ecosystem";
-import Services from "@/sections/Services";
-import Contact from "@/sections/Contact";
-import FAQ from "@/sections/FAQ";
-import Supporters from "@/sections/Supporters";
-import Team from "@/sections/Team";
-import Vision from "@/sections/Vision";
-import AboutOverview from "@/sections/AboutOverview";
+import AtAGlanceStats from "@/sections/AtAGlanceStats";
+import FeaturedHighlight from "@/sections/FeaturedHighlight";
+import LeadershipPreview from "@/sections/LeadershipPreview";
+import FinalCTA from "@/sections/FinalCTA";
 
 export default function Home() {
   return (
-    <main className="overflow-x-hidden ">
+    <main className="overflow-x-hidden bg-white text-slate-900">
 
+      {/* 1. Hero Section */}
       <Hero />
 
+      {/* 2. Who We Are Preview (Gateway to /about) */}
       <Scroll3DSection>
-        <AboutOverview />
+        <WhoWeArePreview />
       </Scroll3DSection>
 
+      {/* 3. Our Businesses / Group Areas (Gateway to Division Platforms) */}
       <Scroll3DSection>
         <Ecosystem />
       </Scroll3DSection>
 
+      {/* 4. KP Global Group at a Glance (Animated Counter Metrics) */}
       <Scroll3DSection>
-        <Services />
+        <AtAGlanceStats />
       </Scroll3DSection>
 
+      {/* 5. Featured Highlight (Flagship Showcase) */}
       <Scroll3DSection>
-        <Contact />
+        <FeaturedHighlight />
       </Scroll3DSection>
 
+      {/* 6. Leadership Preview (Gateway to /team) */}
       <Scroll3DSection>
-        <Vision />
+        <LeadershipPreview />
       </Scroll3DSection>
 
+      {/* 7. Final Corporate CTA (Gateway to /contact & Footer) */}
       <Scroll3DSection>
-        <FAQ />
+        <FinalCTA />
       </Scroll3DSection>
 
-      <Scroll3DSection>
-        <Supporters />
-      </Scroll3DSection>
-
-      <Scroll3DSection>
-        <Team />
-      </Scroll3DSection>
     </main>
   );
 }
-

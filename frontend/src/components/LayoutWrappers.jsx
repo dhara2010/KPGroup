@@ -13,7 +13,6 @@ export function InteractiveCanvas() {
       <div className="absolute bottom-[-10%] right-[-10%] w-[60vw] h-[60vw] bg-accent-soft rounded-full blur-[80px] animate-pulse duration-[12000ms]" />
       
       {/* Futuristic Cyber Tech Grid */}
-      <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.015)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.015)_1px,transparent_1px)] bg-[size:50px_50px] opacity-30" />
     </div>
   );
 }

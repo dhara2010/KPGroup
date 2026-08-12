@@ -1,34 +1,50 @@
 
 import React from 'react';
 
-import { Sparkles, Users, Globe } from 'lucide-react';
+import { Sparkles, Cpu, Users, Radio, GraduationCap, Briefcase } from 'lucide-react';
 import { ScrollReveal } from '@/components/Animations';
+import { SectionWave } from '@/components/Animations/SectionWave';
 
 const CAPABILITIES = [
   {
-    icon: Sparkles,
-    title: "Integrated Solutions",
-    desc: "All in one custom ecosystem. Integrated technical development with specialized training, media reach, and career solutions under one roof."
+    num: "01",
+    icon: Cpu,
+    title: "Build stronger digital systems",
+    desc: "Custom websites, applications, digital platforms & business automation."
   },
   {
+    num: "02",
     icon: Users,
-    title: "Professional Experts",
-    desc: "Experienced and dedicated professionals working together to deliver high-quality solutions tailored for your business."
+    title: "Connect with trusted businesses",
+    desc: "Pan-India entrepreneur network, referral collaborations & Investor Connect."
   },
   {
-    icon: Globe,
-    title: "Global Vision",
-    desc: "Connecting international opportunities with technical mastery. Broadening horizons and building powerful business corridors worldwide."
+    num: "03",
+    icon: Radio,
+    title: "Build authority and visibility",
+    desc: "Entrepreneur stories, founder interviews, success features & media branding."
+  },
+  {
+    num: "04",
+    icon: Briefcase,
+    title: "Find and develop the right talent",
+    desc: "Structured talent platform for faster, verified & efficient corporate hiring."
+  },
+  {
+    num: "05",
+    icon: GraduationCap,
+    title: "Build future-ready skills",
+    desc: "Industry-relevant skill programs & market-aligned practical certifications."
   }
 ];
 
 function Services() {
   return (
-    <section className="relative bg-white text-slate-900 overflow-hidden font-sans py-20 md:py-28 border-y border-slate-100">
+    <section id="services" className="relative bg-white text-slate-900 overflow-hidden font-sans py-20 md:py-28 border-y border-slate-100">
 
       {/* Subtle light mesh grid & ambient purple glow */}
       <div className="absolute inset-0 pointer-events-none z-0 opacity-60">
-        <div className="absolute inset-0 bg-[linear-gradient(rgba(108,59,255,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(108,59,255,0.03)_1px,transparent_1px)] bg-[size:40px_40px]"></div>
+        <SectionWave position="right" direction="up" intensity="high" />
         <div className="absolute top-1/2 left-[-10%] w-[50%] h-[50%] bg-primary/10 rounded-full blur-[140px] animate-pulse" />
         <div className="absolute bottom-0 right-[-5%] w-[45%] h-[45%] bg-accent/10 rounded-full blur-[140px]" />
       </div>
@@ -39,15 +55,13 @@ function Services() {
         <ScrollReveal variant="fade-up" className="text-center mb-16 flex flex-col items-center space-y-4">
           <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-primary/10 border border-primary/20 text-xs font-bold text-primary uppercase tracking-widest shadow-sm">
             <Sparkles className="w-3.5 h-3.5" />
-            Capabilities & Strengths
+            Competitive Advantage
           </div>
-          <h2 className="text-4xl md:text-5xl lg:text-6xl font-black uppercase tracking-tight text-slate-900 leading-none">
-            Why Choose Us
+          <h2 className="text-3xl md:text-5xl lg:text-6xl font-black uppercase tracking-tight text-slate-900 leading-tight">
+            WHY KP?
+            <br />
+            <span className="text-primary">ONE ECOSYSTEM. FIVE GROWTH ENGINES.</span>
           </h2>
-          <p className="text-slate-600 font-normal text-sm md:text-base leading-relaxed max-w-2xl">
-            We bridge technical architectures, educational networks, B2B synergy and worldwide employment
-            marketplaces directly to deliver unrivaled value to your company.
-          </p>
         </ScrollReveal>
 
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
@@ -67,13 +81,16 @@ function Services() {
           {/* Right Column: Capabilities cards */}
           <div className="lg:col-span-7 space-y-4">
             {CAPABILITIES.map((item, idx) => (
-              <ScrollReveal key={idx} variant="fade-left" delay={0.15 * idx}>
-                <div className="flex gap-5 p-6 border border-slate-200/80 rounded-2xl bg-white hover:border-primary/50 transition-all duration-300 group hover:shadow-xl hover:shadow-primary/10">
-                  <div className="w-12 h-12 rounded-xl bg-primary/10 border border-primary/20 flex items-center justify-center text-primary shrink-0 group-hover:scale-110 transition-transform duration-300 shadow-sm">
-                    <item.icon className="w-6 h-6 text-primary" />
+              <ScrollReveal key={idx} variant="fade-left" delay={0.1 * idx}>
+                <div className="flex gap-4 p-5 border border-slate-200/80 rounded-2xl bg-white hover:border-primary/50 transition-all duration-300 group hover:shadow-xl hover:shadow-primary/10 items-center">
+                  <span className="text-xl font-black text-slate-300 group-hover:text-primary transition-colors font-mono shrink-0">
+                    {item.num}
+                  </span>
+                  <div className="w-10 h-10 rounded-xl bg-primary/10 border border-primary/20 flex items-center justify-center text-primary shrink-0 group-hover:scale-110 transition-transform duration-300 shadow-sm">
+                    <item.icon className="w-5 h-5 text-primary" />
                   </div>
                   <div>
-                    <h4 className="text-base font-extrabold text-slate-900 uppercase tracking-tight mb-1.5">
+                    <h4 className="text-sm md:text-base font-extrabold text-slate-900 uppercase tracking-tight mb-1">
                       {item.title}
                     </h4>
                     <p className="text-xs md:text-sm text-slate-600 leading-relaxed font-normal">

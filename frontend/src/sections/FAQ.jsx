@@ -32,7 +32,7 @@ const faqs = [
   },
   {
     question: "What makes KP Global Business different from others?",
-    answer: "We are not just a development shop. KP Global is a unified ecosystem integrating IT Solutions, Media, Recruitment (KP Global Jobs), and Skills Training (KP Academy). This allows us to support your business holistically—not just with code, but with strategy, talent, and growth."
+    answer: "KP Global is a premium business acceleration ecosystem integrating 5 strategic divisions: KP Global IT Solutions, KP Global Media – Entrepreneur Journey, KP Global Jobs, KP Global Academy of Skills, and KP Global Business Community. This allows us to support businesses and professionals holistically across technology, trusted networking, media visibility, talent solutions, and skill development."
   }
 ];
 

@@ -15,7 +15,6 @@ export default function VisionMissionPage() {
 
             {/* Cyber Grid Lines */}
             <div className="absolute inset-0 pointer-events-none opacity-5 z-0">
-                <div className="absolute inset-0 bg-[linear-gradient(rgba(6,59,76,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(6,59,76,0.03)_1px,transparent_1px)] bg-[size:45px_45px]"></div>
             </div>
 
             <div className="max-w-7xl mx-auto px-6 relative z-10">
@@ -85,7 +84,7 @@ export default function VisionMissionPage() {
 
                             <ScrollReveal variant="fade-left" delay={0.3}>
                                 <p className="text-text-secondary font-light text-base md:text-lg leading-relaxed">
-                                    Our vision is to build the world's most trusted global business ecosystem, bridging technical excellence with massive creative networks. We aim to empower startups, legacy corporations, and emerging professionals to scale their operations securely through cutting-edge technology, automation, and reliable digital solutions.
+                                    "To become India's most trusted business and career growth ecosystem."
                                 </p>
                             </ScrollReveal>
 
@@ -132,7 +131,7 @@ export default function VisionMissionPage() {
 
                             <ScrollReveal variant="fade-right" delay={0.3}>
                                 <p className="text-text-secondary font-light text-base md:text-lg leading-relaxed">
-                                    Our mission is to deliver high-quality, result-driven services that accelerate growth, trigger digital transformations, and secure competitive advantages for our clients. We remain dedicated to constant technical innovation, operational transparency, and client satisfaction above all else.
+                                    "To simplify growth through integrated, practical and impact-driven solutions."
                                 </p>
                             </ScrollReveal>
 
@@ -178,12 +177,11 @@ export default function VisionMissionPage() {
                     <div className="max-w-4xl mx-auto p-12 md:p-16 rounded-[2.5rem] bg-[#080808] border border-white/10 shadow-[0_0_50px_rgba(108,59,255,0.15)] relative overflow-hidden group">
                         {/* Background glow */}
                         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[80%] h-[80%] bg-primary/10 rounded-full blur-[100px] pointer-events-none" />
-                        <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.02)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.02)_1px,transparent_1px)] bg-[size:40px_40px] opacity-30 pointer-events-none" />
                         
                         <div className="absolute top-0 left-1/2 -translate-x-1/2 w-64 h-[2px] bg-gradient-to-r from-transparent via-primary to-transparent" />
                         
                         <h3 className="text-2xl md:text-4xl font-extrabold text-white mb-6 uppercase tracking-tight leading-tight relative z-10">
-                            Let's build the future, together.
+                            Let’s connect. Let’s collaborate. Let’s scale.
                         </h3>
                         <p className="text-white/60 text-sm md:text-base max-w-xl mx-auto mb-10 font-light leading-relaxed relative z-10">
                             Accelerate your digital transformation and grow your brand with KP Global's strategic technology ecosystem.
