@@ -75,26 +75,15 @@ export default function AboutOverview() {
   const stats = [
     { value: "100+", label: "Projects Completed", icon: Activity, color: "text-primary" },
     { value: "20+", label: "Team Members", icon: ShieldCheck, color: "text-primary" },
-    { value: "100%", label: "Customer Satisfaction", icon: Sparkles, color: "text-primary" },
+    { value: "100+", label: "Customer Satisfaction", icon: Sparkles, color: "text-primary" },
     { value: "5+", label: "Years Experience", icon: Zap, color: "text-primary" },
   ];
 
   return (
     <Section variant="default" className="relative overflow-hidden border-t border-border">
-      {/* Laser Grid Background overlay */}
-      <div className="absolute inset-0 pointer-events-none opacity-10 z-0">
-        <div className="absolute inset-0 bg-[linear-gradient(rgba(108,59,255,0.06)_1px,transparent_1px),linear-gradient(90deg,rgba(108,59,255,0.06)_1px,transparent_1px)] bg-[size:45px_45px]"></div>
-      </div>
-
-      {/* Cyber ambient background glows */}
-      <div className="absolute inset-0 z-0 pointer-events-none opacity-25">
-        <div className="absolute top-1/4 left-1/3 w-[50vw] h-[50vw] bg-primary/5 rounded-full blur-[140px]" />
-        <div className="absolute bottom-1/4 right-1/4 w-[50vw] h-[50vw] bg-primary/5 rounded-full blur-[140px]" />
-      </div>
-
       <div className="max-w-7xl mx-auto px-6 relative z-10">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
-          
+
           {/* Left Column: Heading, description, capability list */}
           <div className="lg:col-span-7 space-y-8 flex flex-col items-start text-left">
             <ScrollReveal variant="fade-right">
@@ -129,8 +118,7 @@ export default function AboutOverview() {
 
             <ScrollReveal variant="fade-right" delay={0.3}>
               <Text variant="large" className="max-w-xl">
-                We unite technology, media strategy, and global networking to help businesses grow smarter and faster. Bridging high-end software development, digital branding, and entrepreneurial synergic networks to solve tomorrow's corporate challenges.
-              </Text>
+                A Business Ecosystem Designed for GrowthWe unite technology, media strategy, and global networking to help businesses grow smarter and faster.              </Text>
             </ScrollReveal>
 
             {/* Interactive Capability checkmarks */}

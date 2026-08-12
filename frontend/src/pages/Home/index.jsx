@@ -1,7 +1,6 @@
 import Hero from "@/sections/Hero";
 import { Scroll3DSection } from "@/components/Animations";
 import Ecosystem from "@/sections/Ecosystem";
-import Architecture from "@/sections/Architecture";
 import Services from "@/sections/Services";
 import Contact from "@/sections/Contact";
 import FAQ from "@/sections/FAQ";
@@ -22,10 +21,6 @@ export default function Home() {
 
       <Scroll3DSection>
         <Ecosystem />
-      </Scroll3DSection>
-
-      <Scroll3DSection>
-        <Architecture />
       </Scroll3DSection>
 
       <Scroll3DSection>

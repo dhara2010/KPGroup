@@ -102,8 +102,11 @@ h3, .h3-display {
 a {
   transition: color 0.2s ease-in-out;
 }
-a:hover {
+a:not([class*="text-white"]):not([class*="bg-"]):not([class*="btn"]):hover {
   color: var(--color-primary);
+}
+a.text-white:hover {
+  color: #ffffff !important;
 }
 
 @layer utilities {
