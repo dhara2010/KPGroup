@@ -142,42 +142,9 @@ export default function PartnersPage() {
             }
           `}} />
 
-          {/* Dynamic Scroll Marquees */}
-          <ScrollReveal variant="blur-in" className="relative overflow-hidden w-full border-t border-slate-200/80 pt-12">
-            <div className="absolute left-0 top-0 bottom-0 w-32 bg-gradient-to-r from-white to-transparent z-20 pointer-events-none"></div>
-            <div className="absolute right-0 top-0 bottom-0 w-32 bg-gradient-to-l from-white to-transparent z-20 pointer-events-none"></div>
-
-            <div className="flex flex-col gap-6">
-              <div className="flex w-max animate-[marquee_35s_linear_infinite] hover:[animation-play-state:paused]">
-                <div className="flex gap-6 px-3">
-                  {[...supportersRow1, ...supportersRow1, ...supportersRow1].map((supporter, idx) => (
-                    <div
-                      key={`marquee1-${idx}`}
-                      className="relative flex items-center justify-center w-[250px] h-[100px] shrink-0 p-4 rounded-[1.5rem] bg-white border border-slate-200/80 hover:border-primary/50 hover:scale-105 transition-all duration-300 group cursor-default shadow-md"
-                    >
-                      <img
-                        src={supporter.logo}
-                        alt={supporter.name}
-                        className="p-3 w-full h-full object-contain filter group-hover:scale-105 transition-all duration-300"
-                      />
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </div>
-          </ScrollReveal>
-
         </div>
 
       </div>
-
-      <style dangerouslySetInnerHTML={{
-        __html: `
-        @keyframes marquee {
-          0% { transform: translateX(0); }
-          100% { transform: translateX(-33.33%); }
-        }
-      `}} />
     </div>
   );
 }

@@ -1,7 +1,6 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { Award, Layers, Globe2, Building } from 'lucide-react';
 import { ScrollReveal } from '@/components/Animations';
-import { SectionWave } from '@/components/Animations/SectionWave';
 import { Section } from '@/components/ui/Section';
 
 const METRICS = [
@@ -15,7 +14,7 @@ const METRICS = [
   {
     target: 50,
     suffix: "+",
-    label: "Enterprise Projects & Platforms Delivered",
+    label: "Enterprise Projects Delivered",
     sub: "Custom digital & IT systems",
     icon: Layers
   },
@@ -29,7 +28,7 @@ const METRICS = [
   {
     target: 100,
     suffix: "%",
-    label: "Pan-India Reach & Ecosystem Growth",
+    label: "Pan-India Reach & Growth",
     sub: "Trusted network collaborations",
     icon: Globe2
   }
@@ -46,8 +45,8 @@ function Counter({ target, suffix }) {
         if (entry.isIntersecting && !hasAnimated) {
           setHasAnimated(true);
           let start = 0;
-          const duration = 1800;
-          const steps = 40;
+          const duration = 2000;
+          const steps = 60;
           const increment = target / steps;
           const stepTime = duration / steps;
 
@@ -78,55 +77,66 @@ function Counter({ target, suffix }) {
 
 export default function AtAGlanceStats() {
   return (
-    <Section id="at-a-glance" variant="default" className="relative overflow-hidden py-24 md:py-32 border-t border-slate-200/80 bg-slate-900 text-white">
-      {/* Background Subtle Ambient Lighting */}
-      <div className="absolute inset-0 pointer-events-none opacity-40 z-0">
-        <SectionWave position="left" direction="down" intensity="medium" />
-        <div className="absolute top-0 right-1/4 w-[45vw] h-[45vw] bg-primary/20 rounded-full blur-[160px]" />
-        <div className="absolute bottom-0 left-1/4 w-[45vw] h-[45vw] bg-accent/20 rounded-full blur-[160px]" />
-      </div>
-
+    <Section id="at-a-glance" variant="default" className="relative overflow-hidden py-32 bg-slate-950 text-white">
+      {/* Subtle Grid Background */}
+      <div className="absolute inset-0 z-0 bg-[url('/noise.png')] opacity-[0.02]" />
+      
       <div className="max-w-7xl mx-auto px-6 relative z-10">
         
         {/* Header */}
-        <div className="mb-16 text-center flex flex-col items-center">
-          <ScrollReveal variant="3d-unfold">
-            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-primary/20 border border-primary/30 text-xs font-bold text-primary-soft uppercase tracking-widest mb-4 shadow-sm">
-              Impact & Reach
-            </div>
-          </ScrollReveal>
-
-          <h2 className="text-3xl md:text-5xl font-black uppercase text-white tracking-tight font-heading leading-tight">
-            KP GLOBAL GROUP AT A GLANCE
-          </h2>
+        <div className="mb-20 grid grid-cols-1 md:grid-cols-2 gap-8 items-end">
+          <div>
+            <ScrollReveal variant="fade-up">
+              <div className="flex items-center gap-3 mb-6">
+                <span className="w-12 h-px bg-white/20"></span>
+                <span className="text-sm font-bold text-white/60 uppercase tracking-[0.2em]">
+                  Key Metrics
+                </span>
+              </div>
+            </ScrollReveal>
+            <ScrollReveal variant="fade-up" delay={0.1}>
+              <h2 className="text-4xl md:text-5xl font-black uppercase text-white tracking-tight leading-tight">
+                KP GLOBAL GROUP <br className="hidden md:block" />
+                <span className="text-white/40">BY THE NUMBERS.</span>
+              </h2>
+            </ScrollReveal>
+          </div>
+          <div className="md:text-right">
+            <ScrollReveal variant="fade-up" delay={0.2}>
+              <p className="text-slate-400 font-medium text-lg max-w-sm ml-auto">
+                Measurable impact across multiple sectors, driven by our commitment to excellence.
+              </p>
+            </ScrollReveal>
+          </div>
         </div>
 
         {/* 4 Counter Cards */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-px bg-white/10 rounded-2xl overflow-hidden border border-white/10">
           {METRICS.map((item, idx) => {
             const Icon = item.icon;
             return (
-              <ScrollReveal key={idx} variant="fade-up" delay={0.1 * idx}>
-                <div className="group p-8 rounded-[2rem] bg-white/[0.04] border border-white/10 hover:border-primary/50 hover:bg-white/[0.08] transition-all duration-300 h-full flex flex-col justify-between shadow-xl">
-                  <div>
-                    <div className="w-12 h-12 rounded-2xl bg-primary/20 border border-primary/30 flex items-center justify-center text-primary mb-6 group-hover:scale-110 transition-transform">
-                      <Icon className="w-6 h-6" />
-                    </div>
-
-                    <div className="text-4xl md:text-5xl font-black text-white font-mono tracking-tight mb-2">
-                      <Counter target={item.target} suffix={item.suffix} />
-                    </div>
-
-                    <h3 className="text-sm font-extrabold uppercase tracking-wide text-white/90 mb-1">
-                      {item.label}
-                    </h3>
+              <div key={idx} className="bg-slate-950 p-8 lg:p-10 flex flex-col justify-between group relative overflow-hidden">
+                {/* Hover Glow */}
+                <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                
+                <div className="relative z-10">
+                  <div className="w-12 h-12 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center text-white/80 mb-12 group-hover:text-primary transition-colors">
+                    <Icon className="w-6 h-6" />
                   </div>
 
-                  <span className="text-xs text-white/60 font-light mt-4 pt-4 border-t border-white/10 block">
+                  <div className="text-5xl md:text-6xl font-black text-white tracking-tighter mb-4">
+                    <Counter target={item.target} suffix={item.suffix} />
+                  </div>
+
+                  <h3 className="text-base font-bold uppercase tracking-wide text-white/90 mb-2">
+                    {item.label}
+                  </h3>
+                  
+                  <p className="text-sm text-white/50 leading-relaxed font-medium">
                     {item.sub}
-                  </span>
+                  </p>
                 </div>
-              </ScrollReveal>
+              </div>
             );
           })}
         </div>

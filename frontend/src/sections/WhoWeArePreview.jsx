@@ -1,31 +1,28 @@
 import React from 'react';
-import { ArrowRight, Sparkles, ShieldCheck, Building2 } from 'lucide-react';
+import { ArrowRight, ShieldCheck, Building2, Globe2 } from 'lucide-react';
 import { Link } from 'react-router-dom';
-import { ScrollReveal, TextReveal } from '@/components/Animations';
+import { ScrollReveal } from '@/components/Animations';
 import { Section } from '@/components/ui/Section';
 
 export default function WhoWeArePreview() {
   return (
-    <Section id="who-we-are" variant="default" className="relative overflow-hidden py-24 md:py-32 border-t border-slate-200/80 bg-white text-slate-900">
-      {/* Background Glow */}
-      <div className="absolute inset-0 pointer-events-none opacity-50 z-0">
-        <div className="absolute top-1/2 left-0 w-[45vw] h-[45vw] bg-primary/10 rounded-full blur-[160px]" />
-      </div>
-
+    <Section id="who-we-are" variant="default" className="relative overflow-hidden py-32 bg-slate-50 text-slate-900 border-b border-slate-200/50">
       <div className="max-w-7xl mx-auto px-6 relative z-10">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-24 items-center">
           
           {/* Left Column: Short Intro Content */}
-          <div className="lg:col-span-7 space-y-6">
+          <div className="space-y-8">
             <ScrollReveal variant="fade-up">
-              <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-primary/10 border border-primary/20 text-xs font-bold text-primary uppercase tracking-widest shadow-sm">
-                <Building2 className="w-3.5 h-3.5" />
-                Who We Are
+              <div className="flex items-center gap-3 mb-4">
+                <span className="w-12 h-px bg-primary/40"></span>
+                <span className="text-sm font-bold text-primary uppercase tracking-[0.2em]">
+                  Who We Are
+                </span>
               </div>
             </ScrollReveal>
 
             <ScrollReveal variant="fade-up" delay={0.1}>
-              <h2 className="text-3xl md:text-5xl font-black uppercase text-slate-900 tracking-tight font-heading leading-tight">
+              <h2 className="text-4xl md:text-5xl lg:text-6xl font-black uppercase text-slate-900 tracking-tight leading-[1.1]">
                 ONE CORPORATE GROUP.
                 <br />
                 <span className="text-primary">FIVE GROWTH DIVISIONS.</span>
@@ -33,36 +30,38 @@ export default function WhoWeArePreview() {
             </ScrollReveal>
 
             <ScrollReveal variant="fade-up" delay={0.2}>
-              <p className="text-slate-600 font-normal text-base md:text-lg leading-relaxed max-w-2xl">
+              <p className="text-slate-600 font-medium text-lg leading-relaxed max-w-xl">
                 KP Global Group is an integrated business acceleration ecosystem uniting technology, media authority, talent acquisition, skill development, and trusted networking into one scalable corporate framework.
               </p>
             </ScrollReveal>
 
             {/* Micro Highlights */}
-            <ScrollReveal variant="fade-up" delay={0.3} className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
-              <div className="flex items-center gap-3 p-4 rounded-2xl bg-slate-50/80 border border-slate-200/80 shadow-sm">
-                <div className="w-9 h-9 rounded-xl bg-primary/10 border border-primary/20 flex items-center justify-center text-primary shrink-0">
+            <ScrollReveal variant="fade-up" delay={0.3} className="grid grid-cols-1 sm:grid-cols-2 gap-6 pt-4 border-t border-slate-200/60 mt-8">
+              <div className="flex items-start gap-4">
+                <div className="w-10 h-10 rounded-full bg-primary/5 flex items-center justify-center text-primary shrink-0 border border-primary/10">
                   <ShieldCheck className="w-5 h-5" />
                 </div>
-                <span className="text-xs font-bold text-slate-900 uppercase tracking-wide">
-                  Trust-Based Infrastructure
-                </span>
-              </div>
-              <div className="flex items-center gap-3 p-4 rounded-2xl bg-slate-50/80 border border-slate-200/80 shadow-sm">
-                <div className="w-9 h-9 rounded-xl bg-primary/10 border border-primary/20 flex items-center justify-center text-primary shrink-0">
-                  <Sparkles className="w-5 h-5" />
+                <div>
+                  <h4 className="text-sm font-bold text-slate-900 uppercase tracking-wide mb-1">Trust-Based</h4>
+                  <p className="text-sm text-slate-500 leading-relaxed">Secure corporate infrastructure built for scale.</p>
                 </div>
-                <span className="text-xs font-bold text-slate-900 uppercase tracking-wide">
-                  Pan-India Acceleration
-                </span>
+              </div>
+              <div className="flex items-start gap-4">
+                <div className="w-10 h-10 rounded-full bg-primary/5 flex items-center justify-center text-primary shrink-0 border border-primary/10">
+                  <Globe2 className="w-5 h-5" />
+                </div>
+                <div>
+                  <h4 className="text-sm font-bold text-slate-900 uppercase tracking-wide mb-1">Pan-India</h4>
+                  <p className="text-sm text-slate-500 leading-relaxed">National acceleration for businesses and talent.</p>
+                </div>
               </div>
             </ScrollReveal>
 
             {/* Gateway CTA */}
-            <ScrollReveal variant="fade-up" delay={0.4} className="pt-4">
+            <ScrollReveal variant="fade-up" delay={0.4} className="pt-8">
               <Link
                 to="/about"
-                className="group inline-flex items-center gap-3 px-7 py-3.5 rounded-full bg-slate-900 hover:bg-primary text-white font-bold text-xs uppercase tracking-widest transition-all duration-300 shadow-md hover:shadow-xl group"
+                className="group inline-flex items-center gap-4 px-8 py-4 bg-slate-950 text-white font-bold text-xs uppercase tracking-[0.2em] transition-all duration-300 hover:bg-primary"
               >
                 <span>About KP Global Group</span>
                 <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
@@ -71,18 +70,20 @@ export default function WhoWeArePreview() {
           </div>
 
           {/* Right Column: Visual Frame */}
-          <ScrollReveal variant="fade-left" delay={0.2} className="lg:col-span-5 relative group">
-            <div className="absolute -inset-4 bg-gradient-to-r from-primary/20 to-accent/20 rounded-[2.5rem] blur-xl opacity-70 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none" />
-            <div className="relative rounded-[2.5rem] overflow-hidden border border-slate-200/80 bg-white shadow-2xl aspect-[4/3] w-full">
+          <ScrollReveal variant="fade-left" delay={0.2} className="relative w-full h-full min-h-[500px]">
+            {/* Minimalist offset background */}
+            <div className="absolute top-8 -right-8 bottom-8 left-8 bg-slate-200/50 -z-10" />
+            
+            <div className="relative h-full w-full bg-white shadow-xl aspect-[4/5] md:aspect-[3/4] lg:aspect-auto overflow-hidden">
               <img
                 src="/about_boardroom_bg.webp"
                 alt="About KP Global Group"
-                className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                className="w-full h-full object-cover grayscale-[20%] hover:grayscale-0 transition-all duration-700"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-slate-950/70 via-transparent to-transparent flex items-end p-8">
-                <span className="text-xs font-bold text-white uppercase tracking-widest drop-shadow-md">
-                  Corporate Leadership & Vision
-                </span>
+              <div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-transparent to-transparent flex flex-col justify-end p-10">
+                <Building2 className="w-8 h-8 text-white mb-4 opacity-80" />
+                <h3 className="text-2xl font-bold text-white mb-2">Corporate Leadership</h3>
+                <p className="text-white/80 text-sm max-w-sm">Driving innovation and growth across 5 diverse divisions under a unified vision.</p>
               </div>
             </div>
           </ScrollReveal>

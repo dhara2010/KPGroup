@@ -1,72 +1,114 @@
-import React from 'react';
-import { ArrowRight, Quote, Users } from 'lucide-react';
+import React, { useState, useEffect } from 'react';
+import { ArrowRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { ScrollReveal } from '@/components/Animations';
 import { Section } from '@/components/ui/Section';
 
 export default function LeadershipPreview() {
+  const [team, setTeam] = useState([]);
+
+  useEffect(() => {
+    const fetchTeam = async () => {
+      try {
+        const res = await fetch("http://localhost:5000/api/teams");
+        const data = await res.json();
+        if (Array.isArray(data)) {
+          // Take only the first 4 members for the preview grid
+          setTeam(data.slice(0, 4));
+        } else {
+          console.error("Failed to fetch team: response is not an array", data);
+        }
+      } catch (error) {
+        console.error("Failed to fetch team:", error);
+      }
+    };
+
+    fetchTeam();
+  }, []);
+
   return (
-    <Section id="leadership-preview" variant="default" className="relative overflow-hidden py-24 md:py-32 border-t border-slate-200/80 bg-white text-slate-900">
-      {/* Background Subtle Glow */}
-      <div className="absolute inset-0 pointer-events-none opacity-50 z-0">
-        <div className="absolute top-1/2 right-0 w-[45vw] h-[45vw] bg-primary/10 rounded-full blur-[160px]" />
-      </div>
+    <Section id="leadership-preview" variant="default" className="relative overflow-hidden py-32 bg-slate-950 text-white border-t border-white/10">
+      
+      {/* Background Subtle Lines */}
+      <div className="absolute inset-0 z-0 bg-[linear-gradient(to_right,#ffffff05_1px,transparent_1px),linear-gradient(to_bottom,#ffffff05_1px,transparent_1px)] bg-[size:4rem_4rem] opacity-20" />
 
       <div className="max-w-7xl mx-auto px-6 relative z-10">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
-          
-          {/* Left Column: Visual Preview */}
-          <ScrollReveal variant="fade-right" className="lg:col-span-5 relative group">
-            <div className="absolute -inset-4 bg-gradient-to-r from-primary/20 to-accent/20 rounded-[2.5rem] blur-xl opacity-70 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none" />
-            <div className="relative rounded-[2.5rem] overflow-hidden border border-slate-200/80 bg-slate-900 shadow-2xl aspect-[4/3] w-full">
-              <img
-                src="/about_boardroom_bg.webp"
-                alt="KP Global Group Leadership"
-                className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-transparent to-transparent flex items-end p-8">
-                <span className="text-xs font-bold text-white uppercase tracking-widest">
-                  Executive Board & Direction
+        
+        {/* Header */}
+        <div className="flex flex-col md:flex-row md:items-end justify-between gap-8 mb-20">
+          <div>
+            <ScrollReveal variant="fade-up">
+              <div className="flex items-center gap-3 mb-6">
+                <span className="w-12 h-px bg-white/20"></span>
+                <span className="text-sm font-bold text-white/60 uppercase tracking-[0.2em]">
+                  Executive Team
                 </span>
               </div>
-            </div>
-          </ScrollReveal>
-
-          {/* Right Column: Leadership Statement & CTA */}
-          <div className="lg:col-span-7 space-y-6">
-            <ScrollReveal variant="fade-up">
-              <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-primary/10 border border-primary/20 text-xs font-bold text-primary uppercase tracking-widest shadow-sm">
-                <Users className="w-3.5 h-3.5" />
-                Leadership Philosophy
-              </div>
             </ScrollReveal>
-
             <ScrollReveal variant="fade-up" delay={0.1}>
-              <h2 className="text-3xl md:text-5xl font-black uppercase text-slate-900 tracking-tight font-heading leading-tight">
-                GUIDED BY VISION & PURPOSE.
+              <h2 className="text-4xl md:text-5xl font-black uppercase text-white tracking-tight leading-tight">
+                GUIDED BY <br className="hidden md:block" />
+                <span className="text-white/40">VISION & PURPOSE.</span>
               </h2>
             </ScrollReveal>
-
-            <ScrollReveal variant="fade-up" delay={0.2} className="relative p-6 rounded-2xl bg-slate-50/80 border border-slate-200/80 shadow-sm">
-              <Quote className="w-8 h-8 text-primary/30 absolute top-4 right-4 pointer-events-none" />
-              <p className="text-slate-700 font-medium italic text-base md:text-lg leading-relaxed relative z-10">
-                "Our mission is to build scalable corporate infrastructure, foster verified entrepreneurship, and empower businesses with integrated growth engines."
-              </p>
-            </ScrollReveal>
-
-            {/* Gateway CTA */}
-            <ScrollReveal variant="fade-up" delay={0.3} className="pt-2">
-              <Link
-                to="/team"
-                className="group inline-flex items-center gap-3 px-7 py-3.5 rounded-full bg-slate-900 hover:bg-primary text-white font-bold text-xs uppercase tracking-widest transition-all duration-300 shadow-md hover:shadow-xl"
-              >
-                <span>Meet Our Leadership →</span>
-                <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-              </Link>
-            </ScrollReveal>
           </div>
-
+          
+          <ScrollReveal variant="fade-up" delay={0.2} className="md:text-right flex flex-col md:items-end">
+            <p className="text-slate-400 font-medium text-lg max-w-sm mb-6">
+              Our leadership is committed to building scalable corporate infrastructure and fostering sustainable growth.
+            </p>
+            <Link
+              to="/team"
+              className="group inline-flex items-center gap-3 text-xs font-bold text-white uppercase tracking-[0.2em] hover:text-primary transition-colors"
+            >
+              <span>View All Leadership</span>
+              <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+            </Link>
+          </ScrollReveal>
         </div>
+
+        {/* Leadership Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8">
+          {team.map((leader, idx) => (
+            <ScrollReveal 
+              key={leader._id || idx}
+              variant="fade-up"
+              delay={0.1 * idx}
+            >
+              <div className="group relative w-full aspect-[3/4] rounded-3xl overflow-hidden bg-slate-900 border border-white/10">
+                
+                {/* Image */}
+                {leader.image ? (
+                  <img
+                    src={leader.image}
+                    alt={leader.name}
+                    className="w-full h-full object-cover object-top grayscale opacity-80 group-hover:grayscale-0 group-hover:opacity-100 group-hover:scale-105 transition-all duration-700 ease-out"
+                  />
+                ) : (
+                  <div className="w-full h-full bg-[#1c1c1c]" />
+                )}
+                
+                {/* Gradient Overlay */}
+                <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/40 to-transparent opacity-80 group-hover:opacity-90 transition-opacity duration-500" />
+                
+                {/* Content */}
+                <div className="absolute inset-0 p-8 flex flex-col justify-end transform translate-y-4 group-hover:translate-y-0 transition-transform duration-500">
+                  <h3 className="text-2xl font-bold text-white mb-1 tracking-tight">
+                    {leader.name}
+                  </h3>
+                  <p className="text-sm font-bold text-primary uppercase tracking-widest">
+                    {leader.role}
+                  </p>
+                  
+                  {/* Subtle decorative line */}
+                  <div className="w-0 h-px bg-primary mt-6 group-hover:w-full transition-all duration-700 ease-out" />
+                </div>
+
+              </div>
+            </ScrollReveal>
+          ))}
+        </div>
+
       </div>
     </Section>
   );

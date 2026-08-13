@@ -26,11 +26,49 @@ export default function SinglePostPage({ params }) {
   const routerParams = useParams();
   const slug = routerParams.slug || params?.slug;
   
-  // Find the post by slug
-  const post = INITIAL_POSTS.find((p) => p.slug === slug || p.slug.replace(/-a-/g, "-") === slug);
+  const [post, setPost] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(false);
   
+  // Hooks must be called unconditionally
+  const [comments, setComments] = useState([]);
+  const [form, setForm] = useState({ name: "", email: "", website: "", message: "" });
+  const [copied, setCopied] = useState(false);
+  const [likes, setLikes] = useState(12);
+  const [isLiked, setIsLiked] = useState(false);
+
+  React.useEffect(() => {
+    const fetchPost = async () => {
+      try {
+        const res = await fetch("http://localhost:5000/api/blogs");
+        const data = await res.json();
+        const found = data.find(p => p.slug === slug);
+        if (found) {
+          setPost(found);
+          if (found.comments) setComments(found.comments);
+        } else {
+          setError(true);
+        }
+      } catch (err) {
+        console.error(err);
+        setError(true);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchPost();
+  }, [slug]);
+
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-white flex items-center justify-center pt-24 pb-20">
+        <div className="w-12 h-12 border-4 border-primary/20 border-t-primary rounded-full animate-spin"></div>
+      </div>
+    );
+  }
+
   // If no post is found, return 404 block
-  if (!post) {
+  if (error || !post) {
     return (
       <div className="min-h-screen bg-white text-slate-900 flex items-center justify-center pt-24 pb-20">
         <div className="text-center space-y-4 max-w-md px-6">
@@ -49,13 +87,6 @@ export default function SinglePostPage({ params }) {
       </div>
     );
   }
-
-  // Comments state starting with the post's preset comments
-  const [comments, setComments] = useState(post.comments || []);
-  const [form, setForm] = useState({ name: "", email: "", website: "", message: "" });
-  const [copied, setCopied] = useState(false);
-  const [likes, setLikes] = useState(12);
-  const [isLiked, setIsLiked] = useState(false);
 
   // Handle new comment submission
   const handleCommentSubmit = (e) => {

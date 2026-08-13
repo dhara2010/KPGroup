@@ -1,58 +1,76 @@
 import React from 'react';
-import { ArrowRight, Sparkles, Send } from 'lucide-react';
+import { ArrowRight, Phone, Mail } from 'lucide-react';
 import { Link } from 'react-router-dom';
-import { ScrollReveal } from '@/components/Animations';
-import { SectionWave } from '@/components/Animations/SectionWave';
+import { ScrollReveal } from "@/components/Animations";
+import { Section } from "@/components/ui/Section";
 
 export default function FinalCTA() {
   return (
-    <section id="final-cta" className="mb-30 relative py-24 md:py-32 bg-slate-950 text-white overflow-hidden border-t border-slate-900 font-sans">
-      {/* Ambient background glows */}
-      <div className="absolute inset-0 pointer-events-none opacity-40 z-0">
-        <SectionWave position="left" direction="down" intensity="high" />
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[70vw] h-[70vw] bg-primary/20 rounded-full blur-[180px]" />
+    <Section id="final-cta" variant="default" className="relative overflow-hidden py-32 bg-slate-950 text-white">
+      
+      {/* Abstract Corporate Background Elements */}
+      <div className="absolute inset-0 pointer-events-none z-0">
+        <div className="absolute top-0 right-0 w-[50vw] h-[50vw] bg-primary/10 rounded-full blur-[150px]" />
+        <div className="absolute bottom-0 left-0 w-[40vw] h-[40vw] bg-accent/10 rounded-full blur-[120px]" />
+        
+        {/* Subtle grid */}
+        <div className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff05_1px,transparent_1px),linear-gradient(to_bottom,#ffffff05_1px,transparent_1px)] bg-[size:4rem_4rem] opacity-20" />
       </div>
 
-      <div className="relative z-10 max-w-5xl mx-auto px-6 text-center">
-
-        <ScrollReveal variant="fade-up" className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-primary/20 border border-primary/40 text-xs font-bold text-primary-soft uppercase tracking-widest mb-6 shadow-md">
-          <Sparkles className="w-3.5 h-3.5" />
-          Accelerate Your Growth
+      <div className="max-w-5xl mx-auto px-6 relative z-10 text-center">
+        
+        <ScrollReveal variant="fade-up">
+          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/5 border border-white/10 mb-8 backdrop-blur-sm">
+            <span className="w-2 h-2 rounded-full bg-primary animate-pulse"></span>
+            <span className="text-xs font-bold text-white/80 uppercase tracking-[0.2em]">
+              Start Your Transformation
+            </span>
+          </div>
         </ScrollReveal>
 
         <ScrollReveal variant="fade-up" delay={0.1}>
-          <h2 className="text-3xl md:text-5xl lg:text-6xl font-black uppercase text-white tracking-tight font-heading leading-tight max-w-4xl mx-auto mb-6">
-            READY TO EXPLORE THE POWER OF ONE CONNECTED ECOSYSTEM?
+          <h2 className="text-4xl md:text-6xl lg:text-7xl font-black uppercase tracking-tight leading-tight mb-8 text-white">
+            READY TO SCALE <br className="hidden md:block" />
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-accent">YOUR BUSINESS?</span>
           </h2>
         </ScrollReveal>
 
         <ScrollReveal variant="fade-up" delay={0.2}>
-          <p className="text-white/70 text-base md:text-lg font-light max-w-2xl mx-auto leading-relaxed mb-10">
-            Connect with KP Global Group to discover strategic corporate partnerships, digital enablement, and business growth solutions.
+          <p className="text-lg md:text-xl text-slate-400 font-medium max-w-2xl mx-auto mb-12">
+            Join the global network of enterprises leveraging KP Global Group's integrated technology, talent, and media ecosystem.
           </p>
         </ScrollReveal>
 
-        <ScrollReveal variant="fade-up" delay={0.3} className="flex flex-wrap items-center justify-center gap-4">
+        <ScrollReveal variant="fade-up" delay={0.3} className="flex flex-col sm:flex-row items-center justify-center gap-6">
           <Link
             to="/contact"
-            className="group inline-flex items-center gap-3 px-8 py-4 rounded-full bg-primary hover:bg-primary-dark text-white font-extrabold text-xs uppercase tracking-widest transition-all duration-300 shadow-xl shadow-primary/30 hover:scale-[1.03] active:scale-[0.98]"
+            className="group relative inline-flex items-center justify-center gap-3 px-8 py-4 bg-primary text-white font-bold text-sm uppercase tracking-widest rounded-full overflow-hidden transition-all duration-300 hover:shadow-[0_0_40px_rgba(108,59,255,0.4)] w-full sm:w-auto"
           >
-            <span>Connect With Us</span>
-            <div className="w-6 h-6 rounded-full bg-white/20 flex items-center justify-center group-hover:translate-x-1 transition-transform">
-              <Send className="w-3.5 h-3.5 text-white" />
-            </div>
+            <span className="relative z-10 flex items-center gap-2">
+              Partner With Us
+              <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+            </span>
+            <div className="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-300 ease-out" />
           </Link>
-
-          <Link
-            to="/about"
-            className="inline-flex items-center gap-2 px-8 py-4 rounded-full bg-white/10 hover:bg-white/20 border border-white/20 text-white font-extrabold text-xs uppercase tracking-widest transition-all duration-300 backdrop-blur-md hover:scale-[1.03] active:scale-[0.98]"
-          >
-            <span>Explore KP Global Group</span>
-            <ArrowRight className="w-4 h-4" />
-          </Link>
+          
+          <div className="flex items-center gap-6 justify-center">
+            <a href="tel:+911234567890" className="flex items-center gap-2 text-slate-300 hover:text-white transition-colors group">
+              <div className="w-10 h-10 rounded-full border border-white/20 flex items-center justify-center group-hover:border-primary group-hover:bg-primary/10 transition-colors">
+                <Phone className="w-4 h-4" />
+              </div>
+              <span className="text-xs font-bold tracking-widest uppercase">Call Us</span>
+            </a>
+            
+            <a href="mailto:contact@kpglobalbusiness.com" className="flex items-center gap-2 text-slate-300 hover:text-white transition-colors group">
+              <div className="w-10 h-10 rounded-full border border-white/20 flex items-center justify-center group-hover:border-primary group-hover:bg-primary/10 transition-colors">
+                <Mail className="w-4 h-4" />
+              </div>
+              <span className="text-xs font-bold tracking-widest uppercase">Email Us</span>
+            </a>
+          </div>
         </ScrollReveal>
 
       </div>
-    </section>
+    </Section>
   );
 }
