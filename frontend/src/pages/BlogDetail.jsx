@@ -1,7 +1,7 @@
 
 
 import React, { useState } from "react";
-import { INITIAL_POSTS } from "@/data/blogData";
+
 import { Link, useParams } from "react-router-dom";
 import PageHero from "@/components/common/PageHero";
 

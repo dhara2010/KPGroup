@@ -3,36 +3,12 @@ import { Award, Layers, Globe2, Building } from 'lucide-react';
 import { ScrollReveal } from '@/components/Animations';
 import { Section } from '@/components/ui/Section';
 
-const METRICS = [
-  {
-    target: 5,
-    suffix: "+",
-    label: "Years of Operational Excellence",
-    sub: "Established corporate track record",
-    icon: Award
-  },
-  {
-    target: 50,
-    suffix: "+",
-    label: "Enterprise Projects Delivered",
-    sub: "Custom digital & IT systems",
-    icon: Layers
-  },
-  {
-    target: 5,
-    suffix: "",
-    label: "Strategic Business Divisions",
-    sub: "IT, Media, Jobs, Academy & Community",
-    icon: Building
-  },
-  {
-    target: 100,
-    suffix: "%",
-    label: "Pan-India Reach & Growth",
-    sub: "Trusted network collaborations",
-    icon: Globe2
-  }
-];
+const iconMap = {
+  Award: Award,
+  Layers: Layers,
+  Building: Building,
+  Globe2: Globe2
+};
 
 function Counter({ target, suffix }) {
   const [count, setCount] = useState(0);
@@ -76,6 +52,24 @@ function Counter({ target, suffix }) {
 }
 
 export default function AtAGlanceStats() {
+  const [metrics, setMetrics] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchMetrics = async () => {
+      try {
+        const res = await fetch("http://localhost:5000/api/metrics");
+        const data = await res.json();
+        setMetrics(data);
+      } catch (err) {
+        console.error(err);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchMetrics();
+  }, []);
+
   return (
     <Section id="at-a-glance" variant="default" className="relative overflow-hidden py-32 bg-transparent text-slate-900 border-t border-slate-200/50">
       {/* Subtle Grid Background */}
@@ -111,35 +105,41 @@ export default function AtAGlanceStats() {
         </div>
 
         {/* 4 Counter Cards */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-px bg-slate-200 rounded-2xl overflow-hidden border border-slate-200">
-          {METRICS.map((item, idx) => {
-            const Icon = item.icon;
-            return (
-              <div key={idx} className="bg-white p-8 lg:p-10 flex flex-col justify-between group relative overflow-hidden">
-                {/* Hover Glow */}
-                <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                
-                <div className="relative z-10">
-                  <div className="w-12 h-12 rounded-xl bg-slate-50 border border-slate-200 flex items-center justify-center text-slate-600 mb-12 group-hover:text-brand-violet transition-colors">
-                    <Icon className="w-6 h-6" />
-                  </div>
-
-                  <div className="text-5xl md:text-6xl font-black text-slate-900 tracking-tighter mb-4">
-                    <Counter target={item.target} suffix={item.suffix} />
-                  </div>
-
-                  <h3 className="text-base font-bold uppercase tracking-wide text-slate-900 mb-2">
-                    {item.label}
-                  </h3>
+        {loading ? (
+          <div className="flex justify-center items-center py-12">
+            <div className="animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-primary"></div>
+          </div>
+        ) : metrics.length === 0 ? null : (
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-px bg-slate-200 rounded-2xl overflow-hidden border border-slate-200">
+            {metrics.map((item, idx) => {
+              const Icon = iconMap[item.icon] || Award; // default fallback
+              return (
+                <div key={idx} className="bg-white p-8 lg:p-10 flex flex-col justify-between group relative overflow-hidden">
+                  {/* Hover Glow */}
+                  <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
                   
-                  <p className="text-sm text-slate-500 leading-relaxed font-medium">
-                    {item.sub}
-                  </p>
+                  <div className="relative z-10">
+                    <div className="w-12 h-12 rounded-xl bg-slate-50 border border-slate-200 flex items-center justify-center text-slate-600 mb-12 group-hover:text-brand-violet transition-colors">
+                      <Icon className="w-6 h-6" />
+                    </div>
+
+                    <div className="text-5xl md:text-6xl font-black text-slate-900 tracking-tighter mb-4">
+                      <Counter target={item.target} suffix={item.suffix} />
+                    </div>
+
+                    <h3 className="text-base font-bold uppercase tracking-wide text-slate-900 mb-2">
+                      {item.label}
+                    </h3>
+                    
+                    <p className="text-sm text-slate-500 leading-relaxed font-medium">
+                      {item.sub}
+                    </p>
+                  </div>
                 </div>
-              </div>
-            );
-          })}
-        </div>
+              );
+            })}
+          </div>
+        )}
 
       </div>
     </Section>

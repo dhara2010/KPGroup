@@ -1,43 +1,27 @@
-"use client";
-
-import React, { useState } from 'react';
-import { HelpCircle, Plus } from 'lucide-react';
+import React, { useState, useEffect } from 'react';
+import { HelpCircle, Plus, Loader2 } from 'lucide-react';
 import { ScrollReveal, TextReveal, ThreeDTilt } from "@/components/Animations";
 import PageHero from "@/components/common/PageHero";
 
-const faqs = [
-  {
-    question: "What services does KP Global Business provide?",
-    answer: "We offer a comprehensive suite of digital and business services including custom Web Development, Mobile App Engineering, Brand Identity, Strategic Marketing, AI Integrations, Global Placement/Jobs, and Deep Skill Academy Training."
-  },
-  {
-    question: "Who can benefit from your services?",
-    answer: "Anyone from early-stage startups and independent entrepreneurs to scaling mid-sized businesses and massive global enterprises looking to modernize their technology stack, build a strong brand presence, or acquire specialized digital talent."
-  },
-  {
-    question: "Do you provide services internationally?",
-    answer: "Yes! We are proud to support international clients globally. We have specialized procedures to handle cross-border communication, localized compliance, multi-currency projects, and global delivery standards."
-  },
-  {
-    question: "Do you offer customized solutions for businesses?",
-    answer: "Absolutely. Every partnership begins with scoping your specific requirements. We tailor all aspects of our service—including timelines, technology stacks, budgets, and scaling protocols—to your business goals."
-  },
-  {
-    question: "How can I contact your team for inquiries?",
-    answer: "The fastest way to reach us is by filling out our interactive 5-Step Contact Funnel right above this section. Alternatively, you can drop us an email, and our strategy team will reach back within 24 hours."
-  },
-  {
-    question: "Are your services suitable for startups and small businesses?",
-    answer: "Yes, we are highly startup-friendly. We offer custom, localized, and scaled pricing options starting from budget-friendly levels to help young businesses get off the ground, launch their MVP, and scale without huge upfront capital."
-  },
-  {
-    question: "What makes KP Global Business different from others?",
-    answer: "KP Global is a premium business acceleration ecosystem integrating 5 strategic divisions: KP Global IT Solutions, KP Global Media – Entrepreneur Journey, KP Global Jobs, KP Global Academy of Skills, and KP Global Business Community. This allows us to support businesses and professionals holistically across technology, trusted networking, media visibility, talent solutions, and skill development."
-  }
-];
-
 export default function FAQ({ isPage = false }) {
+  const [faqs, setFaqs] = useState([]);
+  const [loading, setLoading] = useState(true);
   const [openIdx, setOpenIdx] = useState(null);
+
+  useEffect(() => {
+    const fetchFaqs = async () => {
+      try {
+        const res = await fetch("http://localhost:5000/api/faqs");
+        const data = await res.json();
+        setFaqs(data);
+      } catch (err) {
+        console.error(err);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchFaqs();
+  }, []);
 
   const toggleFAQ = (idx) => {
     setOpenIdx(openIdx === idx ? null : idx);
@@ -78,60 +62,70 @@ export default function FAQ({ isPage = false }) {
           </div>
         </div>
         {/* Content Layout */}
-        <div className="grid grid-cols-1 gap-4 lg:gap-6">
-          {faqs.map((faq, idx) => {
-            const isOpen = openIdx === idx;
+        {loading ? (
+          <div className="flex justify-center items-center py-12">
+            <Loader2 className="w-8 h-8 animate-spin text-primary" />
+          </div>
+        ) : faqs.length === 0 ? (
+          <div className="text-center py-12 bg-white/50 backdrop-blur-md rounded-[2.5rem] border border-slate-200/60">
+            <h3 className="text-xl font-black text-slate-900 uppercase">No FAQs found</h3>
+          </div>
+        ) : (
+          <div className="grid grid-cols-1 gap-4 lg:gap-6">
+            {faqs.map((faq, idx) => {
+              const isOpen = openIdx === idx;
 
-            return (
-              <ScrollReveal
-                key={idx}
-                variant="3d-unfold"
-                delay={idx * 0.05}
-              >
-                <div
-                  className={`group rounded-[2rem] border transition-all duration-300 overflow-hidden h-fit ${isOpen
-                    ? "bg-white/95 backdrop-blur-md border-primary/40 shadow-[0_8px_30px_rgb(0,0,0,0.08)]"
-                    : "bg-white/80 backdrop-blur-md border-slate-200/60 hover:border-primary/30 hover:shadow-[0_10px_40px_rgb(0,0,0,0.06)] hover:-translate-y-1 shadow-[0_4px_20px_rgb(0,0,0,0.02)]"
-                    }`}
+              return (
+                <ScrollReveal
+                  key={idx}
+                  variant="3d-unfold"
+                  delay={idx * 0.05}
                 >
-                  <button
-                    onClick={() => toggleFAQ(idx)}
-                    className="w-full flex items-center justify-between p-6 md:p-8 text-left focus:outline-none"
-                  >
-                    <span
-                      className={`font-semibold tracking-tight text-base md:text-lg pr-4 transition-colors duration-300 ${isOpen
-                        ? "text-primary font-bold"
-                        : "text-slate-900 group-hover:text-primary/80"
-                        }`}
-                    >
-                      {faq.question}
-                    </span>
-
-                    <div
-                      className={`w-10 h-10 rounded-full flex items-center justify-center transition-all duration-300 border shrink-0 ${isOpen
-                        ? "bg-primary border-primary text-white rotate-45 scale-110 shadow-md"
-                        : "bg-slate-50 border-slate-200 text-slate-400 group-hover:border-primary/30 group-hover:text-primary"
-                        }`}
-                    >
-                      <Plus className="w-4 h-4" />
-                    </div>
-                  </button>
-
                   <div
-                    className={`transition-all duration-500 ease-in-out ${isOpen
-                      ? "max-h-96 opacity-100"
-                      : "max-h-0 opacity-0 pointer-events-none"
+                    className={`group rounded-[2rem] border transition-all duration-300 overflow-hidden h-fit ${isOpen
+                      ? "bg-white/95 backdrop-blur-md border-primary/40 shadow-[0_8px_30px_rgb(0,0,0,0.08)]"
+                      : "bg-white/80 backdrop-blur-md border-slate-200/60 hover:border-primary/30 hover:shadow-[0_10px_40px_rgb(0,0,0,0.06)] hover:-translate-y-1 shadow-[0_4px_20px_rgb(0,0,0,0.02)]"
                       }`}
                   >
-                    <div className="px-6 md:px-8 pb-6 md:pb-8 pt-4 text-sm md:text-base text-slate-600 font-medium leading-relaxed border-t border-slate-100">
-                      {faq.answer}
+                    <button
+                      onClick={() => toggleFAQ(idx)}
+                      className="w-full flex items-center justify-between p-6 md:p-8 text-left focus:outline-none"
+                    >
+                      <span
+                        className={`font-semibold tracking-tight text-base md:text-lg pr-4 transition-colors duration-300 ${isOpen
+                          ? "text-primary font-bold"
+                          : "text-slate-900 group-hover:text-primary/80"
+                          }`}
+                      >
+                        {faq.question}
+                      </span>
+
+                      <div
+                        className={`w-10 h-10 rounded-full flex items-center justify-center transition-all duration-300 border shrink-0 ${isOpen
+                          ? "bg-primary border-primary text-white rotate-45 scale-110 shadow-md"
+                          : "bg-slate-50 border-slate-200 text-slate-400 group-hover:border-primary/30 group-hover:text-primary"
+                          }`}
+                      >
+                        <Plus className="w-4 h-4" />
+                      </div>
+                    </button>
+
+                    <div
+                      className={`transition-all duration-500 ease-in-out ${isOpen
+                        ? "max-h-96 opacity-100"
+                        : "max-h-0 opacity-0 pointer-events-none"
+                        }`}
+                    >
+                      <div className="px-6 md:px-8 pb-6 md:pb-8 pt-4 text-sm md:text-base text-slate-600 font-medium leading-relaxed border-t border-slate-100">
+                        {faq.answer}
+                      </div>
                     </div>
                   </div>
-                </div>
-              </ScrollReveal>
-            );
-          })}
-        </div>
+                </ScrollReveal>
+              );
+            })}
+          </div>
+        )}
 
       </div>
     </section>
@@ -153,4 +147,3 @@ export default function FAQ({ isPage = false }) {
 
   return content;
 }
-

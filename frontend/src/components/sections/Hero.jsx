@@ -3,12 +3,10 @@ import React, { useEffect, useRef, useState } from "react";
 import { Play, Sparkles, ArrowRight, Activity, Cpu, Zap, Star } from "lucide-react";
 import { ScrollReveal } from "@/components/Animations";
 import { SectionWave } from "@/components/Animations/SectionWave";
-import { Button } from "@/components/ui/Button";
-import { Heading, Text, Eyebrow } from "@/components/ui/Typography";
+
 function GlassOrbitalSphere({ scale, opacity, zIndex, centerOpacity, ringOpacity, mousePos, isLg, progress }) {
   // Smooth 2D rotation on scroll to preserve 100% 1:1 circular geometry without 3D perspective distortion
   const scrollRotate = progress * 160;
-
   // Smoothly move from right-side placement to viewport center as user scrolls
   const leftPos = isLg ? `${62 - progress * 12}%` : "50%";
   const topPos = isLg ? `${46 + progress * 4}%` : "45%";

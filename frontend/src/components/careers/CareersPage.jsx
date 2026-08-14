@@ -1,118 +1,21 @@
-"use client";
-
-import React, { useState, useMemo } from "react";
+import React, { useState, useMemo, useEffect } from "react";
 import { 
-  Briefcase, 
-  MapPin, 
-  Clock, 
   Search, 
+  MapPin, 
+  Briefcase, 
+  Banknote, 
+  Clock, 
   ChevronRight, 
-  X, 
-  Sparkles, 
-  Send, 
-  Award, 
   Users, 
+  Award, 
   Shield, 
   Zap, 
   CheckCircle2, 
-  Paperclip 
+  Paperclip,
+  Loader2
 } from "lucide-react";
 
 import PageHero from "@/components/common/PageHero";
-
-// Mock Jobs Database
-const JOBS = [
-  {
-    id: "tech-1",
-    title: "Senior Full Stack Engineer",
-    department: "Tech & Engineering",
-    type: "Full-Time",
-    location: "Remote / Hybrid (Mumbai)",
-    experience: "5+ Years",
-    salary: "Competitive",
-    description: "Lead the development of next-generation infrastructure for our digital global trading platform. Work with React, Next.js, Node.js, and high-performance databases.",
-    requirements: [
-      "Expertise in modern JavaScript/TypeScript, React/Next.js and Node.js.",
-      "Experience with scale, performance optimization, and serverless architectures.",
-      "Strong understanding of database design (SQL/NoSQL) and cloud architecture (AWS/GCP)."
-    ]
-  },
-  {
-    id: "tech-2",
-    title: "AI / ML Integration Specialist",
-    department: "Tech & Engineering",
-    type: "Full-Time",
-    location: "Remote (Global)",
-    experience: "3+ Years",
-    salary: "Industry Standard",
-    description: "Design and implement custom machine learning pipelines and LLM integrations to power smart features across our business ecosystem.",
-    requirements: [
-      "Practical experience integrating OpenAI, Anthropic, or open-source LLMs.",
-      "Proficient in Python, LangChain, vector databases, and REST/GraphQL APIs.",
-      "Strong understanding of prompt engineering and model evaluation."
-    ]
-  },
-  {
-    id: "academy-1",
-    title: "Lead Technical Mentor",
-    department: "Skill Academy",
-    type: "Full-Time",
-    location: "Surat, Gujarat",
-    experience: "3+ Years",
-    salary: "Competitive",
-    description: "Guide and inspire the next cohort of technical graduates. Develop curriculum modules, run hands-on lab sessions, and conduct code reviews.",
-    requirements: [
-      "Solid background in software engineering (Full-Stack, Mobile, or Data Science).",
-      "Passion for teaching, coaching, and mentoring junior talent.",
-      "Excellent communication and presentation skills."
-    ]
-  },
-  {
-    id: "media-1",
-    title: "Creative Video Editor & Producer",
-    department: "Media & Marketing",
-    type: "Full-Time",
-    location: "Hybrid (Mumbai)",
-    experience: "2+ Years",
-    salary: "Industry Standard",
-    description: "Produce highly engaging video content for our global media network. Edit reels, short docs, podcasts, and digital advertisement creatives.",
-    requirements: [
-      "Mastery of Premiere Pro, After Effects, DaVinci Resolve, or similar tools.",
-      "Strong portfolio demonstrating motion graphics, sound design, and pacing.",
-      "Ability to thrive in a fast-paced creative environment."
-    ]
-  },
-  {
-    id: "media-2",
-    title: "Growth Marketing Lead",
-    department: "Media & Marketing",
-    type: "Full-Time",
-    location: "Remote / Mumbai",
-    experience: "4+ Years",
-    salary: "Competitive",
-    description: "Drive user acquisition and engagement campaigns across paid search, social platforms, and community channels.",
-    requirements: [
-      "Proven track record scaling B2B/B2C SaaS or educational platforms.",
-      "Expertise in SEO/SEM, performance marketing, and digital attribution models.",
-      "Data-driven mindset with advanced analytical skills."
-    ]
-  },
-  {
-    id: "ops-1",
-    title: "Business Development Manager",
-    department: "Business Operations",
-    type: "Full-Time",
-    location: "Surat / Remote",
-    experience: "3+ Years",
-    salary: "Base + High Commissions",
-    description: "Build strategic partnerships and expand our global business community. Source new leads, pitch corporate programs, and manage partner relationships.",
-    requirements: [
-      "Experience in B2B sales, corporate relations, or business development.",
-      "Outstanding negotiation, presentation, and contract-management skills.",
-      "Self-driven attitude with a focus on hitting growth milestones."
-    ]
-  }
-];
 
 const DEPARTMENTS = ["All", "Tech & Engineering", "Skill Academy", "Media & Marketing", "Business Operations"];
 
@@ -140,11 +43,13 @@ const BENEFITS = [
 ];
 
 export default function CareersPage() {
+  const [jobs, setJobs] = useState([]);
+  const [loading, setLoading] = useState(true);
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedDept, setSelectedDept] = useState("All");
-  const [selectedJob, setSelectedJob] = useState(null); // Job currently open in detail modal
-  const [isApplying, setIsApplying] = useState(false); // Sub-state to show the form
-  const [submitSuccess, setSubmitSuccess] = useState(false); // Submission visual feedback
+  const [selectedJob, setSelectedJob] = useState(null); 
+  const [isApplying, setIsApplying] = useState(false); 
+  const [submitSuccess, setSubmitSuccess] = useState(false); 
 
   // Form State
   const [formName, setFormName] = useState("");
@@ -153,15 +58,30 @@ export default function CareersPage() {
   const [formNote, setFormNote] = useState("");
   const [selectedFile, setSelectedFile] = useState(null);
 
+  useEffect(() => {
+    const fetchJobs = async () => {
+      try {
+        const res = await fetch("http://localhost:5000/api/jobs");
+        const data = await res.json();
+        setJobs(data);
+      } catch (err) {
+        console.error(err);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchJobs();
+  }, []);
+
   // Filter jobs
   const filteredJobs = useMemo(() => {
-    return JOBS.filter(job => {
+    return jobs.filter(job => {
       const matchDept = selectedDept === "All" || job.department === selectedDept;
       const matchSearch = job.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
                           job.description.toLowerCase().includes(searchQuery.toLowerCase());
       return matchDept && matchSearch;
     });
-  }, [searchQuery, selectedDept]);
+  }, [searchQuery, selectedDept, jobs]);
 
   // Handle Form submit
   const handleApplySubmit = (e) => {
@@ -198,8 +118,6 @@ export default function CareersPage() {
         title="Careers" 
         description="KP Global is an immersive ecosystem of technology, education, and media. We're looking for visionary minds, continuous learners, and bold leaders to scale new horizons." 
       />
-
-
 
       <div className="max-w-7xl mx-auto px-6 relative z-10 mt-16">
 
@@ -249,263 +167,271 @@ export default function CareersPage() {
             </div>
           </div>
 
+          {/* Department Tabs */}
+          <div className="flex overflow-x-auto hide-scrollbar gap-3 mb-8 pb-2">
+            {DEPARTMENTS.map(dept => (
+              <button
+                key={dept}
+                onClick={() => setSelectedDept(dept)}
+                className={`px-5 py-2.5 rounded-full text-sm font-bold whitespace-nowrap transition-all duration-300 ${
+                  selectedDept === dept
+                    ? "bg-primary text-white shadow-md"
+                    : "bg-white/90 text-slate-600 border border-slate-200 hover:bg-slate-50 hover:border-primary/30"
+                }`}
+              >
+                {dept}
+              </button>
+            ))}
+          </div>
 
-
-          {/* Jobs Listing */}
-          {filteredJobs.length > 0 ? (
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              {filteredJobs.map(job => (
-                <div
-                  key={job.id}
-                  onClick={() => { setSelectedJob(job); setIsApplying(false); }}
-                  className="p-6 rounded-[2.5rem] bg-white/90 backdrop-blur-md border border-slate-200/60 shadow-[0_8px_30px_rgb(0,0,0,0.04)] hover:shadow-[0_20px_40px_rgb(0,0,0,0.08)] hover:border-primary/30 hover:-translate-y-1 transition-all duration-500 cursor-pointer flex flex-col justify-between group"
-                >
-                  <div>
-                    <div className="flex items-center justify-between mb-4">
-                      <span className="text-[10px] font-bold uppercase tracking-widest px-3 py-1 rounded-full bg-primary/10 text-primary border border-primary/20">
-                        {job.department}
-                      </span>
-                      <span className="text-xs text-slate-500 flex items-center gap-1 font-bold">
-                        <Clock className="w-3.5 h-3.5 text-primary" />
-                        {job.type}
-                      </span>
-                    </div>
-
-                    <h3 className="text-xl font-bold text-slate-900 mb-2 group-hover:text-primary transition-colors duration-300">
-                      {job.title}
-                    </h3>
-                    <p className="text-sm text-slate-600 line-clamp-2 mb-6 font-medium">
-                      {job.description}
-                    </p>
-                  </div>
-
-                  <div className="flex items-center justify-between pt-4 border-t border-slate-100 mt-auto">
-                    <div className="flex items-center gap-4 text-xs text-slate-500 font-bold">
-                      <span className="flex items-center gap-1.5">
-                        <MapPin className="w-3.5 h-3.5 text-primary" />
-                        {job.location}
-                      </span>
-                    </div>
-                    <div className="w-8 h-8 rounded-full bg-slate-50 border border-slate-200 group-hover:bg-primary group-hover:border-primary flex items-center justify-center text-slate-400 group-hover:text-white transition-all duration-300 shadow-sm">
-                      <ChevronRight className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" />
-                    </div>
-                  </div>
-                </div>
-              ))}
+          {loading ? (
+            <div className="flex justify-center items-center py-20">
+              <Loader2 className="w-10 h-10 animate-spin text-primary" />
             </div>
           ) : (
-            <div className="text-center py-20 bg-white/90 backdrop-blur-md border border-slate-200/60 shadow-[0_8px_30px_rgb(0,0,0,0.04)] rounded-[2.5rem]">
-              <Briefcase className="w-12 h-12 text-slate-400 mx-auto mb-4" />
-              <h3 className="text-lg font-bold text-slate-900 mb-1">No vacancies found</h3>
-              <p className="text-sm text-slate-600 font-medium">Try adjusting your filters or search query.</p>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {filteredJobs.length > 0 ? (
+                filteredJobs.map(job => (
+                  <div 
+                    key={job.id} 
+                    className="group flex flex-col justify-between p-7 rounded-[2.5rem] bg-white/90 backdrop-blur-md border border-slate-200/60 shadow-[0_8px_30px_rgb(0,0,0,0.04)] hover:shadow-[0_20px_40px_rgb(0,0,0,0.08)] hover:border-primary/40 transition-all duration-500 cursor-pointer"
+                    onClick={() => setSelectedJob(job)}
+                  >
+                    <div>
+                      <div className="flex items-center justify-between mb-4">
+                        <span className="px-3 py-1 bg-primary/10 text-primary rounded-full text-[10px] font-black uppercase tracking-widest border border-primary/20">
+                          {job.department}
+                        </span>
+                        <div className="w-8 h-8 rounded-full bg-slate-50 border border-slate-100 flex items-center justify-center group-hover:bg-primary group-hover:border-primary transition-colors duration-300">
+                          <ChevronRight className="w-4 h-4 text-slate-400 group-hover:text-white" />
+                        </div>
+                      </div>
+                      
+                      <h3 className="text-xl font-bold text-slate-900 mb-4 group-hover:text-primary transition-colors duration-300">
+                        {job.title}
+                      </h3>
+                      
+                      <div className="space-y-3 mb-6">
+                        <div className="flex items-center text-sm text-slate-600 font-medium">
+                          <MapPin className="w-4 h-4 mr-3 text-slate-400" />
+                          {job.location}
+                        </div>
+                        <div className="flex items-center text-sm text-slate-600 font-medium">
+                          <Briefcase className="w-4 h-4 mr-3 text-slate-400" />
+                          {job.type} • {job.experience}
+                        </div>
+                        <div className="flex items-center text-sm text-slate-600 font-medium">
+                          <Banknote className="w-4 h-4 mr-3 text-slate-400" />
+                          {job.salary}
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="pt-5 border-t border-slate-100">
+                      <button className="w-full py-3 rounded-full bg-slate-50 border border-slate-200 text-sm font-bold text-slate-700 group-hover:bg-primary group-hover:border-primary group-hover:text-white transition-all duration-300">
+                        View Details
+                      </button>
+                    </div>
+                  </div>
+                ))
+              ) : (
+                <div className="col-span-full py-20 text-center bg-white/50 backdrop-blur-md rounded-[2.5rem] border border-slate-200/60">
+                  <Briefcase className="w-12 h-12 text-slate-300 mx-auto mb-4" />
+                  <h3 className="text-xl font-bold text-slate-800 mb-2">No roles found</h3>
+                  <p className="text-slate-500 font-medium">Try adjusting your filters or check back later.</p>
+                </div>
+              )}
             </div>
           )}
         </div>
       </div>
 
-      {/* ── Job details & application Drawer / Modal ── */}
+      {/* ── Modal: Job Details & Apply Flow ── */}
       {selectedJob && (
-        <div 
-          className="fixed inset-0 z-[100] flex items-center justify-end"
-          style={{ background: "rgba(0,0,0,0.75)", backdropFilter: "blur(10px)" }}
-          onClick={() => { setSelectedJob(null); setIsApplying(false); }}
-        >
-          <div 
-            className="w-full max-w-2xl h-full bg-white border-l border-slate-200 p-8 overflow-y-auto flex flex-col justify-between shadow-2xl"
-            onClick={e => e.stopPropagation()}
-            style={{ animation: "slideIn 0.35s cubic-bezier(0.16,1,0.3,1) forwards" }}
-          >
-            {/* Header */}
-            <div>
-              <div className="flex items-center justify-between mb-6">
-                <span className="text-[10px] font-bold px-3 py-1.5 rounded-full bg-primary/10 text-primary border border-primary/20 uppercase tracking-widest">
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/40 backdrop-blur-sm">
+          {/* Click away area */}
+          <div className="absolute inset-0" onClick={() => !submitSuccess && setSelectedJob(null)} />
+          
+          <div className="relative w-full max-w-2xl bg-white rounded-[2.5rem] shadow-2xl flex flex-col max-h-[90vh] overflow-hidden animate-in fade-in zoom-in-95 duration-300">
+            
+            {/* Header (Sticky) */}
+            <div className="shrink-0 px-8 py-6 border-b border-slate-100 flex items-start justify-between bg-white z-10">
+              <div>
+                <span className="inline-block mb-3 px-3 py-1 bg-primary/10 text-primary rounded-full text-[10px] font-black uppercase tracking-widest border border-primary/20">
                   {selectedJob.department}
                 </span>
-                <button 
-                  onClick={() => { setSelectedJob(null); setIsApplying(false); }}
-                  className="p-2 text-slate-400 hover:text-slate-900 bg-slate-100 hover:bg-slate-200 rounded-full transition-all"
-                >
-                  <X className="w-5 h-5" />
-                </button>
+                <h2 className="text-2xl font-bold text-slate-900">{selectedJob.title}</h2>
               </div>
+              <button 
+                onClick={() => setSelectedJob(null)}
+                className="p-2 rounded-full hover:bg-slate-100 transition-colors"
+                disabled={submitSuccess}
+              >
+                <ChevronRight className="w-5 h-5 text-slate-400 rotate-180" />
+              </button>
+            </div>
 
-              {!isApplying ? (
-                <>
-                  {/* Job Details Screen */}
-                  <h2 className="text-2xl sm:text-3xl font-black mb-3 text-slate-900 tracking-tight">
-                    {selectedJob.title}
-                  </h2>
-                  <div className="flex flex-wrap items-center gap-x-6 gap-y-2 text-sm text-slate-600 mb-8 pb-6 border-b border-slate-200 font-bold">
-                    <span className="flex items-center gap-1.5">
-                      <MapPin className="w-4 h-4 text-primary" />
-                      {selectedJob.location}
-                    </span>
-                    <span className="flex items-center gap-1.5">
-                      <Clock className="w-4 h-4 text-primary" />
-                      {selectedJob.type}
-                    </span>
-                    <span className="flex items-center gap-1.5">
-                      <Briefcase className="w-4 h-4 text-primary" />
-                      {selectedJob.experience}
-                    </span>
+            {/* Scrollable Body */}
+            <div className="flex-1 overflow-y-auto px-8 py-6 bg-slate-50/50">
+              {submitSuccess ? (
+                <div className="py-16 flex flex-col items-center justify-center text-center animate-in fade-in zoom-in">
+                  <div className="w-20 h-20 rounded-full bg-green-100 flex items-center justify-center mb-6">
+                    <CheckCircle2 className="w-10 h-10 text-green-600" />
                   </div>
-
-                  <div className="space-y-6">
+                  <h3 className="text-2xl font-bold text-slate-900 mb-2">Application Received!</h3>
+                  <p className="text-slate-600 font-medium max-w-sm">
+                    Thank you for applying to the <strong>{selectedJob.title}</strong> role. Our talent team will review your profile and reach out shortly.
+                  </p>
+                </div>
+              ) : isApplying ? (
+                <div className="animate-in fade-in slide-in-from-right-4 duration-300">
+                  <h3 className="text-lg font-bold text-slate-900 mb-6">Submit Your Application</h3>
+                  
+                  <form onSubmit={handleApplySubmit} className="space-y-5">
                     <div>
-                      <h4 className="text-slate-900 font-bold text-base mb-2">Role Overview</h4>
-                      <p className="text-slate-600 text-sm leading-relaxed font-medium">
-                        {selectedJob.description}
-                      </p>
+                      <label className="block text-sm font-bold text-slate-700 mb-1.5">Full Name *</label>
+                      <input 
+                        required
+                        type="text"
+                        value={formName}
+                        onChange={e=>setFormName(e.target.value)}
+                        className="w-full px-4 py-3 rounded-xl bg-white border border-slate-200 focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all text-sm"
+                        placeholder="John Doe"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-sm font-bold text-slate-700 mb-1.5">Email Address *</label>
+                      <input 
+                        required
+                        type="email"
+                        value={formEmail}
+                        onChange={e=>setFormEmail(e.target.value)}
+                        className="w-full px-4 py-3 rounded-xl bg-white border border-slate-200 focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all text-sm"
+                        placeholder="john@example.com"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-sm font-bold text-slate-700 mb-1.5">LinkedIn URL</label>
+                      <input 
+                        type="url"
+                        value={formLinkedin}
+                        onChange={e=>setFormLinkedin(e.target.value)}
+                        className="w-full px-4 py-3 rounded-xl bg-white border border-slate-200 focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all text-sm"
+                        placeholder="https://linkedin.com/in/..."
+                      />
+                    </div>
+
+                    {/* File Upload UI */}
+                    <div>
+                      <label className="block text-sm font-bold text-slate-700 mb-1.5">Resume / CV</label>
+                      <label className="flex items-center justify-center w-full px-4 py-8 border-2 border-dashed border-slate-200 rounded-xl bg-white hover:bg-slate-50 hover:border-primary/50 transition-colors cursor-pointer group">
+                        <input type="file" className="hidden" accept=".pdf,.doc,.docx" onChange={handleFileChange} />
+                        <div className="flex flex-col items-center text-center">
+                          <Paperclip className="w-6 h-6 text-slate-400 group-hover:text-primary mb-2 transition-colors" />
+                          {selectedFile ? (
+                            <span className="text-sm font-bold text-primary">{selectedFile.name}</span>
+                          ) : (
+                            <>
+                              <span className="text-sm font-bold text-slate-700">Click to upload or drag & drop</span>
+                              <span className="text-xs text-slate-500 mt-1">PDF, DOC, DOCX up to 5MB</span>
+                            </>
+                          )}
+                        </div>
+                      </label>
                     </div>
 
                     <div>
-                      <h4 className="text-slate-900 font-bold text-base mb-2">Key Requirements</h4>
-                      <ul className="space-y-3">
-                        {selectedJob.requirements.map((req, index) => (
-                          <li key={index} className="flex items-start gap-2.5 text-slate-600 text-sm font-medium">
-                            <span className="w-1.5 h-1.5 rounded-full bg-primary mt-2 flex-shrink-0" />
-                            {req}
-                          </li>
-                        ))}
-                      </ul>
+                      <label className="block text-sm font-bold text-slate-700 mb-1.5">Additional Notes</label>
+                      <textarea 
+                        rows={3}
+                        value={formNote}
+                        onChange={e=>setFormNote(e.target.value)}
+                        className="w-full px-4 py-3 rounded-xl bg-white border border-slate-200 focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all text-sm resize-none"
+                        placeholder="Tell us why you're a great fit..."
+                      />
                     </div>
-                  </div>
-                </>
+                  </form>
+                </div>
               ) : (
-                <>
-                  {/* Application Form Screen */}
-                  <h3 className="text-xl font-bold mb-1 text-slate-900">Apply for {selectedJob.title}</h3>
-                  <p className="text-xs text-slate-500 font-medium mb-6">Complete the details below to submit your profile.</p>
-
-                  {submitSuccess ? (
-                    <div className="flex flex-col items-center justify-center py-12 text-center" style={{ animation: "fadeIn 0.3s" }}>
-                      <div className="w-16 h-16 rounded-full bg-green-500/20 border border-green-500/40 flex items-center justify-center mb-6">
-                        <CheckCircle2 className="w-8 h-8 text-green-500" />
-                      </div>
-                      <h4 className="text-xl font-bold text-slate-900 mb-2">Application Received!</h4>
-                      <p className="text-sm text-slate-600 max-w-sm font-medium">
-                        Thank you for applying. Our talent acquisition team will review your application and reach out shortly.
-                      </p>
+                <div className="animate-in fade-in duration-300">
+                  {/* Job Overview tags */}
+                  <div className="flex flex-wrap gap-3 mb-8">
+                    <div className="px-4 py-2 bg-white rounded-lg border border-slate-200 flex items-center text-sm font-medium text-slate-700">
+                      <MapPin className="w-4 h-4 mr-2 text-primary" /> {selectedJob.location}
                     </div>
-                  ) : (
-                    <form onSubmit={handleApplySubmit} className="space-y-5">
-                      <div>
-                        <label className="block text-xs font-bold text-slate-600 uppercase tracking-widest mb-1.5">Full Name *</label>
-                        <input
-                          type="text"
-                          required
-                          value={formName}
-                          onChange={e => setFormName(e.target.value)}
-                          placeholder="Your full name"
-                          className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-sm text-slate-900 font-semibold focus:outline-none focus:border-primary focus:shadow-[0_0_20px_rgba(108,59,255,0.15)] transition-all"
-                        />
-                      </div>
+                    <div className="px-4 py-2 bg-white rounded-lg border border-slate-200 flex items-center text-sm font-medium text-slate-700">
+                      <Briefcase className="w-4 h-4 mr-2 text-primary" /> {selectedJob.type}
+                    </div>
+                    <div className="px-4 py-2 bg-white rounded-lg border border-slate-200 flex items-center text-sm font-medium text-slate-700">
+                      <Clock className="w-4 h-4 mr-2 text-primary" /> {selectedJob.experience}
+                    </div>
+                    <div className="px-4 py-2 bg-white rounded-lg border border-slate-200 flex items-center text-sm font-medium text-slate-700">
+                      <Banknote className="w-4 h-4 mr-2 text-primary" /> {selectedJob.salary}
+                    </div>
+                  </div>
 
-                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                        <div>
-                          <label className="block text-xs font-bold text-slate-600 uppercase tracking-widest mb-1.5">Email Address *</label>
-                          <input
-                            type="email"
-                            required
-                            value={formEmail}
-                            onChange={e => setFormEmail(e.target.value)}
-                            placeholder="name@example.com"
-                            className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-sm text-slate-900 font-semibold focus:outline-none focus:border-primary focus:shadow-[0_0_20px_rgba(108,59,255,0.15)] transition-all"
-                          />
-                        </div>
-                        <div>
-                          <label className="block text-xs font-bold text-slate-600 uppercase tracking-widest mb-1.5">LinkedIn Profile</label>
-                          <input
-                            type="url"
-                            value={formLinkedin}
-                            onChange={e => setFormLinkedin(e.target.value)}
-                            placeholder="https://linkedin.com/in/username"
-                            className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-sm text-slate-900 font-semibold focus:outline-none focus:border-primary focus:shadow-[0_0_20px_rgba(108,59,255,0.15)] transition-all"
-                          />
-                        </div>
-                      </div>
+                  <div className="prose prose-slate max-w-none">
+                    <h3 className="text-lg font-bold text-slate-900 mb-3">About the Role</h3>
+                    <p className="text-slate-600 leading-relaxed mb-8">{selectedJob.description}</p>
 
-                      <div>
-                        <label className="block text-xs font-bold text-slate-600 uppercase tracking-widest mb-1.5">Resume / CV *</label>
-                        <div className="relative border border-dashed border-slate-300 hover:border-primary rounded-xl bg-slate-50 transition-colors p-6 text-center cursor-pointer">
-                          <input
-                            type="file"
-                            required
-                            onChange={handleFileChange}
-                            accept=".pdf,.doc,.docx"
-                            className="absolute inset-0 opacity-0 cursor-pointer"
-                          />
-                          <Paperclip className="w-6 h-6 text-slate-400 mx-auto mb-2" />
-                          <span className="block text-xs font-bold text-slate-600">
-                            {selectedFile ? selectedFile.name : "Upload PDF or DOCX file"}
-                          </span>
-                          <span className="block text-[10px] font-bold text-slate-400 mt-1 uppercase tracking-widest">Max file size 10MB</span>
-                        </div>
-                      </div>
-
-                      <div>
-                        <label className="block text-xs font-bold text-slate-600 uppercase tracking-widest mb-1.5">Cover Note / Message</label>
-                        <textarea
-                          rows={3}
-                          value={formNote}
-                          onChange={e => setFormNote(e.target.value)}
-                          placeholder="Tell us a little about yourself..."
-                          className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-sm text-slate-900 font-semibold focus:outline-none focus:border-primary focus:shadow-[0_0_20px_rgba(108,59,255,0.15)] transition-all resize-none"
-                        />
-                      </div>
-
-                      <button
-                        type="submit"
-                        className="group w-full py-4 flex items-center justify-center gap-4 bg-slate-950 hover:bg-brand-violet rounded-full text-xs font-bold uppercase tracking-[0.2em] text-white shadow-md hover:shadow-xl hover:-translate-y-0.5 active:translate-y-0 transition-all duration-300"
-                      >
-                        Submit Application
-                        <Send className="w-3.5 h-3.5" />
-                      </button>
-                    </form>
-                  )}
-                </>
+                    <h3 className="text-lg font-bold text-slate-900 mb-4">Requirements</h3>
+                    <ul className="space-y-3 mb-8">
+                      {selectedJob.requirements.map((req, i) => (
+                        <li key={i} className="flex items-start">
+                          <span className="mt-1.5 mr-3 w-1.5 h-1.5 rounded-full bg-primary shrink-0" />
+                          <span className="text-slate-600 leading-relaxed">{req}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                </div>
               )}
             </div>
 
-            {/* Footer Apply CTA */}
-            {!isApplying && (
-              <div className="mt-8 pt-6 border-t border-slate-200 flex items-center justify-between gap-4">
-                <div>
-                  <span className="text-[10px] text-slate-500 font-bold tracking-widest block uppercase">SALARY</span>
-                  <span className="text-sm font-bold text-slate-900">{selectedJob.salary}</span>
-                </div>
-                <button
-                  onClick={() => setIsApplying(true)}
-                  className="group px-8 py-4 flex items-center gap-4 bg-slate-950 hover:bg-brand-violet rounded-full text-xs font-bold uppercase tracking-[0.2em] text-white shadow-md hover:shadow-xl hover:-translate-y-0.5 active:translate-y-0 transition-all duration-300"
+            {/* Footer Actions (Sticky) */}
+            <div className="shrink-0 px-8 py-5 bg-white border-t border-slate-100 flex items-center justify-end gap-4">
+              {!submitSuccess && (
+                <>
+                  <button 
+                    onClick={() => {
+                      if (isApplying) setIsApplying(false);
+                      else setSelectedJob(null);
+                    }}
+                    className="px-6 py-3 rounded-full text-sm font-bold text-slate-600 hover:bg-slate-100 transition-colors"
+                  >
+                    {isApplying ? "Back to Details" : "Close"}
+                  </button>
+                  
+                  {isApplying ? (
+                    <button 
+                      onClick={handleApplySubmit}
+                      className="px-8 py-3 rounded-full bg-primary text-white text-sm font-bold hover:bg-primary/90 shadow-[0_4px_15px_rgba(108,59,255,0.3)] transition-all"
+                    >
+                      Submit Application
+                    </button>
+                  ) : (
+                    <button 
+                      onClick={() => setIsApplying(true)}
+                      className="px-8 py-3 rounded-full bg-primary text-white text-sm font-bold hover:bg-primary/90 shadow-[0_4px_15px_rgba(108,59,255,0.3)] transition-all"
+                    >
+                      Apply Now
+                    </button>
+                  )}
+                </>
+              )}
+              {submitSuccess && (
+                <button 
+                  onClick={() => setSelectedJob(null)}
+                  className="w-full px-8 py-3 rounded-full bg-slate-100 text-slate-700 text-sm font-bold hover:bg-slate-200 transition-all"
                 >
-                  Apply For This Role
-                  <ArrowIcon />
+                  Close Window
                 </button>
-              </div>
-            )}
+              )}
+            </div>
+
           </div>
         </div>
       )}
-
-      {/* Styled slide animations */}
-      <style dangerouslySetInnerHTML={{ __html: `
-        @keyframes slideIn {
-          from { transform: translateX(100%); }
-          to { transform: translateX(0); }
-        }
-        @keyframes fadeIn {
-          from { opacity: 0; }
-          to { opacity: 1; }
-        }
-      `}} />
     </div>
-  );
-}
-
-function ArrowIcon() {
-  return (
-    <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M14 5l7 7m0 0l-7 7m7-7H3" />
-    </svg>
   );
 }
