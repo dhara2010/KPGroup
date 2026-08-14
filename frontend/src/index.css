@@ -40,6 +40,17 @@
   --color-accent: #8B5CF6;
   --color-accent-soft: #F1ECFF;
 
+  /* New Brand Colors Inspired by Abstract Image */
+  --brand-blue: #0070F3;
+  --brand-cyan: #00E1FF;
+  --brand-violet: #8B5CF6;
+  --brand-purple: #C026D3;
+  --brand-pink: #EC4899;
+  --brand-magenta: #E81CFF;
+  --brand-orange: #FF7A00;
+
+  --brand-gradient: linear-gradient(135deg, var(--brand-blue), var(--brand-violet), var(--brand-purple), var(--brand-pink));
+
   --color-bg: #FFFFFF;
   --color-bg-soft: #F8F6FF;
   --color-bg-muted: #F7F5FC;
@@ -110,6 +121,21 @@ a.text-white:hover {
 }
 
 @layer utilities {
+  .text-brand-gradient {
+    background-image: var(--brand-gradient);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: transparent;
+    background-size: 200% auto;
+    transition: background-position 0.5s ease;
+  }
+  .text-brand-gradient:hover {
+    background-position: right center;
+  }
+  .bg-brand-gradient {
+    background-image: var(--brand-gradient);
+  }
+
   .bg-300 {
     background-size: 300% 300%;
   }
