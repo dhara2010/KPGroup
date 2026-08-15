@@ -5,6 +5,7 @@ import { Star, ShieldCheck, Heart, ArrowUpRight, CheckCircle2, ChevronRight, Spa
 import { Link } from "react-router-dom";
 
 import { ScrollReveal, TextReveal } from "@/components/Animations";
+import { apiFetch } from "../api/api";
 import PageHero from "@/components/common/PageHero";
 
 export default function PartnersPage() {
@@ -16,8 +17,7 @@ export default function PartnersPage() {
   useEffect(() => {
     const fetchPartners = async () => {
       try {
-        const res = await fetch("http://localhost:5000/api/partners");
-        const data = await res.json();
+        const data = await apiFetch("/api/partners");
         if (Array.isArray(data)) {
           setPartners(data);
         } else {

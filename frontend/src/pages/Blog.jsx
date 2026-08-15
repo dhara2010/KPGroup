@@ -5,6 +5,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { Search, Calendar, ArrowRight, Clock, Activity, X } from "lucide-react";
 import { ScrollReveal } from "@/components/Animations";
 import PageHero from "@/components/common/PageHero";
+import { apiFetch } from "../api/api";
 
 export default function BlogPage() {
   const navigate = useNavigate();
@@ -28,8 +29,7 @@ export default function BlogPage() {
   useEffect(() => {
     const fetchBlogs = async () => {
       try {
-        const res = await fetch("http://localhost:5000/api/blogs");
-        const data = await res.json();
+        const data = await apiFetch("/api/blogs");
         if (Array.isArray(data)) {
           setPosts(data);
         } else {

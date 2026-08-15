@@ -3,6 +3,7 @@ import { ArrowRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { ScrollReveal } from '@/components/Animations';
 import { Section } from '@/components/ui/Section';
+import { apiFetch } from "../../api/api";
 
 export default function LeadershipPreview() {
   const [team, setTeam] = useState([]);
@@ -10,8 +11,7 @@ export default function LeadershipPreview() {
   useEffect(() => {
     const fetchTeam = async () => {
       try {
-        const res = await fetch("http://localhost:5000/api/teams");
-        const data = await res.json();
+        const data = await apiFetch("/api/teams");
         if (Array.isArray(data)) {
           // Take only the first 4 members for the preview grid
           setTeam(data.slice(0, 4));

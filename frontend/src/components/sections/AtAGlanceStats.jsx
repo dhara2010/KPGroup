@@ -2,6 +2,7 @@ import React, { useEffect, useState, useRef } from 'react';
 import { Award, Layers, Globe2, Building } from 'lucide-react';
 import { ScrollReveal } from '@/components/Animations';
 import { Section } from '@/components/ui/Section';
+import { apiFetch } from "../../api/api";
 
 const iconMap = {
   Award: Award,
@@ -58,8 +59,7 @@ export default function AtAGlanceStats() {
   useEffect(() => {
     const fetchMetrics = async () => {
       try {
-        const res = await fetch("http://localhost:5000/api/metrics");
-        const data = await res.json();
+        const data = await apiFetch("/api/metrics");
         setMetrics(data);
       } catch (err) {
         console.error(err);

@@ -7,6 +7,7 @@ import {
   Sparkles, Send, Globe, Shield, MessageSquare, Building, User
 } from "lucide-react";
 import PageHero from "@/components/common/PageHero";
+import { apiFetch } from "../api/api";
 
 export default function ContactPage() {
   const [formData, setFormData] = useState({
@@ -31,7 +32,7 @@ export default function ContactPage() {
     try {
       setIsSubmitting(true);
 
-      const response = await fetch("http://localhost:5000/api/forms", {
+      const data = await apiFetch("/api/forms", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -39,7 +40,7 @@ export default function ContactPage() {
         body: JSON.stringify(formData),
       });
 
-      const data = await response.json();
+
 
       if (data.success) {
         setIsSubmitted(true);

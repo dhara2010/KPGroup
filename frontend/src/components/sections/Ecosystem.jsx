@@ -3,6 +3,7 @@ import { MonitorSmartphone, Radio, GraduationCap, Briefcase, Network, ArrowRight
 import { Link } from "react-router-dom";
 import { ScrollReveal } from "@/components/Animations";
 import { Section } from "@/components/ui/Section";
+import { apiFetch } from "../../api/api";
 
 // Map strings from DB to components
 const iconMap = {
@@ -20,8 +21,7 @@ export default function Ecosystem() {
   useEffect(() => {
     const fetchEcosystem = async () => {
       try {
-        const res = await fetch("http://localhost:5000/api/ecosystems");
-        const data = await res.json();
+        const data = await apiFetch("/api/ecosystems");
         setCards(data);
       } catch (err) {
         console.error(err);

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { HelpCircle, Plus, Loader2 } from 'lucide-react';
 import { ScrollReveal, TextReveal, ThreeDTilt } from "@/components/Animations";
 import PageHero from "@/components/common/PageHero";
+import { apiFetch } from "../../api/api";
 
 export default function FAQ({ isPage = false }) {
   const [faqs, setFaqs] = useState([]);
@@ -11,8 +12,7 @@ export default function FAQ({ isPage = false }) {
   useEffect(() => {
     const fetchFaqs = async () => {
       try {
-        const res = await fetch("http://localhost:5000/api/faqs");
-        const data = await res.json();
+        const data = await apiFetch("/api/faqs");
         setFaqs(data);
       } catch (err) {
         console.error(err);

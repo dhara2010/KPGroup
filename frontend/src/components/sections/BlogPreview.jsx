@@ -3,6 +3,7 @@ import { ArrowRight, Calendar, Clock } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { ScrollReveal } from "@/components/Animations";
 import { Section } from "@/components/ui/Section";
+import { apiFetch } from "../../api/api";
 
 export default function BlogPreview() {
   const [blogs, setBlogs] = useState([]);
@@ -10,8 +11,7 @@ export default function BlogPreview() {
   useEffect(() => {
     const fetchBlogs = async () => {
       try {
-        const res = await fetch("http://localhost:5000/api/blogs");
-        const data = await res.json();
+        const data = await apiFetch("/api/blogs");
         if (Array.isArray(data)) {
           // Take the first 3 blogs for the preview
           setBlogs(data.slice(0, 3));

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Target, Users2, Rocket, ShieldCheck, Loader2 } from 'lucide-react';
 import { ScrollReveal, TextReveal } from "@/components/Animations";
+import { apiFetch } from "../../api/api";
 
 const iconMap = {
   Target: <Target className="w-6 h-6 text-primary" />,
@@ -16,8 +17,7 @@ export default function WhyKPGroup() {
   useEffect(() => {
     const fetchReasons = async () => {
       try {
-        const res = await fetch("http://localhost:5000/api/reasons");
-        const data = await res.json();
+        const data = await apiFetch("/api/reasons");
         setReasons(data);
       } catch (err) {
         console.error(err);

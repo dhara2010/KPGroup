@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Users, Loader2 } from "lucide-react";
 import { ScrollReveal, TextReveal, ThreeDTilt } from "@/components/Animations";
+import { apiFetch } from "../../api/api";
 
 export default function Team() {
   const [team, setTeam] = useState([]);
@@ -9,8 +10,7 @@ export default function Team() {
   useEffect(() => {
     const fetchTeam = async () => {
       try {
-        const res = await fetch("http://localhost:5000/api/teams");
-        const data = await res.json();
+        const data = await apiFetch("/api/teams");
         if (Array.isArray(data)) {
           setTeam(data);
         }

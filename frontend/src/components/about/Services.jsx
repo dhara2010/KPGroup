@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Globe, GraduationCap, Building2, Code2, Cpu, FileJson2, Briefcase, Rocket, Loader2 } from 'lucide-react';
 import { ScrollReveal } from "@/components/Animations";
+import { apiFetch } from "../../api/api";
 
 // We need an icon map because the db stores string names
 const iconMap = {
@@ -21,8 +22,7 @@ export default function Services() {
   useEffect(() => {
     const fetchServices = async () => {
       try {
-        const res = await fetch("http://localhost:5000/api/services");
-        const data = await res.json();
+        const data = await apiFetch("/api/services");
         setCapabilities(data);
       } catch (err) {
         console.error(err);

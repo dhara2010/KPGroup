@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Star, Loader2 } from 'lucide-react';
 import { ScrollReveal } from "@/components/Animations";
 import { Section } from "@/components/ui/Section";
+import { apiFetch } from "../../api/api";
 
 export default function AchievementsTimeline() {
   const [achievements, setAchievements] = useState([]);
@@ -10,8 +11,7 @@ export default function AchievementsTimeline() {
   useEffect(() => {
     const fetchAchievements = async () => {
       try {
-        const res = await fetch("http://localhost:5000/api/achievements");
-        const data = await res.json();
+        const data = await apiFetch("/api/achievements");
         setAchievements(data);
       } catch (err) {
         console.error(err);

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { ScrollReveal } from "@/components/Animations";
 import { Loader2 } from "lucide-react";
+import { apiFetch } from "../../api/api";
 
 export default function Supporters() {
   const [partners, setPartners] = useState([]);
@@ -9,8 +10,7 @@ export default function Supporters() {
   useEffect(() => {
     const fetchPartners = async () => {
       try {
-        const res = await fetch(`http://localhost:5000/api/partners`);
-        const data = await res.json();
+        const data = await apiFetch(`/api/partners`);
         const eco = data.filter(p => p.type === "Ecosystem");
         setPartners(eco.length > 0 ? eco : data);
       } catch (err) {

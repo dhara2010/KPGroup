@@ -1,6 +1,7 @@
 import React, { useState, useRef, useEffect, useCallback } from "react";
 import { Play, Pause, X, Volume2, VolumeX, Maximize2, Star, Quote, Sparkles, ArrowRight, Loader2 } from "lucide-react";
 import PageHero from "@/components/common/PageHero";
+import { apiFetch } from "../../api/api";
 
 /* ─── Format time ───────────────────────────────────────────────────────── */
 const fmtT = s => {
@@ -158,8 +159,7 @@ export default function TestimonialsPage() {
   useEffect(() => {
     const fetchTestimonials = async () => {
       try {
-        const res = await fetch("http://localhost:5000/api/testimonials");
-        const data = await res.json();
+        const data = await apiFetch("/api/testimonials");
         setReels(data);
       } catch (err) {
         console.error(err);

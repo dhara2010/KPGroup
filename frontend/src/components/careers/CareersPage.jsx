@@ -16,6 +16,7 @@ import {
 } from "lucide-react";
 
 import PageHero from "@/components/common/PageHero";
+import { apiFetch } from "../../api/api";
 
 const DEPARTMENTS = ["All", "Tech & Engineering", "Skill Academy", "Media & Marketing", "Business Operations"];
 
@@ -61,8 +62,7 @@ export default function CareersPage() {
   useEffect(() => {
     const fetchJobs = async () => {
       try {
-        const res = await fetch("http://localhost:5000/api/jobs");
-        const data = await res.json();
+        const data = await apiFetch("/api/jobs");
         setJobs(data);
       } catch (err) {
         console.error(err);

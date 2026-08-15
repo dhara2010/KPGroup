@@ -4,6 +4,7 @@ import React, { useState } from "react";
 
 import { Link, useParams } from "react-router-dom";
 import PageHero from "@/components/common/PageHero";
+import { apiFetch } from "../api/api";
 
 import { 
   User, MessageSquare, Calendar, ArrowLeft, Link2, Check, Share2, 
@@ -40,8 +41,7 @@ export default function SinglePostPage({ params }) {
   React.useEffect(() => {
     const fetchPost = async () => {
       try {
-        const res = await fetch("http://localhost:5000/api/blogs");
-        const data = await res.json();
+        const data = await apiFetch("/api/blogs");
         const found = data.find(p => p.slug === slug);
         if (found) {
           setPost(found);
