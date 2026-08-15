@@ -41,3 +41,9 @@ Thumbs.db
 # TypeScript
 *.tsbuildinfo
 next-env.d.ts
+
+
+node_modules/
+.env
+uploads/
+*.log
